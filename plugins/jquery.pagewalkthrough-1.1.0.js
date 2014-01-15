@@ -9,7 +9,7 @@
 ;(function ($, window, document, undefined) {
 
 	/**
-    * GLOBAR VAR
+    * GLOBAL VAR
     */
     var _globalWalkthrough = {},
          _elements = [],
@@ -30,7 +30,6 @@
     */
 
     var methods = {
-
         isPageWalkthroughActive: function () {
             if (_isWalkthroughActive) {
                 return true;
@@ -45,7 +44,6 @@
 
         //init method
         init: function (options) {
-
             var options = $.extend({}, $.fn.pagewalkthrough.options, options);
 
             return this.each(function () {
@@ -84,7 +82,6 @@
                 });
 
             });
-
         },
 
         renderOverlay: function () {
@@ -98,7 +95,7 @@
             _isCookieLoad = getCookie('_walkthrough-' + _activeId);
 
             //check if first time walkthrough
-            if (_isCookieLoad == undefined) {
+            // if (_isCookieLoad == undefined) {
                 _isWalkthroughActive = true;
                 buildWalkthrough();
                 showCloseButton();
@@ -111,9 +108,9 @@
                         if (!onAfterShow()) return;
                     }
                 }, 100);            
-            } else {//check when user used to close the walkthrough to call the onCookieLoad callback
-                onCookieLoad(_globalWalkthrough);
-            }
+            // } else {//check when user used to close the walkthrough to call the onCookieLoad callback
+            //     onCookieLoad(_globalWalkthrough);
+            // }
         },
 
         restart: function (e) {
@@ -224,17 +221,13 @@
 
             return _wtObj;
         }
-
-
     };//end public method
-
 
 
     /*
     * BUILD OVERLAY
     */
     function buildWalkthrough() {
-
         var opt = _activeWalkthrough;
 
         //call onBeforeShow callback
@@ -467,7 +460,7 @@
 
         var textRotation =  setRotation(parseInt(opt.steps[_index].popup.contentRotation));
 
-        $jpwTooltip.css({ 'position': 'absolute', 'left': '50%', 'top': '50%', 'margin-left': -(parseInt(opt.steps[_index].popup.width) + 60) / 2 + 'px','z-index':'9999'});
+        $jpwTooltip.css({ 'position': 'absolute', 'left': '50%', 'top': '20%', 'margin-left': -(parseInt(opt.steps[_index].popup.width) + 60) / 2 + 'px','z-index':'9999'});
 
         var tooltipSlide = $('<div id="tooltipTop">' +
                                 '<div id="topLeft"></div>' +
@@ -496,8 +489,6 @@
 
         $jpwTooltip.css('margin-top', -(($jpwTooltip.height()) / 2)+ 'px');
         $jpWalkthrough.show();
-
-
     }
 
 
@@ -505,7 +496,6 @@
     * SHOW TOOLTIP
     */
     function showTooltip(isAccessable) {
-
         var opt = _activeWalkthrough;
 
         var tooltipWidth = (opt.steps[_index].popup.width == '') ? 300 : opt.steps[_index].popup.width,
@@ -538,8 +528,8 @@
                                 '<div id="bottomLeft"></div>' +
                                 '<div id="bottomRight"></div>' +
                             '</div>');
-
-        $jpwTooltip.html('').css({ 'marginLeft': '0', 'margin-top': '0', 'position': 'absolute','z-index':'9999'})
+        
+        $jpwTooltip.html('').css({ 'margin-left': '0', 'margin-top': '0', 'position': 'absolute','z-index':'9999'})
                            .append(tooltipSlide)
                            .wrapInner('<div id="tooltipWrapper" style="width:'+cleanValue(parseInt(opt.steps[_index].popup.width) + 30)+'"></div>')
                            .appendTo($jpWalkthrough);
@@ -596,15 +586,13 @@
         }
 
         $('#jpwTooltip span.' + opt.steps[_index].popup.position).css({ 'left': cleanValue(arrowLeft) });
-
         $jpwTooltip.css({ 'top': cleanValue(top), 'left': cleanValue(left) });
         $jpWalkthrough.show();
     }
 
-    /**
+    /*
      * POPUP NO HIGHLIGHT
      */
-
      function noHighlight(isOverlay){
         var opt = _activeWalkthrough, overlayClass = '';
 
@@ -696,7 +684,7 @@
 
      }
 
-     /*
+   /*
     * SCROLL TO TARGET
     */
     function scrollToTarget() {
@@ -813,7 +801,7 @@
 
     //callback for before all first walkthrough element loaded
     function onBeforeShow() {
-        var options = _activeWalkthrough;
+        var options = _activeWalkthrough || {};
         _index = 0;
 
         if (typeof (options.onBeforeShow) === "function") {
@@ -821,7 +809,7 @@
                 return false;
             }
         }
-
+        
         return true;
     }
 
@@ -1017,15 +1005,15 @@
      * BUTTON CLOSE CLICK
      */
 
-     $('#jpwClose a').live('click', onClose);
-
+     // Patching for jquery 1.7+
+     $(document).on('click', '#jpwClose a', onClose);
 
     /**
      * DRAG & DROP
      */
 
-    $('#jpwTooltip #drag-area').live('mousedown', function (e) {
-
+    // Patching for jquery 1.7+
+    $(document).on('mousedown', '#jpwTooltip #drag-area', function(e) {
         if (!$(this).hasClass('draggable-area')) {
             return;
         }
@@ -1048,12 +1036,12 @@
                 $(this).children('#tooltipWrapper').removeClass('draggable').css({'z-index':z_idx,'cursor':'default'});
             });
         });
-        e.preventDefault(); // disable selection
-    }).live("mouseup", function () {
-        $(this).removeClass('draggable').css('cursor','default');
+        e.preventDefault(); //disable selection
     });
 
-
+    $(document).on('mouseup', '#jpwTooltip #drag-area', function() {
+        $(this).removeClass('draggable').css('cursor','default');
+    });
 
 	/**
     * MAIN PLUGIN
@@ -1078,7 +1066,7 @@
 
     setTimeout(function () {
         methods.renderOverlay();
-    }, 500);
+    }, 1500);
 
 	$.fn.pagewalkthrough.options = {
 
