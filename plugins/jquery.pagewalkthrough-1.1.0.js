@@ -78,9 +78,16 @@
           _hasDefault = false;
         }
 
-                    return false;
+        // when user scroll the page, scroll it back to keep walkthought on user view
+        $(window).scroll(function() {
+          if (_isWalkthroughActive && _activeWalkthrough.steps[_index].stayFocus) {
+            clearTimeout($.data(this, 'scrollTimer'));
+            $.data(this, 'scrollTimer', setTimeout(function() {
+              scrollToTarget(_activeWalkthrough);
+            }, 250));
+          }
 
-                });
+          return false;
 
         });
 
