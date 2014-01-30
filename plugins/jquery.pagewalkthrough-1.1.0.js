@@ -6,8 +6,7 @@
  * Issue, Feature & Bug Support: erwin.yusrizal@gmail.com
  ***/
 
-;
-(function($, window, document, undefined) {
+;(function($, window, document, undefined) {
 
   /**
    * GLOBAL VAR
@@ -88,9 +87,7 @@
           }
 
           return false;
-
         });
-
       });
     },
 
