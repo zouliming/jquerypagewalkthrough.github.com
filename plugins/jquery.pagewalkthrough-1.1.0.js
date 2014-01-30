@@ -44,9 +44,10 @@
       return _index;
     },
 
-        //init method
-        init: function (options) {
-            var options = $.extend({}, $.fn.pagewalkthrough.options, options);
+    //init method
+    init: function(options) {
+      var options = $.extend({}, $.fn.pagewalkthrough.options, options);
+      var that = this;
 
       return this.each(function(i) {
         var $this = $(this),
@@ -70,14 +71,12 @@
           _onLoad = false;
         }
 
-                // when user scroll the page, scroll it back to keep walkthought on user view
-                $(window).scroll(function () {
-                    if (_isWalkthroughActive && _activeWalkthrough.steps[_index].stayFocus) {
-                        clearTimeout($.data(this, 'scrollTimer'));
-                        $.data(this, 'scrollTimer', setTimeout(function () {
-                            scrollToTarget(_activeWalkthrough);
-                        }, 250));
-                    }
+        // set the activeWalkthrough if onLoad is false for all walkthroughs
+        if ((i + 1 === that.length && _counter == 0)) {
+          _activeId = elementId;
+          _activeWalkthrough = _globalWalkthrough[_elements[0]];
+          _hasDefault = false;
+        }
 
                     return false;
 
@@ -1108,7 +1107,12 @@
 
       methods.init.apply(this, arguments);
 
-        } else {
+      // render the overlay on it has a default walkthrough set to show onload
+      if (_hasDefault && _counter < 2) {
+        setTimeout(function() {
+          methods.renderOverlay();
+        }, 500);
+      }
 
     } else {
 
