@@ -1119,7 +1119,7 @@
   /* Previous button clicks
    */
   $(document).on('click', '#jpwPrevious', function() {
-      $.pagewalkthrough('previous');
+      $.pagewalkthrough('prev');
   });
 
   /**
