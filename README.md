@@ -46,8 +46,12 @@ steps: [
         stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
         onLeave: null, // callback when leaving the step
         onEnter: null // callback when entering the step,
+        showNextButton: true, // Show the next button for all steps except the last step
+        showPreviousButton: true, // Show the previous button for all steps except the first step
         i18n: { // Strings for the user interface
-            close: 'Click here to close' // Default text for the close button in the top right corner
+            close: 'Click here to close', // Default text for the close button in the top right corner
+            next: 'Next &rarr;', // Default text for the next button
+            previous: '&larr; Previous' // Default text for the previous button
         }
   }
 

@@ -111,7 +111,7 @@
 
         setTimeout(function() {
           //call onAfterShow callback
-          if (_index == 0 && _firstTimeLoad) {
+          if (isFirstStep() && _firstTimeLoad) {
             if (!onAfterShow()) return;
           }
         }, 100);
@@ -121,7 +121,7 @@
     },
 
     restart: function(e) {
-      if (_index == 0) return;
+      if (isFirstStep()) return;
 
       _index = 0;
       if (!(onRestart(e))) return;
@@ -181,7 +181,7 @@
       scrollToTarget();
 
       //call onAfterShow callback
-      if (_index == 0 && _firstTimeLoad) {
+      if (isFirstStep() && _firstTimeLoad) {
         if (!onAfterShow()) return;
       }
 
@@ -189,7 +189,7 @@
 
     next: function(e) {
       _firstTimeLoad = false;
-      if (_index == (_activeWalkthrough.steps.length - 1)) return;
+      if (isLastStep()) return;
 
       if (!onLeave(e)) return;
       _index = parseInt(_index) + 1;
@@ -201,7 +201,7 @@
     },
 
     prev: function(e) {
-      if (_index == 0) return;
+      if (isFirstStep()) return;
 
       if (!onLeave(e)) return;
       _index = parseInt(_index) - 1;
@@ -236,33 +236,33 @@
    */
 
   function buildWalkthrough() {
-    var opt = _activeWalkthrough;
+    var options = _activeWalkthrough;
 
     //call onBeforeShow callback
-    if (_index == 0 && _firstTimeLoad) {
+    if (isFirstStep() && _firstTimeLoad) {
       if (!onBeforeShow()) return;
     }
 
-    if (opt.steps[_index].popup.type != 'modal' && opt.steps[_index].popup.type != 'nohighlight') {
+    if (options.steps[_index].popup.type != 'modal' && options.steps[_index].popup.type != 'nohighlight') {
 
       $jpWalkthrough.html('');
 
       //check if wrapper is not empty or undefined
-      if (opt.steps[_index].wrapper == '' || opt.steps[_index].wrapper == undefined) {
-        alert('Your walkthrough position is: "' + opt.steps[_index].popup.type + '" but wrapper is empty or undefined. Please check your "' + _activeId + '" wrapper parameter.');
+      if (options.steps[_index].wrapper == '' || options.steps[_index].wrapper == undefined) {
+        alert('Your walkthrough position is: "' + options.steps[_index].popup.type + '" but wrapper is empty or undefined. Please check your "' + _activeId + '" wrapper parameter.');
         return;
       }
 
-      var topOffset = cleanValue($(opt.steps[_index].wrapper).offset().top);
-      var leftOffset = cleanValue($(opt.steps[_index].wrapper).offset().left);
-      var transparentWidth = cleanValue($(opt.steps[_index].wrapper).innerWidth()) || cleanValue($(opt.steps[_index].wrapper).width());
-      var transparentHeight = cleanValue($(opt.steps[_index].wrapper).innerHeight()) || cleanValue($(opt.steps[_index].wrapper).height());
+      var topOffset = cleanValue($(options.steps[_index].wrapper).offset().top);
+      var leftOffset = cleanValue($(options.steps[_index].wrapper).offset().left);
+      var transparentWidth = cleanValue($(options.steps[_index].wrapper).innerWidth()) || cleanValue($(options.steps[_index].wrapper).width());
+      var transparentHeight = cleanValue($(options.steps[_index].wrapper).innerHeight()) || cleanValue($(options.steps[_index].wrapper).height());
 
       //get all margin and make it gorgeous with the 'px', if it has no px, IE will get angry !!
-      var marginTop = cssSyntax(opt.steps[_index].margin, 'top'),
-        marginRight = cssSyntax(opt.steps[_index].margin, 'right'),
-        marginBottom = cssSyntax(opt.steps[_index].margin, 'bottom'),
-        marginLeft = cssSyntax(opt.steps[_index].margin, 'left'),
+      var marginTop = cssSyntax(options.steps[_index].margin, 'top'),
+        marginRight = cssSyntax(options.steps[_index].margin, 'right'),
+        marginBottom = cssSyntax(options.steps[_index].margin, 'bottom'),
+        marginLeft = cssSyntax(options.steps[_index].margin, 'left'),
         roundedCorner = 30,
         overlayClass = '',
         killOverlay = '';
@@ -279,7 +279,7 @@
 
 
       //check if use overlay      
-      if (opt.steps[_index].overlay == undefined || opt.steps[_index].overlay) {
+      if (options.steps[_index].overlay == undefined || options.steps[_index].overlay) {
         overlayClass = 'overlay';
       } else {
         overlayClass = 'noOverlay';
@@ -289,7 +289,7 @@
       var overlayTop = $('<div id="overlayTop" class="' + overlayClass + '"></div>').css(overlayTopStyle).appendTo($jpWalkthrough);
       var overlayLeft = $('<div id="overlayLeft" class="' + overlayClass + '"></div>').css(overlayLeftStyle).appendTo($jpWalkthrough);
 
-      if (!opt.steps[_index].accessable) {
+      if (!options.steps[_index].accessable) {
 
         var highlightedAreaStyle = {
           'top': overlayTopStyle.height,
@@ -392,7 +392,7 @@
 
       } //end checking accessable
 
-      var highlightedAreaWidth = (opt.steps[_index].accessable) ? parseInt(accessableStyle.topAccessable.topCenter.width) + (roundedCorner * 2) : (parseInt(highlightedAreaStyle.topCenter.width) + (roundedCorner * 2));
+      var highlightedAreaWidth = (options.steps[_index].accessable) ? parseInt(accessableStyle.topAccessable.topCenter.width) + (roundedCorner * 2) : (parseInt(highlightedAreaStyle.topCenter.width) + (roundedCorner * 2));
 
 
       var overlayRightStyle = {
@@ -419,20 +419,20 @@
 
       $jpWalkthrough.appendTo('body').show();
 
-      if (opt.steps[_index].accessable) {
+      if (options.steps[_index].accessable) {
         showTooltip(true);
       } else {
         showTooltip(false);
       }
 
 
-    } else if (opt.steps[_index].popup.type == 'modal') {
+    } else if (options.steps[_index].popup.type == 'modal') {
 
       if ($('#jpWalkthrough').length) {
         $('#jpWalkthrough').remove();
       }
 
-      if (opt.steps[_index].overlay == undefined || opt.steps[_index].overlay) {
+      if (options.steps[_index].overlay == undefined || options.steps[_index].overlay) {
         showModal(true);
       } else {
         showModal(false);
@@ -444,12 +444,15 @@
       }
 
 
-      if (opt.steps[_index].overlay == undefined || opt.steps[_index].overlay) {
+      if (options.steps[_index].overlay == undefined || options.steps[_index].overlay) {
         noHighlight(true);
       } else {
         noHighlight(false);
       }
     }
+
+    showNextButton();
+    showPreviousButton();
   }
 
   /*
@@ -457,7 +460,7 @@
    */
 
   function showModal(isOverlay) {
-    var opt = _activeWalkthrough,
+    var options = _activeWalkthrough,
       overlayClass = '';
 
     if (isOverlay) {
@@ -468,13 +471,13 @@
       }
     }
 
-    var textRotation = setRotation(parseInt(opt.steps[_index].popup.contentRotation));
+    var textRotation = setRotation(parseInt(options.steps[_index].popup.contentRotation));
 
     $jpwTooltip.css({
       'position': 'absolute',
       'left': '50%',
       'top': '20%',
-      'margin-left': -(parseInt(opt.steps[_index].popup.width) + 60) / 2 + 'px',
+      'margin-left': -(parseInt(options.steps[_index].popup.width) + 60) / 2 + 'px',
       'z-index': '9999'
     });
 
@@ -493,7 +496,7 @@
 
     $jpWalkthrough.html('');
     $jpwTooltip.html('').append(tooltipSlide)
-      .wrapInner('<div id="tooltipWrapper" style="width:' + cleanValue(parseInt(opt.steps[_index].popup.width) + 30) + '"></div>')
+      .wrapInner('<div id="tooltipWrapper" style="width:' + cleanValue(parseInt(options.steps[_index].popup.width) + 30) + '"></div>')
       .append('<div id="bottom-scratch"></div>')
       .appendTo($jpWalkthrough);
 
@@ -501,7 +504,7 @@
 
     $('#tooltipWrapper').css(textRotation);
 
-    $(opt.steps[_index].popup.content).clone().appendTo('#tooltipInner').show();
+    $(options.steps[_index].popup.content).clone().appendTo('#tooltipInner').show();
 
     $jpwTooltip.css('margin-top', -(($jpwTooltip.height()) / 2) + 'px');
     $jpWalkthrough.show();
@@ -761,7 +764,7 @@
   function showCloseButton() {
     var options = _activeWalkthrough;
 
-    if (!$('jpwClose').length) {
+    if (!$('#jpwClose').length) {
       $('body').append('<div id="jpwClose">' +
         '<a href="javascript:;" title="' + options.i18n.close + '">' +
           '<span></span><br>' + options.i18n.close +
@@ -770,7 +773,30 @@
     }
   }
 
+  /* Show the next button, provided that there are more steps to show. */
+  function showNextButton() {
+    var options = _activeWalkthrough;
 
+    if (!options.showNextButton || isLastStep()) return;
+
+    $jpwTooltip.find('#tooltipInner').after($('<a />', {
+      id: 'jpwNext',
+      html: options.i18n.next
+    }));
+  }
+
+  /* Show the previous button, provided that there is a previous step to go to.
+   */
+  function showPreviousButton() {
+    var options = _activeWalkthrough;
+
+    if (!options.showPreviousButton || isFirstStep()) return;
+
+    $jpwTooltip.find('#tooltipInner').after($('<a />', {
+      id: 'jpwPrevious',
+      html: options.i18n.previous
+    }));
+  }
 
   /**
     /* CALLBACK
@@ -1059,12 +1085,42 @@
     }
   }
 
+  /* Returns true if the current step is the last step in the walkthrough.
+   *
+   * @return {Boolean} true if user is currently viewing last step; false
+   *                   otherwise
+   */
+  function isLastStep() {
+    return _index == (_activeWalkthrough.steps.length - 1);
+  }
+
+  /* Returns true if the current step is the first step in the walkthrough.
+   *
+   * @return {Boolean} true if user is currently viewing first step; false
+   *                   otherwise
+   */
+  function isFirstStep() {
+      return _index === 0;
+  }
+
   /**
    * BUTTON CLOSE CLICK
    */
 
   // Patching for jquery 1.7+
   $(document).on('click', '#jpwClose a', onClose);
+
+  /* Next button clicks
+   */
+  $(document).on('click', '#jpwNext', function() {
+      $.pagewalkthrough('next');
+  });
+
+  /* Previous button clicks
+   */
+  $(document).on('click', '#jpwPrevious', function() {
+      $.pagewalkthrough('previous');
+  });
 
   /**
    * DRAG & DROP
@@ -1166,9 +1222,13 @@
     onAfterShow: null, // callback after page walkthrough loaded
     onRestart: null, //callback for onRestart walkthrough
     onClose: null, //callback page walkthrough closed
-    onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough
+    onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough,
+    showPreviousButton: true, // Whether or not to show the next button
+    showNextButton: true, // Whether or not to show the previous button
     i18n: {
-        close: 'Click here to close' // String for close button in top right corner
+        close: 'Click here to close', // String for close button in top right corner,
+        previous: '&larr; Previous', // String for next button
+        next: 'Next &rarr;' // String for previous button
     }
   };
 
