@@ -45,7 +45,7 @@
 
     //init method
     init: function(options) {
-      var options = $.extend({}, $.fn.pagewalkthrough.options, options);
+      var options = $.extend(true, {}, $.fn.pagewalkthrough.options, options);
       var that = this;
 
       return this.each(function(i) {
@@ -760,9 +760,10 @@
   /**
    * SHOW CLOSE BUTTON
    */
-
   function showCloseButton() {
     var options = _activeWalkthrough;
+
+    if (!options.buttonsToShow.close) return;
 
     if (!$('#jpwClose').length) {
       $('body').append('<div id="jpwClose">' +
@@ -777,7 +778,7 @@
   function showNextButton() {
     var options = _activeWalkthrough;
 
-    if (!options.showNextButton || isLastStep()) return;
+    if (!options.buttonsToShow.next || isLastStep()) return;
 
     $jpwTooltip.find('#tooltipInner').after($('<a />', {
       id: 'jpwNext',
@@ -790,7 +791,7 @@
   function showPreviousButton() {
     var options = _activeWalkthrough;
 
-    if (!options.showPreviousButton || isFirstStep()) return;
+    if (!options.buttonsToShow.previous || isFirstStep()) return;
 
     $jpwTooltip.find('#tooltipInner').after($('<a />', {
       id: 'jpwPrevious',
@@ -1223,8 +1224,11 @@
     onRestart: null, //callback for onRestart walkthrough
     onClose: null, //callback page walkthrough closed
     onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough,
-    showPreviousButton: true, // Whether or not to show the next button
-    showNextButton: true, // Whether or not to show the previous button
+    buttonsToShow: {
+        previous: true, // Whether or not to show the previous button for each step
+        next: true, // Whether or not to show the next button for each step
+        close: true // Whether or not to show the close tour button
+    },
     i18n: {
         close: 'Click here to close', // String for close button in top right corner,
         previous: '&larr; Previous', // String for next button
