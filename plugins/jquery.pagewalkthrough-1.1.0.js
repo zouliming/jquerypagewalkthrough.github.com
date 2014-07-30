@@ -759,8 +759,14 @@
    */
 
   function showCloseButton() {
+    var options = _activeWalkthrough;
+
     if (!$('jpwClose').length) {
-      $('body').append('<div id="jpwClose"><a href="javascript:;" title="Click here to close"><span></span><br>Click Here to Close</a></div>');
+      $('body').append('<div id="jpwClose">' +
+        '<a href="javascript:;" title="' + options.i18n.close + '">' +
+          '<span></span><br>' + options.i18n.close +
+        '</a></div>'
+      );
     }
   }
 
@@ -1160,7 +1166,10 @@
     onAfterShow: null, // callback after page walkthrough loaded
     onRestart: null, //callback for onRestart walkthrough
     onClose: null, //callback page walkthrough closed
-    onCookieLoad: null //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough
+    onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough
+    i18n: {
+        close: 'Click here to close' // String for close button in top right corner
+    }
   };
 
 }(jQuery, window, document));

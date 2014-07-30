@@ -1,21 +1,28 @@
 jQuery Page Walkthrough
 ================================
 
+Forked from [jpadamsonline/jquerypagewalkthrough.github.com](https://github.com/jpadamsonline/jquerypagewalkthrough.github.com)
+
 Page Walkthrough is a flexible system for designing interactive, multimedia, educational walkthroughs.
 
-<h2>Example:</h2>
-To view jQuery Page Walkthrough example <a href="example/example.html">Click Here</a>
-<h2>Install:</h2>
-<pre>
-&lt;!-- CSS --&gt;
-&lt;link type="text/css" rel="stylesheet" href="css/jquery.pagewalkthrough.css" /&gt;
+## Example
 
-&lt;!-- JQUERY --&gt;
-&lt;script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-&lt;script type="text/javascript" src="js/jquery.pagewalkthrough-1.1.0.js"></script>
-</pre>
-<h2>jQuery Page Walkthrough Default Options:</h2>
-<pre>
+To view jQuery Page Walkthrough example <a href="example/example.html">Click Here</a>
+
+## Install
+
+```html
+<!-- CSS -->
+<link type="text/css" rel="stylesheet" href="css/jquery.pagewalkthrough.css" />
+
+<!-- JQUERY -->
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.pagewalkthrough-1.1.0.js"></script>
+```
+
+## jQuery Page Walkthrough Default Options
+
+```javascript
 steps: [
 
   {
@@ -31,14 +38,17 @@ steps: [
               width: '320', //default width for each step,
               draggable: false, // set true to set walkthrough draggable,
               contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
-           },          
-        overlay: true, //use overlay or not, default: true   
+           },
+        overlay: true, //use overlay or not, default: true
         accessable: false, //if true - you can access html element such as form input field, button etc
-        autoScroll: true, //is true - this will autoscroll to the arror/content every step 
+        autoScroll: true, //is true - this will autoscroll to the arror/content every step
         scrollSpeed: 1000, //scroll speed
         stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
         onLeave: null, // callback when leaving the step
-        onEnter: null // callback when entering the step
+        onEnter: null // callback when entering the step,
+        i18n: { // Strings for the user interface
+            close: 'Click here to close' // Default text for the close button in the top right corner
+        }
   }
 
 ],
@@ -49,34 +59,39 @@ onAfterShow: null, // callback after page walkthrough loaded
 onRestart: null, //callback for onRestart walkthrough
 onClose: null, //callback page walkthrough closed
 onCookieLoad: null //when walkthrough closed, it will set cookie and tells the walkthrough to not load automaticly
-</pre>
-<h2>Public Methods:</h2>
-<pre>
-<strong>show</strong>       :   $.pagewalkthrough('show', target)
+```
+
+## Public Methods
+
+```
+show       :   $.pagewalkthrough('show', target)
 This method allows you to open page walkthrough. Target is your walkthrough ID, i.e: #selector
 
-<strong>next</strong>       :   $.pagewalkthrough('next', event)
+next       :   $.pagewalkthrough('next', event)
 This method allows you to go the NEXT step. Event is needed as a param to call next method
 
-<strong>prev</strong>       :   $.pagewalkthrough('prev', event)
+prev       :   $.pagewalkthrough('prev', event)
 This method allows you to go the PREVIOUS step. Event is needed as a param to call prev method
 
-<strong>restart</strong>    :   $.pagewalkthrough('restart', event)
+restart    :   $.pagewalkthrough('restart', event)
 This method allows you to go the RESTART step. Event is needed as a param to call restart method
 
-<strong>close</strong>      :   $.pagewalkthrough('close', target)
+close      :   $.pagewalkthrough('close', target)
 This method allows you to go the CLOSE step. Target is optional. It could be filled with walkthrough ID or leave it blank
 
-<strong>isPageWalkthroughActive</strong>   :   $.pagewalkthrough('isPageWalkthroughActive')
+isPageWalkthroughActive   :   $.pagewalkthrough('isPageWalkthroughActive')
 This property will return status of page walkthrough
 
-<strong>currIndex</strong>  :   $.pagewalkthrough('currIndex')
+currIndex  :   $.pagewalkthrough('currIndex')
 This property will return current index of current walkthrough step
-</pre>
+```
 
-<h2>Browser Support:</h2>
-<p>IE7+, Firefox (Win &amp; Mac), Safari (Win &amp; Mac), Chrome (Win &amp; Mac)</p>
-<p><strong>Note:</strong> Because chrome doesn't support running cookie in local file, if you want to test this plugin on chrome, you should run this plugin from webserver i.e: wamp, mamp, etc</p>
+## Browser Support
 
-<h2>Theme:</h2>
-<p>Will be added soon...</p>
+IE7+, Firefox (Win &amp; Mac), Safari (Win &amp; Mac), Chrome (Win &amp; Mac)
+
+**Note:** Because chrome doesn't support running cookie in local file, if you want to test this plugin on chrome, you should run this plugin from webserver i.e: wamp, mamp, etc
+
+## Theme
+
+Will be added soon...
