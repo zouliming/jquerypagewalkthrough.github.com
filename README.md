@@ -9,6 +9,14 @@ Page Walkthrough is a flexible system for designing interactive, multimedia, edu
 
 To view jQuery Page Walkthrough example <a href="example/example.html">Click Here</a>
 
+## Screenshots
+
+### Modal-style tour step
+![Modal-style step](images/screenshot_modal.png 'Modal-style step')
+
+### Tooltip-style tour step with highlighted content
+![Tooltip-style step](images/screenshot_tooltip.png 'Tooltip-style step')
+
 ## Install
 
 ```html
