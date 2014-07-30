@@ -99,3 +99,10 @@ IE7+, Firefox (Win &amp; Mac), Safari (Win &amp; Mac), Chrome (Win &amp; Mac)
 ## Theme
 
 Will be added soon...
+
+## Changelog
+
+### 30/07/2014
+
+* i18n support for close button text
+* Support for showing next and previous buttons to move between tour stops
