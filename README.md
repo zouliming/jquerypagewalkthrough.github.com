@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/warby-/jquerypagewalkthrough.github.com.png?label=ready&title=Ready)](https://waffle.io/warby-/jquerypagewalkthrough.github.com)
 jQuery Page Walkthrough
 ================================
 
