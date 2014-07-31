@@ -65,7 +65,7 @@ steps: [
   }
 
 ],
-name: '',
+name: null, // the ID for this walkthrough
 onLoad: true, //load the walkthrough at first time page loaded
 onBeforeShow: null, //callback before page walkthrough loaded
 onAfterShow: null, // callback after page walkthrough loaded

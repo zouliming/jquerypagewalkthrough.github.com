@@ -21,6 +21,7 @@
     _firstTimeLoad = true,
     _onLoad = true,
     _index = 0,
+    _id = 0, // Counter for default walkthrough IDs
     _isWalkthroughActive = true,
     $jpwOverlay = $('<div id="jpwOverlay"></div>'),
     $jpWalkthrough = $('<div id="jpWalkthrough"></div>'),
@@ -48,15 +49,18 @@
       var options = $.extend(true, {}, $.fn.pagewalkthrough.options, options);
       var that = this;
 
+      if (!options.name) {
+          options.name = 'walkthrough-' + _id++;
+      }
+
       return this.each(function(i) {
         var $this = $(this),
-          elementId = $this.attr('id');
 
         options = options || {};
-        options.elementID = elementId;
+        options.elementID = options.name;
 
-        _globalWalkthrough[elementId] = options;
-        _elements.push(elementId);
+        _globalWalkthrough[options.name] = options;
+        _elements.push(options.name);
 
         //check if onLoad and this is first time load
         if (options.onLoad) {
@@ -65,14 +69,14 @@
 
         //get first onload = true
         if (_counter == 1 && _onLoad) {
-          _activeId = elementId;
+          _activeId = options.name;
           _activeWalkthrough = _globalWalkthrough[_activeId];
           _onLoad = false;
         }
 
         // set the activeWalkthrough if onLoad is false for all walkthroughs
         if ((i + 1 === that.length && _counter == 0)) {
-          _activeId = elementId;
+          _activeId = options.name;
           _activeWalkthrough = _globalWalkthrough[_elements[0]];
           _hasDefault = false;
         }
@@ -1191,9 +1195,7 @@
 
 
   $.fn.pagewalkthrough.options = {
-
     steps: [
-
       {
         wrapper: '', //an ID of page element HTML that you want to highlight
         margin: 0, //margin for highlighted area, may use CSS syntax i,e: '10px 20px 5px 30px'
@@ -1215,9 +1217,8 @@
         onLeave: null, // callback when leaving the step
         onEnter: null // callback when entering the step
       }
-
     ],
-    name: '',
+    name: null, // the ID for this walkthrough
     onLoad: true, //load the walkthrough at first time page loaded
     onBeforeShow: null, //callback before page walkthrough loaded
     onAfterShow: null, // callback after page walkthrough loaded
