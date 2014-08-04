@@ -1,6 +1,7 @@
 #jpwClose a,
 #jpwNext,
 #jpwPrevious {
+  color: #00C7FF;
   cursor: pointer;
   font-family: 'GochiHand';
   font-size: 16px;
