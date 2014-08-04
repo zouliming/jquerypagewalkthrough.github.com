@@ -1,14 +1,9 @@
 [![Stories in Ready](https://badge.waffle.io/warby-/jquerypagewalkthrough.github.com.png?label=ready&title=Ready)](https://waffle.io/warby-/jquerypagewalkthrough.github.com)
-jQuery Page Walkthrough
-================================
+# jQuery Page Walkthrough
 
 Forked from [jpadamsonline/jquerypagewalkthrough.github.com](https://github.com/jpadamsonline/jquerypagewalkthrough.github.com)
 
 Page Walkthrough is a flexible system for designing interactive, multimedia, educational walkthroughs.
-
-## Example
-
-To view jQuery Page Walkthrough example <a href="example/example.html">Click Here</a>
 
 ## Screenshots
 
@@ -18,7 +13,11 @@ To view jQuery Page Walkthrough example <a href="example/example.html">Click Her
 ### Tooltip-style tour step with highlighted content
 ![Tooltip-style step](assets/screenshot_tooltip.png 'Tooltip-style step')
 
-## Install
+## Demo site
+
+The demo site is located [here](http://warby-.github.io/jquery-pagewalkthrough/).
+
+## Installing
 
 1. Download the release you want from the [releases page](https://github.com/warby-/jquery-pagewalkthrough/releases), or download the
 [latest code](https://github.com/warby-/jquery-pagewalkthrough/archive/master.zip)(may not be stable).
@@ -32,8 +31,14 @@ To view jQuery Page Walkthrough example <a href="example/example.html">Click Her
 <!-- jQuery -->
 <script type="text/javascript" src="path/to/jquery/jquery-<jquery_version>.js"></script>
 <!-- Page walkthrough plugin -->
-<script type="text/javascript" src="path/to/extracted/files/jquery.pagewalkthrough-1.1.0.js"></script>
+<script type="text/javascript" src="path/to/extracted/files/jquery.pagewalkthrough.js"></script>
 ```
+
+**Note: there are minified versions of the JS and CSS files available for production, with the suffixes `.min.js` and `.min.css` respectively.**
+
+## Usage
+
+@TODO
 
 ## jQuery Page Walkthrough Default Options
 
@@ -105,15 +110,48 @@ currIndex  :   $.pagewalkthrough('currIndex')
 This property will return current index of current walkthrough step
 ```
 
+## Contributing
+
+### Building
+
+The `build` script in `bin/build` can be used to update the distribution files found in `dist/`.  The build script has two dependencies (see below section).
+Once these two dependencies are met, just run `./bin/build` from the top-level directory of the repository to update everything in `dist/`.
+
+#### Build script dependencies
+
+For the build script to run, you will need the programs `less` (for compiling the LESS into CSS, and for creating the minified CSS - you'd need this
+anyway if you had modified the LESS during development), and `uglifyjs` (for creating the minified JS).  The easiest way to install these dependencies
+is through `node` and `npm`:
+
+```shell
+npm install -g less
+npm install -g uglify-js
+```
+
+### Code style
+
+There is no formally defined code style, so just try and stick to what is already there for the time being.  The code is due a major refactor and tidy-up anyway.  The only "hard"
+rule is stick to 2 space tabs.  Also try to stick to lines which are less than 80 characters long.
+
+Also note that the CSS pre-processor [lesscss](http://lesscss.org/) is used in this project - don't modify the CSS files directly, as your changes will be overwritten when the LESS
+is compiled.  Instead, you should modify the LESS and compile it (see the section on 'Building' above).
+
 ## Browser Support
 
-IE7+, Firefox (Win &amp; Mac), Safari (Win &amp; Mac), Chrome (Win &amp; Mac)
+### Desktop
 
-**Note:** Because chrome doesn't support running cookie in local file, if you want to test this plugin on chrome, you should run this plugin from webserver i.e: wamp, mamp, etc
+- IE7+
+- Firefox
+- Safari
+- Chrome (**Note: Chrome does not support cookies from locally run files.  If you want to test or develop against this aspect of the project, you should host the project on a local server**)
+
+### Mobile
+
+@TODO - untested as of yet
 
 ## Theme
 
-Will be added soon...
+@TODO - not yet implemented
 
 ## Changelog
 
