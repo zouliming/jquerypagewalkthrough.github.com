@@ -1,10 +1,15 @@
+@content-font: 'GochiHand';
+@content-color: #ffffff;
+@controls-font: 'GochiHand';
+@controls-color: #00c7ff;
 @controls-font-size: 16px;
+@close-control-hover-color: #7eff00;
 
 .control() {
-    color: #00C7FF;
+    color: @controls-color;
     cursor: pointer;
 
-    font-family: 'GochiHand';
+    font-family: @controls-font;
     font-size: @controls-font-size;
     font-weight: lighter;
 }
@@ -116,8 +121,8 @@
             z-index: 1000;
         }
         #tooltipInner {
-            font-family: 'GochiHand';
-            color: #fff;
+            font-family: @content-font;
+            color: @content-color;
             text-align: center;
             font-size: @controls-font-size;
             a {
@@ -193,11 +198,11 @@
     right: 25px;
     z-index: 10000;
     a {
-        color: #fff;
+        color: @content-color;
         text-align: center;
         display: block;
         &:hover {
-            color: #7EFF00;
+            color: @close-control-hover-color;
         }
 
         span {

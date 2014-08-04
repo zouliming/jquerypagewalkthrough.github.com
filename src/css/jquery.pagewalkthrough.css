@@ -1,7 +1,7 @@
 #jpwClose a,
 #jpwNext,
 #jpwPrevious {
-  color: #00C7FF;
+  color: #00c7ff;
   cursor: pointer;
   font-family: 'GochiHand';
   font-size: 16px;
@@ -109,7 +109,7 @@
 }
 #jpWalkthrough #jpwTooltip #tooltipInner {
   font-family: 'GochiHand';
-  color: #fff;
+  color: #ffffff;
   text-align: center;
   font-size: 16px;
 }
@@ -195,12 +195,12 @@
   z-index: 10000;
 }
 #jpwClose a {
-  color: #fff;
+  color: #ffffff;
   text-align: center;
   display: block;
 }
 #jpwClose a:hover {
-  color: #7EFF00;
+  color: #7eff00;
 }
 #jpwClose a span {
   display: inline-block;
