@@ -4,7 +4,7 @@
  * Contributors: James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 1.2
+ * Version: 1.2.3
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -48,7 +48,7 @@
 
     //init method
     init: function(options) {
-      var options = $.extend(true, {}, $.fn.pagewalkthrough.options, options);
+      var options = $.extend(true, {}, $.fn.pagewalkthrough.defaults, options);
       var that = this;
 
       if (!options.name) {
@@ -252,6 +252,11 @@
       if (!onBeforeShow()) return;
     }
 
+    // Extend step options with defaults
+    options.steps[_index] = $.extend(
+        true, {}, $.fn.pagewalkthrough.defaults.steps[0], options.steps[_index]
+    );
+
     if (options.steps[_index].popup.type != 'modal' && options.steps[_index].popup.type != 'nohighlight') {
 
       $jpWalkthrough.html('');
@@ -287,7 +292,7 @@
       }
 
 
-      //check if use overlay      
+      //check if use overlay
       if (options.steps[_index].overlay == undefined || options.steps[_index].overlay) {
         overlayClass = 'overlay';
       } else {
@@ -999,6 +1004,8 @@
   }
 
   function cssSyntax(val, position) {
+    if (!val) val = '0px';
+
     var value = val,
       arrVal = value.split(' '),
       counter = 0,
@@ -1199,7 +1206,7 @@
   }
 
 
-  $.fn.pagewalkthrough.options = {
+  $.fn.pagewalkthrough.defaults = {
     steps: [
       {
         wrapper: '', //an ID of page element HTML that you want to highlight
@@ -1243,3 +1250,4 @@
   };
 
 }(jQuery, window, document));
+

@@ -119,6 +119,7 @@ Will be added soon...
 
 ### 04/08/2014
 
+* v1.2.3: Hotfix for each step's options not correctly extending default options
 * v1.2.2: Hotfix to make the plugin actually work
 * v1.2.1: Bug fix
 * v1.2.0: Remove demo/example related files from master branch; source files into src/; distribution files into dist/

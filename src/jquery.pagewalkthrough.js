@@ -4,7 +4,7 @@
  * Contributors: James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 1.2
+ * Version: 1.2.3
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
