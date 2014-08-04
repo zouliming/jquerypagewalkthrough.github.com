@@ -56,7 +56,7 @@
       }
 
       return this.each(function(i) {
-        var $this = $(this),
+        var $this = $(this);
 
         options = options || {};
         options.elementID = options.name;
