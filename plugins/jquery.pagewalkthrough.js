@@ -1,8 +1,10 @@
 /***
  * Author: Erwin Yusrizal
  * UX by: Tai Nguyen
+ * Contributors: James Warwood <james.duncan.1991@googlemail.com>
+ *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 1.1.0
+ * Version: 1.1.4
  * Issue, Feature & Bug Support: erwin.yusrizal@gmail.com
  ***/
 
