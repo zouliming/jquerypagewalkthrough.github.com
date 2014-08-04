@@ -56,7 +56,7 @@
       }
 
       return this.each(function(i) {
-        var $this = $(this),
+        var $this = $(this);
 
         options = options || {};
         options.elementID = options.name;
@@ -178,8 +178,11 @@
     show: function(target) {
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
-      _activeId = target;
-      _activeWalkthrough = _globalWalkthrough[target];
+      // @FIXME: need to figure what's actually going on in terms of deciding
+      // which walkthrough to show - the below is a hotfix to get the plugin
+      // actually working
+      _activeId = target || _activeId;
+      _activeWalkthrough = _globalWalkthrough[_activeId];
 
       buildWalkthrough();
       showCloseButton();
