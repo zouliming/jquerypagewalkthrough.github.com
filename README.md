@@ -13,20 +13,26 @@ To view jQuery Page Walkthrough example <a href="example/example.html">Click Her
 ## Screenshots
 
 ### Modal-style tour step
-![Modal-style step](images/screenshot_modal.png 'Modal-style step')
+![Modal-style step](assets/screenshot_modal.png 'Modal-style step')
 
 ### Tooltip-style tour step with highlighted content
-![Tooltip-style step](images/screenshot_tooltip.png 'Tooltip-style step')
+![Tooltip-style step](assets/screenshot_tooltip.png 'Tooltip-style step')
 
 ## Install
 
+1. Download the release you want from the [releases page](https://github.com/warby-/jquery-pagewalkthrough/releases), or download the
+[latest code](https://github.com/warby-/jquery-pagewalkthrough/archive/master.zip)(may not be stable).
+2. Extract the files from the `dist/` folder into your project
+3. Include the stylesheets and JS (**note: include jQuery first**):
+
 ```html
 <!-- CSS -->
-<link type="text/css" rel="stylesheet" href="css/jquery.pagewalkthrough.css" />
+<link type="text/css" rel="stylesheet" href="path/to/extracted/files/css/jquery.pagewalkthrough.css" />
 
-<!-- JQUERY -->
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js/jquery.pagewalkthrough-1.1.0.js"></script>
+<!-- jQuery -->
+<script type="text/javascript" src="path/to/jquery/jquery-<jquery_version>.js"></script>
+<!-- Page walkthrough plugin -->
+<script type="text/javascript" src="path/to/extracted/files/jquery.pagewalkthrough-1.1.0.js"></script>
 ```
 
 ## jQuery Page Walkthrough Default Options
@@ -110,6 +116,10 @@ IE7+, Firefox (Win &amp; Mac), Safari (Win &amp; Mac), Chrome (Win &amp; Mac)
 Will be added soon...
 
 ## Changelog
+
+### 04/08/2014
+
+* v1.2.0: Remove demo/example related files from master branch; source files into src/; distribution files into dist/
 
 ### 30/07/2014
 

@@ -18,6 +18,16 @@
             "name": "Erwin Yusrizal",
             "email": "erwin.yusrizal@gmail.com",
             "url": "http://jquerypagewalkthrough.github.com"
+        },
+        {
+            "name": "James Warwood",
+            "email": "james.duncan.1991@googlemail.com",
+            "url": "https://github.com/warby-"
+        },
+        {
+            "name": "Craig Roberts",
+            "email": "craig0990@gmail.com",
+            "url": "https://github.com/craig0990"
         }
     ],
     "licenses": [
@@ -27,14 +37,14 @@
         }
     ],
     "repository": {
-            "type": "git",
-    	    "url": "git://github.com/jquerypagewalkthrough/jquerypagewalkthrough.git"
-	    },
+        "type": "git",
+        "url": "git://github.com/warby-/jquery-pagewalkthrough.git"
+    },
     "bugs": "",
-    "homepage": "http://jquerypagewalkthrough.github.com",
-	"demo": "http://jquerypagewalkthrough.github.com/example/example.html",
-    "docs": "http://jquerypagewalkthrough.github.com",
-    "download": "https://github.com/jquerypagewalkthrough/jquerypagewalkthrough.github.com/zipball/master",
+    "homepage": "https://github.com/warby-/jquery-pagewalkthrough",
+	"demo": "http://warby-.github.io/jquery-pagewalkthrough",
+    "docs": "https://github.com/warby-/jquery-pagewalkthrough",
+    "download": "https://github.com/warby-/jquery-pagewalkthrough/archive/master.zip",
     "dependencies": {
         "jquery": ">=1.4"
     }
