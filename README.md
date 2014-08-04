@@ -113,5 +113,6 @@ Will be added soon...
 
 ### 30/07/2014
 
-* i18n support for close button text
-* Support for showing next and previous buttons to move between tour stops
+* v1.1.4: Add option to make close button optional
+* v1.1.3: Support for showing next and previous buttons to move between tour stops
+* v1.1.2: i18n support for close button text
