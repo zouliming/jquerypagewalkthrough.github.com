@@ -111,7 +111,7 @@
       if (_isCookieLoad == undefined) {
         _isWalkthroughActive = true;
         buildWalkthrough();
-        showCloseButton();
+        showButton('jpwClose', 'body');
 
         scrollToTarget();
 
@@ -155,23 +155,17 @@
         _isCookieLoad = getCookie('_walkthrough-' + _activeId);
       }
 
-      if ($('#jpwOverlay').length) {
-        $jpwOverlay.fadeOut('slow', function() {
-          $(this).remove();
-        });
-      }
+      $jpwOverlay.fadeOut('slow', function() {
+        $(this).remove();
+      });
 
-      if ($('#jpWalkthrough').length) {
-        $jpWalkthrough.fadeOut('slow', function() {
-          $(this).html('').remove();
-        });
-      }
+      $jpWalkthrough.fadeOut('slow', function() {
+        $(this).html('').remove();
+      });
 
-      if ($('#jpwClose').length) {
-        $('#jpwClose').fadeOut('slow', function() {
-          $(this).html('').remove();
-        });
-      }
+      $('#jpwClose').fadeOut('slow', function() {
+        $(this).remove();
+      });
 
     },
 
@@ -185,7 +179,7 @@
       _activeWalkthrough = _globalWalkthrough[_activeId];
 
       buildWalkthrough();
-      showCloseButton();
+      showButton('jpwClose', 'body');
 
       scrollToTarget();
 
@@ -465,8 +459,9 @@
       }
     }
 
-    showNextButton();
-    showPreviousButton();
+    showButton('jpwPrevious');
+    showButton('jpwNext');
+    showButton('jpwFinish');
   }
 
   /*
@@ -770,46 +765,33 @@
     }
   }
 
-
-  /**
-   * SHOW CLOSE BUTTON
+  /* Render a control button outside the #tooltipInner element.
+   *
+   * @param {String} id               The button identifier within the
+   *                                  options.buttons hash (e.g. 'jpwNext')
+   * @param {jQuery|String} appendTo  (Optional) The element or selector to
+   *                                  append the button to.  Defaults to
+   *                                  #tooltipWrapper
    */
-  function showCloseButton() {
-    var options = _activeWalkthrough;
+  function showButton(id, appendTo) {
+    if ($('#' + id).length) return;
 
-    if (!options.buttonsToShow.close) return;
+    var btn = _activeWalkthrough.buttons[id];
 
-    if (!$('#jpwClose').length) {
-      $('body').append('<div id="jpwClose">' +
-        '<a href="javascript:;" title="' + options.i18n.close + '">' +
-          '<span></span><br>' + options.i18n.close +
-        '</a></div>'
-      );
+    appendTo = appendTo || '#tooltipWrapper';
+
+    // Check that button is defined
+    if (!btn) return;
+
+    // Check that button should be shown
+    if ((typeof btn.show === 'function' && !btn.show()) || !btn.show) {
+      return;
     }
-  }
 
-  /* Show the next button, provided that there are more steps to show. */
-  function showNextButton() {
-    var options = _activeWalkthrough;
-
-    if (!options.buttonsToShow.next || isLastStep()) return;
-
-    $jpwTooltip.find('#tooltipInner').after($('<a />', {
-      id: 'jpwNext',
-      html: options.i18n.next
-    }));
-  }
-
-  /* Show the previous button, provided that there is a previous step to go to.
-   */
-  function showPreviousButton() {
-    var options = _activeWalkthrough;
-
-    if (!options.buttonsToShow.previous || isFirstStep()) return;
-
-    $jpwTooltip.find('#tooltipInner').after($('<a />', {
-      id: 'jpwPrevious',
-      html: options.i18n.previous
+    // Append button
+    $(appendTo).append($('<a />', {
+      id: id,
+      html: btn.i18n
     }));
   }
 
@@ -1124,8 +1106,8 @@
    * BUTTON CLOSE CLICK
    */
 
-  // Patching for jquery 1.7+
-  $(document).on('click', '#jpwClose a', onClose);
+  /* Close and finish tour buttons clicks */
+  $(document).on('click', '#jpwClose, #jpwFinish', onClose);
 
   /* Next button clicks
    */
@@ -1237,15 +1219,29 @@
     onRestart: null, //callback for onRestart walkthrough
     onClose: null, //callback page walkthrough closed
     onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough,
-    buttonsToShow: {
-        previous: true, // Whether or not to show the previous button for each step
-        next: true, // Whether or not to show the next button for each step
-        close: true // Whether or not to show the close tour button
-    },
-    i18n: {
-        close: 'Click here to close', // String for close button in top right corner,
-        previous: '&larr; Previous', // String for next button
-        next: 'Next &rarr;' // String for previous button
+    buttons: {
+      jpwClose: {
+        i18n: 'Click here to close',
+        show: true
+      },
+      jpwNext: {
+        i18n: 'Next &rarr;',
+        show: function() {
+          return !isLastStep();
+        }
+      },
+      jpwPrevious: {
+        i18n: '&larr; Previous',
+        show: function() {
+          return !isFirstStep();
+        }
+      },
+      jpwFinish: {
+        i18n: 'Finish &#10004;',
+        show: function() {
+          return isLastStep();
+        }
+      }
     }
   };
 

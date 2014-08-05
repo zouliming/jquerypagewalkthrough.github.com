@@ -14,7 +14,7 @@
     font-weight: lighter;
 }
 
-#jpwClose a, #jpwNext, #jpwPrevious {
+#jpwClose, #jpwNext, #jpwPrevious, #jpwFinish {
     .control();
 }
 
@@ -194,29 +194,33 @@
 }
 #jpwClose {
     position: fixed;
-    top: 25px;
+    top: 65px;
     right: 25px;
     z-index: 10000;
-    a {
-        color: @content-color;
-        text-align: center;
-        display: block;
-        &:hover {
-            color: @close-control-hover-color;
-        }
 
-        span {
-            display: inline-block;
-            *display: inline;
-            *zoom: 1;
-            width: 44px;
-            height: 40px;
-            background: url("images/close.png") no-repeat;
-        }
+    color: @content-color;
+    text-align: center;
+    display: block;
+
+    &:hover {
+        color: @close-control-hover-color;
+    }
+
+    &:before {
+        content: '';
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        width: 44px;
+        height: 40px;
+        background: url("images/close.png") no-repeat;
+        position: absolute;
+        top: -45px;
+        left: 36px;
     }
 }
 
-#jpwNext {
+#jpwNext, #jpwFinish {
     float: right;
 }
 
