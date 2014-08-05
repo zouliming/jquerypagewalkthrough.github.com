@@ -43,43 +43,68 @@ The demo site is located [here](http://warby-.github.io/jquery-pagewalkthrough/)
 ## jQuery Page Walkthrough Default Options
 
 ```javascript
-steps: [{
-wrapper: '', //an ID of page element HTML that you want to highlight
-  margin: 0, //margin for highlighted area, may use CSS syntax i,e: '10px 20px 5px 30px' or '20px 20px' and so on
-  popup: {
-  content: '', //ID content of the walkthrough
-    type: 'modal', //tooltip, modal, nohighlight
-    position:'top',//position for tooltip and nohighlight type only: top, right, bottom, left
-    offsetHorizontal: 0, //horizontal offset for the walkthrough
-    offsetVertical: 0, //vertical offset for the walkthrough
-    width: '320', //default width for each step,
-    draggable: false, // set true to set walkthrough draggable,
-    contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
-  },
-  overlay: true, //use overlay or not, default: true
-  accessable: false, //if true - you can access html element such as form input field, button etc
-  autoScroll: true, //is true - this will autoscroll to the arror/content every step
-  scrollSpeed: 1000, //scroll speed
-  stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
-  onLeave: null, // callback when leaving the step
-  onEnter: null // callback when entering the step
-}],
+steps: [
+  {
+    wrapper: '', //an ID of page element HTML that you want to highlight
+    margin: 0, //margin for highlighted area, may use CSS syntax i,e: '10px 20px 5px 30px'
+    popup: {
+      content: '', //ID content of the walkthrough
+      type: 'modal', //tooltip, modal, nohighlight
+      position: 'top', //position for tooltip and nohighlight type only: top, right, bottom, left
+      offsetHorizontal: 0, //horizontal offset for the walkthrough
+      offsetVertical: 0, //vertical offset for the walkthrough
+      width: '320', //default width for each step,
+      draggable: false, // set true to set walkthrough draggable,
+      contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
+    },
+    overlay: true,
+    accessable: false, //if true - you can access html element such as form input field, button etc
+    autoScroll: true, //is true - this will autoscroll to the arror/content every step 
+    scrollSpeed: 1000, //scroll speed
+    stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
+    onLeave: null, // callback when leaving the step
+    onEnter: null // callback when entering the step
+  }
+],
 name: null, // the ID for this walkthrough
 onLoad: true, //load the walkthrough at first time page loaded
 onBeforeShow: null, //callback before page walkthrough loaded
 onAfterShow: null, // callback after page walkthrough loaded
 onRestart: null, //callback for onRestart walkthrough
 onClose: null, //callback page walkthrough closed
-onCookieLoad: null, //when walkthrough closed, it will set cookie and tells the walkthrough to not load automaticly
-buttonsToShow: {
-  previous: true, // Whether or not to show the previous button for each step (not shown on first step)
-  next: true, // Whether or not to show the next button for each step (not shown on last step)
-  close: true // Whether or not to show the close tour button in top right corner
-},
-i18n: {
-  close: 'Click here to close', // String for close button in top right corner
-  previous: '&larr; Previous', // String for next button
-  next: 'Next &rarr;' // String for previous button
+onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough,
+/* Hash of buttons to show.  Object keys are used as the button element's ID.
+ * Each button has the following structure:
+ *   {
+ *     i18n: {String}            The html for the button
+ *     show: {Boolean|Function}  Whether to show the button or not.  Can be
+ *                               a boolean, or a function which returns a
+ *                               boolean.
+ *   }
+ */
+buttons: {
+  jpwClose: {
+    i18n: 'Click here to close',
+    show: true
+  },
+  jpwNext: {
+    i18n: 'Next &rarr;',
+    show: function() {
+      return !isLastStep();
+    }
+  },
+  jpwPrevious: {
+    i18n: '&larr; Previous',
+    show: function() {
+      return !isFirstStep();
+    }
+  },
+  jpwFinish: {
+    i18n: 'Finish &#10004;',
+    show: function() {
+      return isLastStep();
+    }
+  }
 }
 ```
 
@@ -152,6 +177,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 @TODO - not yet implemented
 
 ## Changelog
+
+### 05/08/2014
+
+* v1.2.4: Add an optional finish button to the last step of the tour
 
 ### 04/08/2014
 

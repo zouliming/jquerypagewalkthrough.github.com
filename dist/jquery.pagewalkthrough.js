@@ -4,7 +4,7 @@
  * Contributors: James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 1.2.3
+ * Version: 1.2.4
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -1106,8 +1106,8 @@
    * BUTTON CLOSE CLICK
    */
 
-  // Patching for jquery 1.7+
-  $(document).on('click', '#jpwClose', onClose);
+  /* Close and finish tour buttons clicks */
+  $(document).on('click', '#jpwClose, #jpwFinish', onClose);
 
   /* Next button clicks
    */
@@ -1219,6 +1219,15 @@
     onRestart: null, //callback for onRestart walkthrough
     onClose: null, //callback page walkthrough closed
     onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough,
+    /* Hash of buttons to show.  Object keys are used as the button element's ID.
+     * Each button has the following structure:
+     *   {
+     *     i18n: {String}            The html for the button
+     *     show: {Boolean|Function}  Whether to show the button or not.  Can be
+     *                               a boolean, or a function which returns a
+     *                               boolean.
+     *   }
+     */
     buttons: {
       jpwClose: {
         i18n: 'Click here to close',
@@ -1244,6 +1253,5 @@
       }
     }
   };
-
 }(jQuery, window, document));
 
