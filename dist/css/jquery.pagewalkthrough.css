@@ -1,7 +1,8 @@
-#jpwClose a,
+#jpwClose,
 #jpwNext,
-#jpwPrevious {
-  color: #00C7FF;
+#jpwPrevious,
+#jpwFinish {
+  color: #00c7ff;
   cursor: pointer;
   font-family: 'GochiHand';
   font-size: 16px;
@@ -109,7 +110,7 @@
 }
 #jpWalkthrough #jpwTooltip #tooltipInner {
   font-family: 'GochiHand';
-  color: #fff;
+  color: #ffffff;
   text-align: center;
   font-size: 16px;
 }
@@ -190,27 +191,30 @@
 }
 #jpwClose {
   position: fixed;
-  top: 25px;
+  top: 65px;
   right: 25px;
   z-index: 10000;
-}
-#jpwClose a {
-  color: #fff;
+  color: #ffffff;
   text-align: center;
   display: block;
 }
-#jpwClose a:hover {
-  color: #7EFF00;
+#jpwClose:hover {
+  color: #7eff00;
 }
-#jpwClose a span {
+#jpwClose:before {
+  content: '';
   display: inline-block;
   *display: inline;
   *zoom: 1;
   width: 44px;
   height: 40px;
   background: url("images/close.png") no-repeat;
+  position: absolute;
+  top: -45px;
+  left: 36px;
 }
-#jpwNext {
+#jpwNext,
+#jpwFinish {
   float: right;
 }
 #jpwPrevious {
