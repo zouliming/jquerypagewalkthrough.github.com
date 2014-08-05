@@ -43,46 +43,44 @@ The demo site is located [here](http://warby-.github.io/jquery-pagewalkthrough/)
 ## jQuery Page Walkthrough Default Options
 
 ```javascript
-steps: [
-
-  {
-        wrapper: '', //an ID of page element HTML that you want to highlight
-        margin: 0, //margin for highlighted area, may use CSS syntax i,e: '10px 20px 5px 30px' or '20px 20px' and so on
-        popup:
-            {
-              content: '', //ID content of the walkthrough
-              type: 'modal', //tooltip, modal, nohighlight
-              position:'top',//position for tooltip and nohighlight type only: top, right, bottom, left
-              offsetHorizontal: 0, //horizontal offset for the walkthrough
-              offsetVertical: 0, //vertical offset for the walkthrough
-              width: '320', //default width for each step,
-              draggable: false, // set true to set walkthrough draggable,
-              contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
-           },
-        overlay: true, //use overlay or not, default: true
-        accessable: false, //if true - you can access html element such as form input field, button etc
-        autoScroll: true, //is true - this will autoscroll to the arror/content every step
-        scrollSpeed: 1000, //scroll speed
-        stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
-        onLeave: null, // callback when leaving the step
-        onEnter: null // callback when entering the step,
-        showNextButton: true, // Show the next button for all steps except the last step
-        showPreviousButton: true, // Show the previous button for all steps except the first step
-        i18n: { // Strings for the user interface
-            close: 'Click here to close', // Default text for the close button in the top right corner
-            next: 'Next &rarr;', // Default text for the next button
-            previous: '&larr; Previous' // Default text for the previous button
-        }
-  }
-
-],
+steps: [{
+wrapper: '', //an ID of page element HTML that you want to highlight
+  margin: 0, //margin for highlighted area, may use CSS syntax i,e: '10px 20px 5px 30px' or '20px 20px' and so on
+  popup: {
+  content: '', //ID content of the walkthrough
+    type: 'modal', //tooltip, modal, nohighlight
+    position:'top',//position for tooltip and nohighlight type only: top, right, bottom, left
+    offsetHorizontal: 0, //horizontal offset for the walkthrough
+    offsetVertical: 0, //vertical offset for the walkthrough
+    width: '320', //default width for each step,
+    draggable: false, // set true to set walkthrough draggable,
+    contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
+  },
+  overlay: true, //use overlay or not, default: true
+  accessable: false, //if true - you can access html element such as form input field, button etc
+  autoScroll: true, //is true - this will autoscroll to the arror/content every step
+  scrollSpeed: 1000, //scroll speed
+  stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
+  onLeave: null, // callback when leaving the step
+  onEnter: null // callback when entering the step
+}],
 name: null, // the ID for this walkthrough
 onLoad: true, //load the walkthrough at first time page loaded
 onBeforeShow: null, //callback before page walkthrough loaded
 onAfterShow: null, // callback after page walkthrough loaded
 onRestart: null, //callback for onRestart walkthrough
 onClose: null, //callback page walkthrough closed
-onCookieLoad: null //when walkthrough closed, it will set cookie and tells the walkthrough to not load automaticly
+onCookieLoad: null, //when walkthrough closed, it will set cookie and tells the walkthrough to not load automaticly
+buttonsToShow: {
+  previous: true, // Whether or not to show the previous button for each step (not shown on first step)
+  next: true, // Whether or not to show the next button for each step (not shown on last step)
+  close: true // Whether or not to show the close tour button in top right corner
+},
+i18n: {
+  close: 'Click here to close', // String for close button in top right corner
+  previous: '&larr; Previous', // String for next button
+  next: 'Next &rarr;' // String for previous button
+}
 ```
 
 ## Public Methods
