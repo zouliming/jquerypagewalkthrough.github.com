@@ -4,7 +4,7 @@
  * Contributors: James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 1.3.0
+ * Version: 1.4.0
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -59,7 +59,7 @@
       var that = this;
 
       if (!options.name) {
-          options.name = 'walkthrough-' + _id++;
+        throw new Error('Must provide a unique name for a tour');
       }
 
       return this.each(function(i) {

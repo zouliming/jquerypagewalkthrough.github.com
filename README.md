@@ -42,6 +42,8 @@ The demo site is located [here](http://warby-.github.io/jquery-pagewalkthrough/)
 
 ## jQuery Page Walkthrough Default Options
 
+**Note:** as of version 1.4, you **must** specify a tour name in the options.
+
 ```javascript
 steps: [
   {
@@ -66,7 +68,7 @@ steps: [
     onEnter: null // callback when entering the step
   }
 ],
-name: null, // the ID for this walkthrough
+name: null, // the ID for this walkthrough (**MUST** be provided)
 onLoad: true, //load the walkthrough at first time page loaded
 onBeforeShow: null, //callback before page walkthrough loaded
 onAfterShow: null, // callback after page walkthrough loaded
@@ -180,6 +182,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ### 07/08/2014
 
+* `v1.4.0`: `name` is now a required options and **must be provided for all tours**
 * `v1.3.0`: Deprecate `isPageWalkthroughActive` function in favour of `isActive` function
 
 ### 05/08/2014
