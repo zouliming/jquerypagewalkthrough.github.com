@@ -11,14 +11,17 @@
     "version": "2.0.0",
     "author": {
         "name": "Erwin Yusrizal",
-        "url": "erwin.yusrizal@gmail.com"
+        "email": "erwin.yusrizal@gmail.com"
     },
     "maintainers": [
         {
-            "name": "Erwin Yusrizal",
-            "email": "erwin.yusrizal@gmail.com",
-            "url": "http://jquerypagewalkthrough.github.com"
+            "name": "James West"
         },
+        {
+            "name": "JP Adams",
+            "email": "jpadamsonline@gmail.com",
+            "url": "https://github.com/jpadamsonline"
+        }
         {
             "name": "James Warwood",
             "email": "james.duncan.1991@googlemail.com",

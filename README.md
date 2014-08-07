@@ -201,3 +201,20 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 * `v1.1.4`: Add option to make close button optional
 * `v1.1.3`: Support for showing next and previous buttons to move between tour stops
 * `v1.1.2`: i18n support for close button text
+
+## Contributors
+
+### Author
+
+* Erwin Yusrizal
+
+### Maintainers
+
+* James Warwood <james.duncan.1991@googlemail.com>
+* Craig Roberts <craig0990@googlemail.com>
+
+### Contributors
+
+* Tai Nguyen
+* JP Adams <jpadamsonline@gmail.com>
+* James West <jwwest@gmail.com>

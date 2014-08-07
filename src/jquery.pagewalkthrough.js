@@ -1,7 +1,9 @@
 /***
  * Author: Erwin Yusrizal
  * UX by: Tai Nguyen
- * Contributors: James Warwood <james.duncan.1991@googlemail.com>
+ * Contributors: James West <jwwest@gmail.com>
+ *               JP Adams <jpadamsonline@gmail.com>
+ *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
  * Version: 2.0.0
