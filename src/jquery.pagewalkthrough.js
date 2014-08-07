@@ -53,6 +53,9 @@
         throw new Error('Must provide a unique name for a tour');
       }
 
+      // @todo what happens with multiple walkthroughs on the same element?
+      this.first().data('jpw', options);
+
       return this.each(function(i) {
         var $this = $(this);
 
@@ -136,22 +139,16 @@
 
     },
 
-    close: function(target) {
+    close: function() {
 
       _index = 0;
       _firstTimeLoad = true;
 
       _isWalkthroughActive = false;
 
-      if (target) {
-        //set cookie to false
-        setCookie('_walkthrough-' + target, 0, 365);
-        _isCookieLoad = getCookie('_walkthrough-' + target);
-      } else {
-        //set cookie to false
-        setCookie('_walkthrough-' + _activeId, 0, 365);
-        _isCookieLoad = getCookie('_walkthrough-' + _activeId);
-      }
+      //set cookie to false
+      setCookie('_walkthrough-' + _activeId, 0, 365);
+      _isCookieLoad = getCookie('_walkthrough-' + _activeId);
 
       $jpwOverlay.fadeOut('slow', function() {
         $(this).remove();
@@ -167,14 +164,10 @@
 
     },
 
-    show: function(target) {
+    show: function() {
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
-      // @FIXME: need to figure what's actually going on in terms of deciding
-      // which walkthrough to show - the below is a hotfix to get the plugin
-      // actually working
-      _activeId = target || _activeId;
-      _activeWalkthrough = _globalWalkthrough[_activeId];
+      _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
 
       buildWalkthrough();
       showButton('jpwClose', 'body');
