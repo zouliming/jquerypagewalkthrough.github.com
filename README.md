@@ -178,6 +178,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+### 07/08/2014
+
+* v1.3.0: Deprecate `isPageWalkthroughActive` function in favour of `isActive` function
+
 ### 05/08/2014
 
 * v1.2.4: Add an optional finish button to the last step of the tour
