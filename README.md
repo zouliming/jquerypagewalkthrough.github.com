@@ -46,6 +46,9 @@ The demo site is located [here](http://warby-.github.io/jquery-pagewalkthrough/)
 ## jQuery Page Walkthrough Default Options
 
 **Note:** as of version 1.4, you **must** specify a tour name in the options.
+**Note:** as of version 2.1, the `popup.content` option for each step can now be the literal content for the step, or a selector as before.  The rule
+for how the plugin decides which to treat it as is simple: if the string is a valid selector, and the selector matches an element that is already present
+in the DOM, the matched element's content is displayed; if it is an invalid selector, or a selector which returns no matches, the literal value is displayed.
 
 ```javascript
 steps: [
@@ -53,7 +56,7 @@ steps: [
     wrapper: '', //an ID of page element HTML that you want to highlight
     margin: 0, //margin for highlighted area, may use CSS syntax i,e: '10px 20px 5px 30px'
     popup: {
-      content: '', //ID content of the walkthrough
+      content: '', // Literal string content for the step, or a selector for which to pull the HTML from (see note above)
       type: 'modal', //tooltip, modal, nohighlight
       position: 'top', //position for tooltip and nohighlight type only: top, right, bottom, left
       offsetHorizontal: 0, //horizontal offset for the walkthrough
@@ -185,7 +188,8 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ### 07/08/2014
 
-* `v2.0.0`: breaking changes to API - fix incorrect spelling of `accessable` to `accessible`; rename `stayFocus` to `lockScrolling`; remove deprecated methods
+* `v2.1.0`: Support for literal content in each step's `popup.content` option, instead of just a selector
+* `v2.0.0`: Breaking changes to API - fix incorrect spelling of `accessable` to `accessible`; rename `stayFocus` to `lockScrolling`; remove deprecated methods
 * `v1.4.0`: `name` is now a required option and **must be provided for all tours**
 * `v1.3.0`: Deprecate `isPageWalkthroughActive` function in favour of `isActive` function
 

@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.0.0
+ * Version: 2.1.0
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -468,7 +468,8 @@
 
   function showModal(isOverlay) {
     var options = _activeWalkthrough,
-      overlayClass = '';
+      overlayClass = '',
+      content;
 
     if (isOverlay) {
       $jpwOverlay.appendTo('body').show();
@@ -511,7 +512,7 @@
 
     $('#tooltipWrapper').css(textRotation);
 
-    $(options.steps[_index].popup.content).clone().appendTo('#tooltipInner').show();
+    $('#tooltipInner').append(getContent(options.steps[_index])).show();
 
     $jpwTooltip.css('margin-top', -(($jpwTooltip.height()) / 2) + 'px');
     $jpWalkthrough.show();
@@ -574,7 +575,7 @@
 
     $('#tooltipWrapper').css(textRotation);
 
-    $(opt.steps[_index].popup.content).clone().appendTo('#tooltipInner').show();
+    $('#tooltipInner').append(getContent(opt.steps[_index])).show();
 
     $jpwTooltip.append('<span class="' + opt.steps[_index].popup.position + '">&nbsp;</span>');
 
@@ -626,6 +627,27 @@
       'left': cleanValue(left)
     });
     $jpWalkthrough.show();
+  }
+
+  /* Get the content for a step.  First attempts to treat step.popup.content
+   * as a selector.  If this fails, or returns an empty result set, it falls
+   * back to return the value of step.popup.content.
+   *
+   * This allows both selectors and literal content to be provided in the
+   * content option.
+   *
+   * @param {Object} step  The step data to return the content for
+   */
+  function getContent(step) {
+    var option = step.popup.content,
+      content;
+
+    try {
+      content = $('body').find(option).html();
+    } catch(e) {
+    }
+
+    return content || option;
   }
 
   /**
