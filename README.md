@@ -46,6 +46,7 @@ The demo site is located [here](http://warby-.github.io/jquery-pagewalkthrough/)
 ## jQuery Page Walkthrough Default Options
 
 **Note:** as of version 1.4, you **must** specify a tour name in the options.
+
 **Note:** as of version 2.1, the `popup.content` option for each step can now be the literal content for the step, or a selector as before.  The rule
 for how the plugin decides which to treat it as is simple: if the string is a valid selector, and the selector matches an element that is already present
 in the DOM, the matched element's content is displayed; if it is an invalid selector, or a selector which returns no matches, the literal value is displayed.
