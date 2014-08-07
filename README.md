@@ -185,6 +185,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ### 07/08/2014
 
+* `v2.0.0`: breaking changes to API - fix incorrect spelling of `accessable` to `accessible`; rename `stayFocus` to `lockScrolling`; remove deprecated methods
 * `v1.4.0`: `name` is now a required option and **must be provided for all tours**
 * `v1.3.0`: Deprecate `isPageWalkthroughActive` function in favour of `isActive` function
 
