@@ -119,28 +119,117 @@ buttons: {
 
 ## Public Methods
 
-```
-show       :   $.pagewalkthrough('show', target)
-This method allows you to open page walkthrough. Target is your walkthrough ID, i.e: #selector
+In general, calling methods on an element collection is preferred as it removes
+any ambiguity about the walkthrough the method is affecting.
 
-next       :   $.pagewalkthrough('next', event)
-This method allows you to go the NEXT step. Event is needed as a param to call next method
+Calling methods with `$.pagewalkthrough(method, args...)` is supported, and will
+operate on the currently active walkthrough if there is one. If no walkthroughs
+are active, calling methods in this way will return boolean `false`.
 
-prev       :   $.pagewalkthrough('prev', event)
-This method allows you to go the PREVIOUS step. Event is needed as a param to call prev method
+### pagewalkthrough(options)
 
-restart    :   $.pagewalkthrough('restart', event)
-This method allows you to go the RESTART step. Event is needed as a param to call restart method
+Creates a new walkthrough for a given element collection. Creating walkthroughs
+by calling `$.pagewalkthrough` is no longer supported.
 
-close      :   $.pagewalkthrough('close', target)
-This method allows you to go the CLOSE step. Target is optional. It could be filled with walkthrough ID or leave it blank
+    $('body').pagewalkthrough(options);
 
-isActive   :   $.pagewalkthrough('isPageWalkthroughActive')
-This property will return status of page walkthrough
+**Note**: The walkthrough is defined on the *first* element in a collection - if
+this element is removed before the walkthrough is shown, the walkthrough will
+not display.
 
-currIndex  :   $.pagewalkthrough('currIndex')
-This property will return current index of current walkthrough step
-```
+### show([name])
+
+Starts a predefined walkthrough.
+
+    // Show a walkthrough defined on a collection
+    $('body').pagewalkthrough('show');
+    // Show a walkthrough defined by a name
+    $.pagewalkthrough('show', 'test');
+
+### next()
+
+Moves to the next step in a walkthrough, if there is one.
+
+    // Move to the next step on a collection
+    $('body').pagewalkthrough('next');
+    // Move to the next step of the active walkthrough
+    $.pagewalkthrough('next');
+
+### prev()
+
+Moves to the previous step in a walkthrough, if there is one.
+
+    // Move to the previous step on a collection
+    $('body').pagewalkthrough('prev');
+    // Move to the previous step of the active walkthrough
+    $.pagewalkthrough('prev')
+
+### restart()
+
+Moves to the first step in a walkthrough.
+
+    // Move to the first step on a collection
+    $('body').pagewalkthrough('restart');
+    // Move to the first step of the active walkthrough
+    $.pagewalkthrough('restart');
+
+### close()
+
+Closes the walkthrough.
+
+    // Close a walkthrough on a collection
+    $('body').pagewalkthrough('close');
+    // Close the active walkthrough
+    $.pagewalkthrough('close');
+
+### isActive([name])
+
+If called on the global jQuery object, the optional `name` argument
+restricts the check to a specific walkthrough.
+
+    // Returns whether *any* walkthrough is active
+    $.pagewalkthrough('isActive');
+    // Returns whether a specific walkthrough is active
+    $.pagewalkthrough('isActive', 'test');
+
+If called on an element collection, the `name` argument is ignored.
+
+    // Returns whether the walkthrough defined on the collection is active
+    $('body').pagewalkthrough('isActive');
+
+### currIndex([name])
+
+If called on the global jQuery object, the optional `name` argument
+restricts the check to a specific walkthrough.
+
+    // Returns the current index for the active walkthrough, or false
+    // if no walkthrough is active
+    $.pagewalkthrough('currIndex');
+    // Returns the current index for a specific walkthrough, or false
+    // if the walkthrough is not active
+    $.pagewalkthrough('isActive', 'test');
+
+If called on an element collection, the `name` argument is ignored.
+
+    // Returns the current index, or false if the walkthrough is not active
+    $('body').pagewalkthrough('currIndex');
+
+### getOptions([activeWalkthrough])
+
+Returns the options for all wakthroughs, unless the `activeWalkthrough` is
+`true`, in which case it returns the options for the currently active
+walkthrough. If no walkthrough is active, it returns `false`.
+
+    // Returns options for all defined walkthroughs
+    $.pagewalkthrough('getOptions');
+    // Returns options for the currently active walkthroughs
+    $.pagewalkthrough('getOptions', true);
+
+If called on an element collection, the `activeWalkthrough` argument is ignored
+and it returns the options for the specific walkthrough.
+
+    // Returns options for this specific walkthrough
+    $('body').pagewalkthrough('getOptions');
 
 ## Contributing
 

@@ -27,7 +27,7 @@
     _onLoad = true,
     _index = 0,
     _id = 0, // Counter for default walkthrough IDs
-    _isWalkthroughActive = true,
+    _isWalkthroughActive = false,
     $jpwOverlay = $('<div id="jpwOverlay"></div>'),
     $jpWalkthrough = $('<div id="jpWalkthrough"></div>'),
     $jpwTooltip = $('<div id="jpwTooltip"></div>');
@@ -141,7 +141,6 @@
     },
 
     close: function() {
-
       _index = 0;
       _firstTimeLoad = true;
 
@@ -165,7 +164,8 @@
 
     },
 
-    show: function() {
+    show: function(name) {
+      name = name || this.first().data('jpw').name;
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
       _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
