@@ -1,4 +1,7 @@
-[![Stories in Ready](https://badge.waffle.io/warby-/jquerypagewalkthrough.github.com.png?label=ready&title=Ready)](https://waffle.io/warby-/jquerypagewalkthrough.github.com)
+###### Issues overview
+[![Issues ready to be worked on](https://badge.waffle.io/warby-/jquery-pagewalkthrough.svg?label=ready&title=Ready%20To%20Work%20On)](http://waffle.io/warby-/jquery-pagewalkthrough)
+[![Issues being worked on](https://badge.waffle.io/warby-/jquery-pagewalkthrough.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/warby-/jquery-pagewalkthrough)
+
 # jQuery Page Walkthrough
 
 Forked from [jpadamsonline/jquerypagewalkthrough.github.com](https://github.com/jpadamsonline/jquerypagewalkthrough.github.com)
