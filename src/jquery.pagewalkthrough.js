@@ -11,6 +11,7 @@
  ***/
 
 ;(function($, window, document, undefined) {
+  'use strict';
 
   /**
    * GLOBAL VAR
@@ -940,10 +941,9 @@
     var rotationStyle = {
       '-webkit-transform': 'none', //safari
       '-moz-transform': 'none', //firefox
-      '-ms-transform': 'none', //IE9+
       '-o-transform': 'none', //opera
       'filter': 'none', //IE7
-      '-ms-transform': 'none' //IE8
+      '-ms-transform': 'none' //IE8+
     }
 
     return rotationStyle;
@@ -966,10 +966,9 @@
     var rotationStyle = {
       '-webkit-transform': 'rotate(' + parseInt(angle) + 'deg)', //safari
       '-moz-transform': 'rotate(' + parseInt(angle) + 'deg)', //firefox
-      '-ms-transform': 'rotate(' + parseInt(angle) + 'deg)', //IE9+
       '-o-transform': 'rotate(' + parseInt(angle) + 'deg)', //opera
       'filter': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',sizingMethod = "auto expand");', //IE7
-      '-ms-transform': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',SizingMethod = "auto expand");' //IE8
+      '-ms-transform': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',SizingMethod = "auto expand");' //IE8+
     }
 
     return rotationStyle;
@@ -1006,7 +1005,7 @@
       counter = 0,
       top, right, bottom, left, returnVal;
 
-    for (i = 0; i < arrVal.length; i++) {
+    for (var i = 0; i < arrVal.length; i++) {
       //check if syntax is clean with value and 'px'
       if (cleanSyntax(arrVal[i])) {
         counter++;
