@@ -4,7 +4,7 @@
  * Contributors: James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 1.4.0
+ * Version: 2.0.0
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -36,17 +36,6 @@
   var methods = {
     isActive: function() {
       return !!_isWalkthroughActive;
-    },
-
-    isPageWalkthroughActive: function() {
-        console.warn('Deprecated: function isPageWalkthroughActive is ' +
-            'deprecated and will be removed in version 2; please use isActive' +
-            'instead.');
-
-        if (_isWalkthroughActive) {
-            return true;
-        }
-        return false;
     },
 
     currIndex: function() {
@@ -90,9 +79,9 @@
           _hasDefault = false;
         }
 
-        // when user scroll the page, scroll it back to keep walkthought on user view
+        // when user scroll the page, scroll it back to keep walkthrough on user view
         $(window).scroll(function() {
-          if (_isWalkthroughActive && _activeWalkthrough.steps[_index].stayFocus) {
+          if (_isWalkthroughActive && _activeWalkthrough.steps[_index].lockScrolling) {
             clearTimeout($.data(this, 'scrollTimer'));
             $.data(this, 'scrollTimer', setTimeout(function() {
               scrollToTarget(_activeWalkthrough);
@@ -304,7 +293,7 @@
       var overlayTop = $('<div id="overlayTop" class="' + overlayClass + '"></div>').css(overlayTopStyle).appendTo($jpWalkthrough);
       var overlayLeft = $('<div id="overlayLeft" class="' + overlayClass + '"></div>').css(overlayLeftStyle).appendTo($jpWalkthrough);
 
-      if (!options.steps[_index].accessable) {
+      if (!options.steps[_index].accessible) {
 
         var highlightedAreaStyle = {
           'top': overlayTopStyle.height,
@@ -348,7 +337,7 @@
           '</div>');
       } else {
 
-        //if accessable
+        //if accessible
         var highlightedAreaStyle = {
           'top': overlayTopStyle.height,
           'left': overlayLeftStyle.width,
@@ -357,9 +346,9 @@
           }
         }
 
-        var accessableStyle = {
+        var accessibleStyle = {
 
-          'topAccessable': {
+          'topAccessible': {
             'position': 'absolute',
             'top': overlayTopStyle.height,
             'left': overlayLeftStyle.width,
@@ -367,7 +356,7 @@
               'width': cleanValue(parseInt(transparentWidth) + parseInt(marginLeft) + parseInt(marginRight))
             }
           },
-          'middleAccessable': {
+          'middleAccessible': {
             'position': 'absolute',
             'top': cleanValue(parseInt(overlayTopStyle.height) + roundedCorner),
             'left': overlayLeftStyle.width,
@@ -379,7 +368,7 @@
               'right': cleanValue(parseInt(transparentWidth) + roundedCorner + parseInt(marginRight) + parseInt(marginLeft))
             }
           },
-          'bottomAccessable': {
+          'bottomAccessible': {
             'left': overlayLeftStyle.width,
             'top': cleanValue(parseInt(overlayTopStyle.height) + roundedCorner + parseInt(transparentHeight) + parseInt(marginTop) + parseInt(marginBottom)),
             'bottomCenter': {
@@ -388,26 +377,26 @@
           }
         }
 
-        var highlightedArea = $('<div id="topAccessable" style="position:' + accessableStyle.topAccessable.position + '; top:' + accessableStyle.topAccessable.top + ';left:' + accessableStyle.topAccessable.left + '">' +
+        var highlightedArea = $('<div id="topAccessible" style="position:' + accessibleStyle.topAccessible.position + '; top:' + accessibleStyle.topAccessible.top + ';left:' + accessibleStyle.topAccessible.left + '">' +
           '<div id="topLeft" class="' + killOverlay + '"></div>' +
-          '<div id="topCenter" class="' + killOverlay + '" style="width:' + accessableStyle.topAccessable.topCenter.width + '"></div>' +
+          '<div id="topCenter" class="' + killOverlay + '" style="width:' + accessibleStyle.topAccessible.topCenter.width + '"></div>' +
           '<div id="topRight" class="' + killOverlay + '"></div>' +
           '</div>' +
 
-        '<div id="middleAccessable" class="' + killOverlay + '" style="clear: left;position:' + accessableStyle.middleAccessable.position + '; top:' + accessableStyle.middleAccessable.top + ';left:' + accessableStyle.middleAccessable.left + ';">' +
-          '<div id="middleLeft" class="' + killOverlay + '" style="height:' + accessableStyle.middleAccessable.middleLeft.height + ';"></div>' +
-          '<div id="middleRight" class="' + killOverlay + '" style="position:absolute;right:-' + accessableStyle.middleAccessable.middleRight.right + ';height:' + accessableStyle.middleAccessable.middleRight.height + ';"></div>' +
+        '<div id="middleAccessible" class="' + killOverlay + '" style="clear: left;position:' + accessibleStyle.middleAccessible.position + '; top:' + accessibleStyle.middleAccessible.top + ';left:' + accessibleStyle.middleAccessible.left + ';">' +
+          '<div id="middleLeft" class="' + killOverlay + '" style="height:' + accessibleStyle.middleAccessible.middleLeft.height + ';"></div>' +
+          '<div id="middleRight" class="' + killOverlay + '" style="position:absolute;right:-' + accessibleStyle.middleAccessible.middleRight.right + ';height:' + accessibleStyle.middleAccessible.middleRight.height + ';"></div>' +
           '</div>' +
 
-        '<div id="bottomAccessable" style="clear: left;position:absolute;left:' + accessableStyle.bottomAccessable.left + ';top:' + accessableStyle.bottomAccessable.top + ';">' +
+        '<div id="bottomAccessible" style="clear: left;position:absolute;left:' + accessibleStyle.bottomAccessible.left + ';top:' + accessibleStyle.bottomAccessible.top + ';">' +
           '<div id="bottomLeft" class="' + killOverlay + '"></div>' +
-          '<div id="bottomCenter" class="' + killOverlay + '" style="width:' + accessableStyle.bottomAccessable.bottomCenter.width + ';"></div>' +
+          '<div id="bottomCenter" class="' + killOverlay + '" style="width:' + accessibleStyle.bottomAccessible.bottomCenter.width + ';"></div>' +
           '<div id="bottomRight" class="' + killOverlay + '"></div>' +
           '</div>').appendTo($jpWalkthrough);
 
-      } //end checking accessable
+      } //end checking accessible
 
-      var highlightedAreaWidth = (options.steps[_index].accessable) ? parseInt(accessableStyle.topAccessable.topCenter.width) + (roundedCorner * 2) : (parseInt(highlightedAreaStyle.topCenter.width) + (roundedCorner * 2));
+      var highlightedAreaWidth = (options.steps[_index].accessible) ? parseInt(accessibleStyle.topAccessible.topCenter.width) + (roundedCorner * 2) : (parseInt(highlightedAreaStyle.topCenter.width) + (roundedCorner * 2));
 
 
       var overlayRightStyle = {
@@ -434,7 +423,7 @@
 
       $jpWalkthrough.appendTo('body').show();
 
-      if (options.steps[_index].accessable) {
+      if (options.steps[_index].accessible) {
         showTooltip(true);
       } else {
         showTooltip(false);
@@ -531,16 +520,16 @@
    * SHOW TOOLTIP
    */
 
-  function showTooltip(isAccessable) {
+  function showTooltip(isAccessible) {
     var opt = _activeWalkthrough;
 
     var tooltipWidth = (opt.steps[_index].popup.width == '') ? 300 : opt.steps[_index].popup.width,
       top, left, arrowTop, arrowLeft,
       roundedCorner = 30,
-      overlayHoleWidth = (isAccessable) ? ($('#topAccessable').innerWidth() + (roundedCorner * 2)) || ($('#topAccessable').width() + (roundedCorner * 2)) : $('#highlightedArea').innerWidth() || $('#highlightedArea').width(),
-      overlayHoleHeight = (isAccessable) ? $('#middleAccessable').innerHeight() + (roundedCorner * 2) || $('#middleAccessable').height() + (roundedCorner * 2) : $('#highlightedArea').innerHeight() || $('#highlightedArea').height(),
-      overlayHoleTop = (isAccessable) ? $('#topAccessable').offset().top : $('#highlightedArea').offset().top,
-      overlayHoleLeft = (isAccessable) ? $('#topAccessable').offset().left : $('#highlightedArea').offset().left,
+      overlayHoleWidth = (isAccessible) ? ($('#topAccessible').innerWidth() + (roundedCorner * 2)) || ($('#topAccessible').width() + (roundedCorner * 2)) : $('#highlightedArea').innerWidth() || $('#highlightedArea').width(),
+      overlayHoleHeight = (isAccessible) ? $('#middleAccessible').innerHeight() + (roundedCorner * 2) || $('#middleAccessible').height() + (roundedCorner * 2) : $('#highlightedArea').innerHeight() || $('#highlightedArea').height(),
+      overlayHoleTop = (isAccessible) ? $('#topAccessible').offset().top : $('#highlightedArea').offset().top,
+      overlayHoleLeft = (isAccessible) ? $('#topAccessible').offset().left : $('#highlightedArea').offset().left,
       arrow = 30,
       draggable = '';
 
@@ -591,7 +580,7 @@
 
       case 'top':
         top = overlayHoleTop - ($jpwTooltip.height() + (arrow / 2)) + parseInt(opt.steps[_index].popup.offsetVertical) - 86;
-        if (isAccessable) {
+        if (isAccessible) {
           left = (overlayHoleLeft + (overlayHoleWidth / 2)) - ($jpwTooltip.width() / 2) - 40 + parseInt(opt.steps[_index].popup.offsetHorizontal);
         } else {
           left = (overlayHoleLeft + (overlayHoleWidth / 2)) - ($jpwTooltip.width() / 2) - 5 + parseInt(opt.steps[_index].popup.offsetHorizontal);
@@ -607,7 +596,7 @@
         break;
       case 'bottom':
 
-        if (isAccessable) {
+        if (isAccessible) {
           top = (overlayHoleTop + overlayHoleHeight) + parseInt(opt.steps[_index].popup.offsetVertical) + 86;
           left = (overlayHoleLeft + (overlayHoleWidth / 2)) - ($jpwTooltip.width() / 2) - 40 + parseInt(opt.steps[_index].popup.offsetHorizontal);
         } else {
@@ -1211,10 +1200,10 @@
           contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
         },
         overlay: true,
-        accessable: false, //if true - you can access html element such as form input field, button etc
+        accessible: false, //if true - you can access html element such as form input field, button etc
         autoScroll: true, //is true - this will autoscroll to the arror/content every step 
         scrollSpeed: 1000, //scroll speed
-        stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
+        lockScrolling: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
         onLeave: null, // callback when leaving the step
         onEnter: null // callback when entering the step
       }

@@ -60,10 +60,10 @@ steps: [
       contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
     },
     overlay: true,
-    accessable: false, //if true - you can access html element such as form input field, button etc
-    autoScroll: true, //is true - this will autoscroll to the arror/content every step 
+    accessible: false, //if true - you can access html element such as form input field, button etc
+    autoScroll: true, //is true - this will autoscroll to the arrow/content every step
     scrollSpeed: 1000, //scroll speed
-    stayFocus: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
+    lockScrolling: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
     onLeave: null, // callback when leaving the step
     onEnter: null // callback when entering the step
   }
@@ -128,7 +128,7 @@ This method allows you to go the RESTART step. Event is needed as a param to cal
 close      :   $.pagewalkthrough('close', target)
 This method allows you to go the CLOSE step. Target is optional. It could be filled with walkthrough ID or leave it blank
 
-isPageWalkthroughActive   :   $.pagewalkthrough('isPageWalkthroughActive')
+isActive   :   $.pagewalkthrough('isPageWalkthroughActive')
 This property will return status of page walkthrough
 
 currIndex  :   $.pagewalkthrough('currIndex')
