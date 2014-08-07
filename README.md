@@ -180,21 +180,21 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ### 07/08/2014
 
-* v1.3.0: Deprecate `isPageWalkthroughActive` function in favour of `isActive` function
+* `v1.3.0`: Deprecate `isPageWalkthroughActive` function in favour of `isActive` function
 
 ### 05/08/2014
 
-* v1.2.4: Add an optional finish button to the last step of the tour
+* `v1.2.4`: Add an optional finish button to the last step of the tour
 
 ### 04/08/2014
 
-* v1.2.3: Hotfix for each step's options not correctly extending default options
-* v1.2.2: Hotfix to make the plugin actually work
-* v1.2.1: Bug fix
-* v1.2.0: Remove demo/example related files from master branch; source files into src/; distribution files into dist/
+* `v1.2.3`: Hotfix for each step's options not correctly extending default options
+* `v1.2.2`: Hotfix to make the plugin actually work
+* `v1.2.1`: Bug fix
+* `v1.2.0`: Remove demo/example related files from master branch; source files into src/; distribution files into dist/
 
 ### 30/07/2014
 
-* v1.1.4: Add option to make close button optional
-* v1.1.3: Support for showing next and previous buttons to move between tour stops
-* v1.1.2: i18n support for close button text
+* `v1.1.4`: Add option to make close button optional
+* `v1.1.3`: Support for showing next and previous buttons to move between tour stops
+* `v1.1.2`: i18n support for close button text
