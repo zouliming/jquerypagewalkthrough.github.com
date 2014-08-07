@@ -34,12 +34,19 @@
    */
 
   var methods = {
-    isPageWalkthroughActive: function() {
-      if (_isWalkthroughActive) {
-        return true;
-      }
-      return false;
+    isActive: function() {
+      return !!_isWalkthroughActive;
+    },
 
+    isPageWalkthroughActive: function() {
+        console.warn('Deprecated: function isPageWalkthroughActive is ' +
+            'deprecated and will be removed in version 2; please use isActive' +
+            'instead.');
+
+        if (_isWalkthroughActive) {
+            return true;
+        }
+        return false;
     },
 
     currIndex: function() {
