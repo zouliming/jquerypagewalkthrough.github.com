@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.1.0
+ * Version: 2.1.1
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -817,7 +817,7 @@
 
   function onCookieLoad(options) {
 
-    for (i = 0; i < _elements.length; i++) {
+    for (var i = 0; i < _elements.length; i++) {
       if (typeof(options[_elements[i]].onCookieLoad) === "function") {
         options[_elements[i]].onCookieLoad.call(this);
       }

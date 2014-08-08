@@ -278,6 +278,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ### 07/08/2014
 
+* `v2.1.1`: Fixes support for multiple walkthroughs, adds clearer method documentation and a basic test suite
 * `v2.1.0`: Support for literal content in each step's `popup.content` option, instead of just a selector
 * `v2.0.0`: Breaking changes to API - fix incorrect spelling of `accessable` to `accessible`; rename `stayFocus` to `lockScrolling`; remove deprecated methods
 * `v1.4.0`: `name` is now a required option and **must be provided for all tours**

@@ -6,11 +6,12 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.1.0
+ * Version: 2.1.1
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
 ;(function($, window, document, undefined) {
+  'use strict';
 
   /**
    * GLOBAL VAR
@@ -26,7 +27,7 @@
     _onLoad = true,
     _index = 0,
     _id = 0, // Counter for default walkthrough IDs
-    _isWalkthroughActive = true,
+    _isWalkthroughActive = false,
     $jpwOverlay = $('<div id="jpwOverlay"></div>'),
     $jpWalkthrough = $('<div id="jpWalkthrough"></div>'),
     $jpwTooltip = $('<div id="jpwTooltip"></div>');
@@ -52,6 +53,9 @@
       if (!options.name) {
         throw new Error('Must provide a unique name for a tour');
       }
+
+      // @todo what happens with multiple walkthroughs on the same element?
+      this.first().data('jpw', options);
 
       return this.each(function(i) {
         var $this = $(this);
@@ -136,22 +140,15 @@
 
     },
 
-    close: function(target) {
-
+    close: function() {
       _index = 0;
       _firstTimeLoad = true;
 
       _isWalkthroughActive = false;
 
-      if (target) {
-        //set cookie to false
-        setCookie('_walkthrough-' + target, 0, 365);
-        _isCookieLoad = getCookie('_walkthrough-' + target);
-      } else {
-        //set cookie to false
-        setCookie('_walkthrough-' + _activeId, 0, 365);
-        _isCookieLoad = getCookie('_walkthrough-' + _activeId);
-      }
+      //set cookie to false
+      setCookie('_walkthrough-' + _activeId, 0, 365);
+      _isCookieLoad = getCookie('_walkthrough-' + _activeId);
 
       $jpwOverlay.fadeOut('slow', function() {
         $(this).remove();
@@ -167,14 +164,11 @@
 
     },
 
-    show: function(target) {
+    show: function(name) {
+      name = name || this.first().data('jpw').name;
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
-      // @FIXME: need to figure what's actually going on in terms of deciding
-      // which walkthrough to show - the below is a hotfix to get the plugin
-      // actually working
-      _activeId = target || _activeId;
-      _activeWalkthrough = _globalWalkthrough[_activeId];
+      _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
 
       buildWalkthrough();
       showButton('jpwClose', 'body');
@@ -823,7 +817,7 @@
 
   function onCookieLoad(options) {
 
-    for (i = 0; i < _elements.length; i++) {
+    for (var i = 0; i < _elements.length; i++) {
       if (typeof(options[_elements[i]].onCookieLoad) === "function") {
         options[_elements[i]].onCookieLoad.call(this);
       }
@@ -947,10 +941,9 @@
     var rotationStyle = {
       '-webkit-transform': 'none', //safari
       '-moz-transform': 'none', //firefox
-      '-ms-transform': 'none', //IE9+
       '-o-transform': 'none', //opera
       'filter': 'none', //IE7
-      '-ms-transform': 'none' //IE8
+      '-ms-transform': 'none' //IE8+
     }
 
     return rotationStyle;
@@ -973,10 +966,9 @@
     var rotationStyle = {
       '-webkit-transform': 'rotate(' + parseInt(angle) + 'deg)', //safari
       '-moz-transform': 'rotate(' + parseInt(angle) + 'deg)', //firefox
-      '-ms-transform': 'rotate(' + parseInt(angle) + 'deg)', //IE9+
       '-o-transform': 'rotate(' + parseInt(angle) + 'deg)', //opera
       'filter': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',sizingMethod = "auto expand");', //IE7
-      '-ms-transform': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',SizingMethod = "auto expand");' //IE8
+      '-ms-transform': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',SizingMethod = "auto expand");' //IE8+
     }
 
     return rotationStyle;
@@ -1013,7 +1005,7 @@
       counter = 0,
       top, right, bottom, left, returnVal;
 
-    for (i = 0; i < arrVal.length; i++) {
+    for (var i = 0; i < arrVal.length; i++) {
       //check if syntax is clean with value and 'px'
       if (cleanSyntax(arrVal[i])) {
         counter++;
