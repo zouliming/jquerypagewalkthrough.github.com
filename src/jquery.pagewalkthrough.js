@@ -1207,54 +1207,89 @@
 
   }
 
-
+  /* #### <a name="default-options">Options</a>
+   *
+   * Default options for each walkthrough.
+   * User options extend these defaults.
+   */
   $.fn.pagewalkthrough.defaults = {
+    /* Array of steps to show
+     */
     steps: [
       {
-        wrapper: '', //an ID of page element HTML that you want to highlight
-        margin: 0, //margin for highlighted area, may use CSS syntax i,e: '10px 20px 5px 30px'
+        // jQuery selector for the element to highlight for this step
+        wrapper: '',
+        // Margin for highlighted element (use CSS syntax)
+        margin: 0,
+        // ##### <a name="popup-options">Popup options</a>
         popup: {
-          content: '', //ID content of the walkthrough
-          type: 'modal', //tooltip, modal, nohighlight
-          position: 'top', //position for tooltip and nohighlight type only: top, right, bottom, left
-          offsetHorizontal: 0, //horizontal offset for the walkthrough
-          offsetVertical: 0, //vertical offset for the walkthrough
-          width: '320', //default width for each step,
-          draggable: false, // set true to set walkthrough draggable,
-          contentRotation: 0 //content rotation : i.e: 0, 90, 180, 270 or whatever value you add. minus sign (-) will be CCW direction
+          // Selector for the element which contains the content, or the literal
+          // content
+          content: '',
+          // Popup type - either modal, tooltip or nohighlight.  See [Popup Types](/pages/popup-types.html)
+          type: 'modal',
+          // Position for tooltip and nohighlight style popups - either top, left, right or bottom
+          position: 'top',
+          // Horizontal offset for the walkthrough
+          offsetHorizontal: 0,
+          // Vertical offset for the walkthrough
+          offsetVertical: 0,
+          // Default width for each popup
+          width: '320',
+          // If true, user can drag tooltip and no highlight style popups around
+          draggable: false,
+          // Amount in degrees to rotate the content by
+          contentRotation: 0
         },
+        // Whether the overlay should be shown or not
         overlay: true,
-        accessible: false, //if true - you can access html element such as form input field, button etc
-        autoScroll: true, //is true - this will autoscroll to the arror/content every step 
-        scrollSpeed: 1000, //scroll speed
-        lockScrolling: false, //if true - when user scroll down/up to the page, it will scroll back the position it belongs
-        onLeave: null, // callback when leaving the step
-        onEnter: null // callback when entering the step
+        // Allow user interaction with highlighted content - e.g. allow typing in inputs
+        accessible: false,
+        // Automatically scroll to the content for the step
+        autoScroll: true,
+        // Speed to use when scrolling to elements
+        scrollSpeed: 1000,
+        // Prevent the user from scrolling away from the content
+        lockScrolling: false,
+        // Callback when entering the step
+        onEnter: null,
+        // Callback when leaving the step
+        onLeave: null
       }
     ],
-    name: null, // the ID for this walkthrough
-    onLoad: true, //load the walkthrough at first time page loaded
-    onBeforeShow: null, //callback before page walkthrough loaded
-    onAfterShow: null, // callback after page walkthrough loaded
-    onRestart: null, //callback for onRestart walkthrough
-    onClose: null, //callback page walkthrough closed
-    onCookieLoad: null, //when walkthrough closed, it will set cookie and use callback if you want to create link to trigger to reopen the walkthrough,
-    /* Hash of buttons to show.  Object keys are used as the button element's ID.
-     * Each button has the following structure:
-     *   {
-     *     i18n: {String}            The html for the button
-     *     show: {Boolean|Function}  Whether to show the button or not.  Can be
-     *                               a boolean, or a function which returns a
-     *                               boolean.
-     *   }
+    // **(Required)** Walkthrough name.  Should be a unique name to identify the walkthrough, as it will
+    // be used in the cookie name
+    name: null,
+    // Automatically show the walkthrough when the page is loaded.  If multiple walkthroughs set this to
+    // true, only the first walkthrough is shown automatically
+    onLoad: true,
+    // Callback to be executed before the walkthrough is shown
+    onBeforeShow: null,
+    // Callback executed after the walkthrough is shown
+    onAfterShow: null,
+    // Callback executed in the event that 'restart' is triggered
+    onRestart: null,
+    // Callback executed when the walkthrough is closed.  The walkthrough can be closed by the user
+    // clicking the close button in the top right, or clicking the finish button on the last step
+    onClose: null,
+    // Callback executed when cookie has been set after a walkthrough has been closed
+    onCookieLoad: null,
+    /* ##### <a name="controls-options">Walkthrough controls</a>
+     *
+     * Hash of buttons to show.  Object keys are used as the button element's ID.
      */
     buttons: {
+      // ID of the button
       jpwClose: {
+        // Translation string for the button
         i18n: 'Click here to close',
+        // Whether or not to show the button.  Can be a boolean value, or a function which returns
+        // a boolean value
         show: true
       },
       jpwNext: {
         i18n: 'Next &rarr;',
+        // Function which resolves to a boolean
         show: function() {
           return !isLastStep();
         }
