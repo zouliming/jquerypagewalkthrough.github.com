@@ -271,7 +271,7 @@
             top: targetElement.offset().top - 20, // top/left minus padding
             left: targetElement.offset().left - 20,
             'z-index': 999998,
-            'box-shadow': '0 0 2560px 2560px rgba(0, 0, 0, 0.6)'
+            'box-shadow': '0 0 1px 10000px rgba(0, 0, 0, 0.6)'
         })
         .append(
             $('<div>')
