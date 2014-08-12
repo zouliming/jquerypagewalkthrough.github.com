@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.1.2
+ * Version: 2.1.3
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -56,6 +56,8 @@
 
       // @todo what happens with multiple walkthroughs on the same element?
       this.first().data('jpw', options);
+
+      options._element = this;
 
       return this.each(function(i) {
         var $this = $(this);
@@ -258,10 +260,11 @@
         return;
       }
 
-      var topOffset = cleanValue($(options.steps[_index].wrapper).offset().top);
-      var leftOffset = cleanValue($(options.steps[_index].wrapper).offset().left);
-      var transparentWidth = cleanValue($(options.steps[_index].wrapper).innerWidth()) || cleanValue($(options.steps[_index].wrapper).width());
-      var transparentHeight = cleanValue($(options.steps[_index].wrapper).innerHeight()) || cleanValue($(options.steps[_index].wrapper).height());
+      var $wrapper = options._element.find(options.steps[_index].wrapper);
+      var topOffset = cleanValue($wrapper.offset().top);
+      var leftOffset = cleanValue($wrapper.offset().left);
+      var transparentWidth = cleanValue($wrapper.innerWidth()) || cleanValue($wrapper.width());
+      var transparentHeight = cleanValue($wrapper.innerHeight()) || cleanValue($wrapper.height());
 
       //get all margin and make it gorgeous with the 'px', if it has no px, IE will get angry !!
       var marginTop = cssSyntax(options.steps[_index].margin, 'top'),
@@ -655,10 +658,11 @@
     var opt = _activeWalkthrough,
       overlayClass = '';
 
-    var wrapperTop = $(opt.steps[_index].wrapper).offset().top,
-      wrapperLeft = $(opt.steps[_index].wrapper).offset().left,
-      wrapperWidth = $(opt.steps[_index].wrapper).width(),
-      wrapperHeight = $(opt.steps[_index].wrapper).height(),
+    var $wrapper = options._element.find(opt.steps[_index].wrapper),
+      wrapperTop = $wrapper.offset().top,
+      wrapperLeft = $wrapper.offset().left,
+      wrapperWidth = $wrapper.width(),
+      wrapperHeight = $wrapper.height(),
       arrow = 30,
       draggable = '',
       top, left, arrowTop, arrowLeft;
