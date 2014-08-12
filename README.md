@@ -276,6 +276,11 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+### 12/08/2014
+
+* `v2.1.2`: Fixes 2 bugs related to the `onClose` callback: 1) would not fire if walkthrough closed using `close` method, and 2) specifying an `onClose` callback would prevent
+the default `close` behaviour from triggering, resulting in the walkthrough not being hidden
+
 ### 07/08/2014
 
 * `v2.1.1`: Fixes support for multiple walkthroughs, adds clearer method documentation and a basic test suite

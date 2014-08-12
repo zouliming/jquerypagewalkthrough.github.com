@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.1.1
+ * Version: 2.1.2
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -141,6 +141,7 @@
     },
 
     close: function() {
+      var options = _activeWalkthrough;
       _index = 0;
       _firstTimeLoad = true;
 
@@ -149,6 +150,10 @@
       //set cookie to false
       setCookie('_walkthrough-' + _activeId, 0, 365);
       _isCookieLoad = getCookie('_walkthrough-' + _activeId);
+
+      if (typeof options.onClose === "function") {
+        options.onClose.call(this);
+      }
 
       $jpwOverlay.fadeOut('slow', function() {
         $(this).remove();
@@ -410,8 +415,6 @@
       }
 
       var overlayBottom = $('<div id="overlayBottom" class="' + overlayClass + '"></div>').css(overlayBottomStyle).appendTo($jpWalkthrough);
-
-
 
       if ($('#jpWalkthrough').length) {
         $('#jpWalkthrough').remove();
@@ -854,24 +857,6 @@
     return true;
   }
 
-  //callback for onClose help
-
-  function onClose() {
-    var options = _activeWalkthrough;
-
-    if (typeof options.onClose === "function") {
-      if (!options.onClose.call(this)) {
-        return false;
-      }
-    }
-
-    //set help mode to false
-    //_isWalkthroughActive = false;
-    methods.close();
-
-    return true;
-  }
-
   //callback for onRestart help
 
   function onRestart(e) {
@@ -1119,7 +1104,7 @@
    */
 
   /* Close and finish tour buttons clicks */
-  $(document).on('click', '#jpwClose, #jpwFinish', onClose);
+  $(document).on('click', '#jpwClose, #jpwFinish', methods.close);
 
   /* Next button clicks
    */

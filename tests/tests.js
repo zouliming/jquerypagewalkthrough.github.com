@@ -1,4 +1,5 @@
 function createWalkthrough(element, options) {
+
     options = $.extend(true, {
         name: 'test',
         onLoad: false,
@@ -173,6 +174,62 @@ QUnit.test('returns false when no walkthrough is active', function(assert) {
     this.fixture.pagewalkthrough('close');
 
     assert.strictEqual(this.fixture.pagewalkthrough('isActive'), false);
+});
+
+QUnit.module('close', lifecycle);
+
+QUnit.asyncTest('onClose callback gets fired', function(assert) {
+    var fired = false;
+
+    createWalkthrough(this.fixture, {
+        onClose: function() {
+            fired = true;
+        }
+    });
+
+    this.fixture.pagewalkthrough('show');
+    this.fixture.pagewalkthrough('close');
+
+    setTimeout(function() {
+        assert.ok(fired, 'onClose was not called');
+        QUnit.start();
+    }, 1000);
+});
+
+QUnit.asyncTest('walkthrough fades out on close using close method', function(assert) {
+    createWalkthrough(this.fixture, {
+        onClose: $.noop
+    });
+
+    this.fixture.pagewalkthrough('show');
+    this.fixture.pagewalkthrough('close');
+
+    setTimeout(function() {
+        assert.equal(
+            $('#jpWalkthrough').is(':visible'),
+            false,
+            'walkthrough was not hidden'
+        );
+        QUnit.start();
+    }, 1000);
+});
+
+QUnit.asyncTest('walkthrough fades out on close after clicking close button', function(assert) {
+    createWalkthrough(this.fixture, {
+        onClose: $.noop
+    });
+
+    this.fixture.pagewalkthrough('show');
+    this.fixture.find('#jpwClose').trigger('click');
+
+    setTimeout(function() {
+        assert.equal(
+            $('#jpWalkthrough').is(':visible'),
+            false,
+            'walkthrough was not hidden'
+        );
+        QUnit.start();
+    }, 1000);
 });
 
 QUnit.module('getOptions', lifecycle);
