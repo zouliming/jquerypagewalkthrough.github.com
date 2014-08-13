@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.3.2
+ * Version: 2.3.3
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -893,13 +893,17 @@
   /* Next button clicks
    */
   $(document).on('click', '#jpwNext', function() {
-      $.pagewalkthrough('next');
+    $.pagewalkthrough('next');
   });
 
   /* Previous button clicks
    */
   $(document).on('click', '#jpwPrevious', function() {
-      $.pagewalkthrough('prev');
+    $.pagewalkthrough('prev');
+  });
+
+  $(document).on('click', '#jpwOverlay', function() {
+    ev.stopPropagation();
   });
 
   /**
