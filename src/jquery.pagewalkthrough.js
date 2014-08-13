@@ -903,7 +903,7 @@
     $.pagewalkthrough('prev');
   });
 
-  $(document).on('click', '#jpwOverlay', function() {
+  $(document).on('click', '#jpwOverlay', function(ev) {
     ev.stopPropagation();
   });
 
