@@ -7,13 +7,15 @@ function createWalkthrough(element, options) {
             {
                 autoScroll: false,
                 popup: {
-                    content: 'Hello, world!'
+                    content: 'Hello, world!',
+                    type: 'modal'
                 }
             },
             {
                 autoScroll: false,
                 popup: {
-                    content: 'Goodbye, world!'
+                    content: 'Goodbye, world!',
+                    type: 'modal'
                 }
             }
         ]

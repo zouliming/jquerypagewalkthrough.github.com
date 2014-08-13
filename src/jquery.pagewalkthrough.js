@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.2.1
+ * Version: 2.3.0
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -86,18 +86,6 @@
           _activeWalkthrough = _globalWalkthrough[_elements[0]];
           _hasDefault = false;
         }
-
-        // when user scroll the page, scroll it back to keep walkthrough on user view
-        $(window).scroll(function() {
-          if (_isWalkthroughActive && _activeWalkthrough.steps[_index].lockScrolling) {
-            clearTimeout($.data(this, 'scrollTimer'));
-            $.data(this, 'scrollTimer', setTimeout(function() {
-              scrollToTarget(_activeWalkthrough);
-            }, 250));
-          }
-
-          return false;
-        });
       });
     },
 
@@ -114,10 +102,8 @@
       //check if first time walkthrough
       if (_isCookieLoad == undefined) {
         _isWalkthroughActive = true;
-        buildWalkthrough();
+        showStep();
         showButton('jpwClose', 'body');
-
-        scrollToTarget();
 
         setTimeout(function() {
           //call onAfterShow callback
@@ -136,10 +122,7 @@
       _index = 0;
       if (!(onRestart(e))) return;
       if (!(onEnter(e))) return;
-      buildWalkthrough();
-
-      scrollToTarget();
-
+      showStep();
     },
 
     close: function() {
@@ -178,10 +161,8 @@
       _firstTimeLoad = true;
       _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
 
-      buildWalkthrough();
+      showStep();
       showButton('jpwClose', 'body');
-
-      scrollToTarget();
 
       //call onAfterShow callback
       if (isFirstStep() && _firstTimeLoad) {
@@ -197,10 +178,7 @@
       if (!onLeave(e)) return;
       _index = parseInt(_index) + 1;
       if (!onEnter(e)) return;
-      buildWalkthrough();
-
-      scrollToTarget();
-
+      showStep();
     },
 
     prev: function(e) {
@@ -209,9 +187,7 @@
       if (!onLeave(e)) return;
       _index = parseInt(_index) - 1;
       if (!onEnter(e)) return;
-      buildWalkthrough();
-
-      scrollToTarget();
+      showStep();
     },
 
     getOptions: function(activeWalkthrough) {
@@ -233,13 +209,47 @@
     }
   }; //end public method
 
-
-  /*
-   * BUILD OVERLAY
+  /* Pre-build walkthrough step function.  Handles the scrolling to the target
+   * element.
    */
+  function showStep() {
+    var options = _activeWalkthrough,
+      step = options.steps[_index],
+      targetElement = options._element.find(step.wrapper),
+      scrollTarget = getScrollParent(targetElement),
+      // For modals, scroll to the top.  For tooltips, try and center the target
+      // (wrapper) element in the screen
+      scrollTo = step.popup.type === 'modal' ? 0 :
+        targetElement.offset().top - ($(window).height() / 2);
+
+    // Only scroll if:
+    //   1.  the new scroll value is <= 0 and the scrollElement offset is > 0
+    //   2.  the new scroll value is > 0 and not equal to the current
+    //       scrollElement offset
+    if ((scrollTo <= 0 && scrollTarget.scrollTop() !== 0) ||
+      (scrollTo > 0 && scrollTo !== scrollTarget.scrollTop())) {
+
+      // Stylistic concerns - fill overlay hole and hide tooltip whilst
+      // scrolling
+      $jpWalkthrough.addClass('jpw-scrolling');
+      $jpwTooltip.fadeOut('fast');
+
+      scrollTarget.animate({
+        scrollTop: scrollTo
+      }, options.steps[_index].scrollSpeed, buildWalkthrough);
+
+    } else {
+
+      // Not scrolling, so jump directly to building the walkthrough
+      buildWalkthrough();
+    }
+  }
 
   function buildWalkthrough() {
-    var options = _activeWalkthrough;
+    $jpWalkthrough.removeClass('jpw-scrolling');
+    var options = _activeWalkthrough,
+      scrollElement,
+      targetElement;
 
     //call onBeforeShow callback
     if (isFirstStep() && _firstTimeLoad) {
@@ -251,6 +261,8 @@
         true, {}, $.fn.pagewalkthrough.defaults.steps[0], options.steps[_index]
     );
 
+    targetElement = options._element.find(options.steps[_index].wrapper);
+
     if (options.steps[_index].popup.type != 'modal' && options.steps[_index].popup.type != 'nohighlight') {
 
       $jpWalkthrough.html('');
@@ -261,7 +273,6 @@
         return;
       }
 
-      var targetElement = options._element.find(options.steps[_index].wrapper);
       // @todo make it so we don't have to destroy and recreate this element for
       // each step
       var overlay = $('<div>')
@@ -283,8 +294,7 @@
                     top: 0,
                     bottom: 0,
                     left: 0,
-                    right: 0,
-                    'box-shadow': 'inset 0 0 10px 10px rgba(0, 0, 0, 0.6)'
+                    right: 0
                 })
         )
         .appendTo($jpWalkthrough);
@@ -294,6 +304,7 @@
       }
 
       $jpWalkthrough.appendTo('body').show();
+      $jpwTooltip.show();
 
       if (options.steps[_index].accessible) {
         showTooltip(true);
@@ -379,6 +390,7 @@
       .appendTo($jpWalkthrough);
 
     $jpWalkthrough.appendTo('body');
+    $jpwTooltip.show();
 
     $('#tooltipWrapper').css(textRotation);
 
@@ -520,35 +532,6 @@
     return content || option;
   }
 
-  /*
-   * SCROLL TO TARGET
-   */
-
-  function scrollToTarget() {
-
-    var options = _activeWalkthrough;
-
-    if (options.steps[_index].autoScroll || options.steps[_index].autoScroll == undefined) {
-      if (options.steps[_index].popup.position != 'modal') {
-
-        var windowHeight = $(window).height() || $(window).innerHeight(),
-          targetOffsetTop = $jpwTooltip.offset().top,
-          targetHeight = $jpwTooltip.height() || $jpwTooltip.innerHeight(),
-          overlayTop = $('#overlayTop').height();
-
-        $('html,body').animate({
-          scrollTop: (targetOffsetTop + (targetHeight / 2) - (windowHeight / 2))
-        }, options.steps[_index].scrollSpeed);
-
-      } else {
-        $('html,body').animate({
-          scrollTop: 0
-        }, options.steps[_index].scrollSpeed);
-      }
-
-    }
-  }
-
   /* Render a control button outside the #tooltipInner element.
    *
    * @param {String} id               The button identifier within the
@@ -631,9 +614,6 @@
     //set help mode to true
     _isWalkthroughActive = true;
     methods.restart(e);
-
-    //auto scroll to target
-    scrollToTarget();
 
     if (typeof options.onRestart === "function") {
       if (!options.onRestart.call(this)) {
@@ -864,6 +844,42 @@
    */
   function isFirstStep() {
       return _index === 0;
+  }
+
+  /* Get the first scrollable parent of the specified element.
+   * Adapted from jQueryUI's [scrollParent](api.jqueryui.com/scrollParent/).
+   *
+   * @param {jQuery} element  The element to find the scrollable parent of
+   *
+   * @return {jQuery} The first scrollable parent, or an empty jQuery object if
+   *                  either of the following is true:
+   *                    1. `element`'s position is 'fixed'
+   *                    2. `element`'s position is 'absolute', and the parent's
+   *                        is 'static'
+   */
+  function getScrollParent(element) {
+    if (!(element instanceof $)) {
+      element = $(element);
+    }
+
+    element = element.first();
+
+    var position = element.css('position'),
+      excludeStaticParent = position === 'absolute',
+      scrollParent = element.parents().filter(function() {
+        var parent = $(this);
+        if (excludeStaticParent && parent.css('position') === 'static') {
+          return false;
+        }
+
+        return (/(auto|scroll)/).test(
+          parent.css('overflow') + parent.css('overflow-y') +
+          parent.css('overflow-x')
+        );
+      }).eq(0);
+
+    return position === 'fixed' ? $() : !scrollParent.length ?
+      $('body') : scrollParent;
   }
 
   /**

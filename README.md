@@ -276,9 +276,13 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+### 13/08/2014
+
+* `v2.3.0`: Fix the auto-scrolling behaviour so that it can scroll elements other than `body,html`
+* `v2.2.1`: Moved the `onClose` callback to before the index reset, so close callbacks can access the last step index.
+
 ### 12/08/2014
 
-* `v2.2.1`: Moved the `onClose` callback to before the index reset, so close callbacks can access the last step index.
 * `v2.2.0`: Remove support for `noHighlight` step types, add box-shadow based overlays
 * `v2.1.3`: Make sure `wrapper` option selector is scoped to the current walkthrough's element, instead of being a document-wide selector
 * `v2.1.2`: Fixes 2 bugs related to the `onClose` callback: 1) would not fire if walkthrough closed using `close` method, and 2) specifying an `onClose` callback would prevent
