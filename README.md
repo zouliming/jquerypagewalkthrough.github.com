@@ -278,6 +278,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ### 13/08/2014
 
+* `v2.3.4`: Fix issue with auto-scrolling to a new target element when the element to scroll is already partly scrolled
 * `v2.3.3`: Fix to prevent clicks on the overlay propagating, thus fixing issue where highlighted Bootstrap dropdowns and such would close
 * `v2.3.2`: Fix overlays for popuip/tooltip content to prevent clicking things behind the walkthrough
 * `v2.3.1`: Minor adjustment for more readable font-sizes
