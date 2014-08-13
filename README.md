@@ -278,6 +278,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ### 13/08/2014
 
+* `v2.2.1`: Minor adjustment for more readable font-sizes
 * `v2.3.0`: Fix the auto-scrolling behaviour so that it can scroll elements other than `body,html`
 * `v2.2.1`: Moved the `onClose` callback to before the index reset, so close callbacks can access the last step index.
 
