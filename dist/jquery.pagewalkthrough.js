@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.3.3
+ * Version: 2.3.4
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -220,7 +220,8 @@
       // For modals, scroll to the top.  For tooltips, try and center the target
       // (wrapper) element in the screen
       scrollTo = step.popup.type === 'modal' ? 0 :
-        targetElement.offset().top - ($(window).height() / 2);
+        targetElement.offset().top - ($(window).height() / 2) +
+        scrollTarget.scrollTop();
 
     // Only scroll if:
     //   1.  the new scroll value is <= 0 and the scrollElement offset is > 0
