@@ -266,6 +266,23 @@ QUnit.test('returns options for a walkthrough element', function(assert) {
     assert.strictEqual(opts.name, 'test', 'Returns correct walkthrough name');
 });
 
+QUnit.module('currIndex', lifecycle);
+
+QUnit.test('returns zero on the first step', function(assert) {
+    createWalkthrough(this.fixture);
+
+    assert.strictEqual(this.fixture.pagewalkthrough('currIndex'), 0);
+});
+
+QUnit.test('returns one on the second step', function(assert) {
+    createWalkthrough(this.fixture);
+
+    this.fixture.pagewalkthrough('show');
+    this.fixture.pagewalkthrough('next');
+
+    assert.strictEqual(this.fixture.pagewalkthrough('currIndex'), 1);
+});
+
 QUnit.module('Errors', lifecycle);
 
 QUnit.test('name is required', 1, function(assert) {
