@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.3.1
+ * Version: 2.3.2
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -275,7 +275,8 @@
 
       // @todo make it so we don't have to destroy and recreate this element for
       // each step
-      var overlay = $('<div>')
+      $jpwOverlay.appendTo($jpWalkthrough);
+      var overlayHole = $('<div>')
         .addClass('overlay-hole')
         .height(targetElement.outerHeight())
         .width(targetElement.outerWidth())
@@ -353,7 +354,7 @@
       content;
 
     if (isOverlay) {
-      $jpwOverlay.appendTo('body').show();
+      $jpwOverlay.appendTo('body').show().removeClass('transparent');
     } else {
       if ($('#jpwOverlay').length) {
         $('#jpwOverlay').remove();
@@ -421,9 +422,9 @@
     var textRotation = (opt.steps[_index].popup.contentRotation == undefined || parseInt(opt.steps[_index].popup.contentRotation) == 0) ? clearRotation() : setRotation(parseInt(opt.steps[_index].popup.contentRotation));
 
 
-    //delete jwOverlay if any
+    // Remove overlay background to prevent double-transparency
     if ($('#jpwOverlay').length) {
-      $('#jpwOverlay').remove();
+      $('#jpwOverlay').addClass('transparent');
     }
 
     var tooltipSlide = $('<div id="tooltipTop">' +
