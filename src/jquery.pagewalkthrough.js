@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.2.0
+ * Version: 2.2.1
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -144,6 +144,11 @@
 
     close: function() {
       var options = _activeWalkthrough;
+
+      if (typeof options.onClose === "function") {
+        options.onClose.call(this);
+      }
+
       _index = 0;
       _firstTimeLoad = true;
 
@@ -152,10 +157,6 @@
       //set cookie to false
       setCookie('_walkthrough-' + _activeId, 0, 365);
       _isCookieLoad = getCookie('_walkthrough-' + _activeId);
-
-      if (typeof options.onClose === "function") {
-        options.onClose.call(this);
-      }
 
       $jpwOverlay.fadeOut('slow', function() {
         $(this).remove();
