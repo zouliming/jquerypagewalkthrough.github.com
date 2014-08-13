@@ -893,13 +893,17 @@
   /* Next button clicks
    */
   $(document).on('click', '#jpwNext', function() {
-      $.pagewalkthrough('next');
+    $.pagewalkthrough('next');
   });
 
   /* Previous button clicks
    */
   $(document).on('click', '#jpwPrevious', function() {
-      $.pagewalkthrough('prev');
+    $.pagewalkthrough('prev');
+  });
+
+  $(document).on('click', '#jpwOverlay', function() {
+    ev.stopPropagation();
   });
 
   /**
