@@ -5,7 +5,7 @@
   color: #00c7ff;
   cursor: pointer;
   font-family: 'GochiHand';
-  font-size: 16px;
+  font-size: 18px;
   font-weight: lighter;
 }
 #jpwOverlay {
@@ -93,10 +93,10 @@
   font-family: 'GochiHand';
   color: #ffffff;
   text-align: center;
-  font-size: 16px;
+  font-size: 22px;
 }
 #jpWalkthrough #jpwTooltip #tooltipInner a {
-  font-size: 16px;
+  font-size: 22px;
 }
 #jpWalkthrough #jpwTooltip #tooltipInner .tooltipTitle {
   font-size: 40px;
