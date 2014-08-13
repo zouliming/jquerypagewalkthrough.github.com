@@ -17,6 +17,12 @@
   height: 100%;
   display: block;
 }
+#jpWalkthrough.jpw-scrolling .overlay-hole > div {
+  box-shadow: inset 0 0 10px 1000px rgba(0, 0, 0, 0.6);
+}
+#jpWalkthrough .overlay-hole > div {
+  box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.6);
+}
 #jpWalkthrough #jpwTooltip {
   overflow: visible;
   padding: 10px;
