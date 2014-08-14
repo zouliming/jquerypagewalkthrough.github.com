@@ -83,8 +83,6 @@ $.fn.pagewalkthrough.defaults = {
         offsetVertical: 0,
         // Default width for each popup
         width: '320',
-        // If true, user can drag tooltip and no highlight style popups around
-        draggable: false,
         // Amount in degrees to rotate the content by
         contentRotation: 0
       },
@@ -318,6 +316,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 14/08/2014
 
+* `v2.5.0`: Remove draggable tooltip 'feature'
 * `v2.4.0`: Remove defunct `accessible` and `overlay` options from step options
 * `v2.3.8`: Fix clicks on tooltip content propagating through the DOM
 * `v2.3.7`: Re-work of fix for issue #35, to make sure stuff behind the overlay cannot be clicked the second time a walkthrough is shown

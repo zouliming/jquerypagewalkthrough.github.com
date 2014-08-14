@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.4.0
+ * Version: 2.5.0
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -449,10 +449,6 @@
       }))
       .appendTo($jpWalkthrough);
 
-    if (step.popup.draggable) {
-      $jpwTooltip.append('<div id="drag-area" class="draggable-area"></div>');
-    }
-
     $jpWalkthrough.appendTo('body').show();
 
     $('#tooltipWrapper').css(textRotation);
@@ -823,41 +819,6 @@
    * DRAG & DROP
    */
 
-  // Patching for jquery 1.7+
-  $(document).on('mousedown', '#jpwTooltip #drag-area', function(e) {
-    if (!$(this).hasClass('draggable-area')) {
-      return;
-    }
-    if (!$(this).hasClass('draggable')) {
-      $(this).addClass('draggable').css('cursor', 'move');
-    }
-
-    var zIdx = $(this).css('z-index'),
-      drgH = $(this).outerHeight(),
-      drgW = $(this).outerWidth(),
-      posY = $(this).offset().top + (drgH * 2) - e.pageY - 10,
-      posX = (e.pageX - $(this).offset().left + drgW) -
-        ($(this).parent().outerWidth() + drgW) + 20;
-
-    $(document).on('mousemove', function(e) {
-
-      $('.draggable').parent().offset({
-        top: e.pageY + posY - drgH,
-        left: e.pageX + posX - drgW
-      }).on('mouseup', function() {
-        $(this).children('#tooltipWrapper').removeClass('draggable').css({
-          'z-index': zIdx,
-          'cursor': 'default'
-        });
-      });
-    });
-    e.preventDefault(); //disable selection
-  });
-
-  $(document).on('mouseup', '#jpwTooltip #drag-area', function() {
-    $(this).removeClass('draggable').css('cursor', 'default');
-  });
-
   /**
    * MAIN PLUGIN
    */
@@ -917,8 +878,6 @@
           offsetVertical: 0,
           // Default width for each popup
           width: '320',
-          // If true, user can drag tooltip and no highlight style popups around
-          draggable: false,
           // Amount in degrees to rotate the content by
           contentRotation: 0
         },
