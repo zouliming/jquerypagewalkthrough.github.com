@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.3.8
+ * Version: 2.4.0
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -323,12 +323,7 @@
       $jpWalkthrough.appendTo('body').show();
       $jpwTooltip.show();
 
-      if (step.accessible) {
-        showTooltip(true);
-      } else {
-        showTooltip(false);
-      }
-
+      showTooltip();
 
     } else if (step.popup.type === 'modal') {
 
@@ -336,11 +331,7 @@
         $('#jpWalkthrough').remove();
       }
 
-      if (typeof step.overlay === 'undefined' || step.overlay) {
-        showModal(true);
-      } else {
-        showModal(false);
-      }
+      showModal();
 
     } else {
       if ($('#jpWalkthrough').length) {
@@ -357,17 +348,11 @@
    * SHOW MODAL
    */
 
-  function showModal(isOverlay) {
+  function showModal() {
     var options = _activeWalkthrough,
       step = options.steps[_index];
 
-    if (isOverlay) {
-      $jpwOverlay.appendTo('body').show().removeClass('transparent');
-    } else {
-      if ($('#jpwOverlay').length) {
-        $('#jpwOverlay').remove();
-      }
-    }
+    $jpwOverlay.appendTo('body').show().removeClass('transparent');
 
     var textRotation = setRotation(parseInt(step.popup.contentRotation, 10));
 
@@ -417,7 +402,7 @@
    * SHOW TOOLTIP
    */
 
-  function showTooltip(isAccessible) {
+  function showTooltip() {
     var opt = _activeWalkthrough,
       step = opt.steps[_index];
 
@@ -483,15 +468,9 @@
       case 'top':
         top = overlayHoleTop - ($jpwTooltip.height() + (arrow / 2)) +
             parseInt(step.popup.offsetVertical, 10) - 86;
-        if (isAccessible) {
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
-            ($jpwTooltip.width() / 2) - 40 +
-            parseInt(step.popup.offsetHorizontal, 10);
-        } else {
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
-            ($jpwTooltip.width() / 2) - 5 +
-            parseInt(step.popup.offsetHorizontal, 10);
-        }
+        left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
+          ($jpwTooltip.width() / 2) - 5 +
+          parseInt(step.popup.offsetHorizontal, 10);
         arrowLeft = ($jpwTooltip.width() / 2) - arrow;
         arrowTop = '';
         break;
@@ -504,20 +483,11 @@
         arrowLeft = '';
         break;
       case 'bottom':
-
-        if (isAccessible) {
-          top = (overlayHoleTop + overlayHoleHeight) +
-            parseInt(step.popup.offsetVertical, 10) + 86;
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
-            ($jpwTooltip.width() / 2) - 40 +
-            parseInt(step.popup.offsetHorizontal, 10);
-        } else {
-          top = overlayHoleTop + overlayHoleHeight +
-            parseInt(step.popup.offsetVertical, 10) + 86;
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
-            ($jpwTooltip.width() / 2) - 5 +
-            parseInt(step.popup.offsetHorizontal, 10);
-        }
+        top = overlayHoleTop + overlayHoleHeight +
+          parseInt(step.popup.offsetVertical, 10) + 86;
+        left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
+          ($jpwTooltip.width() / 2) - 5 +
+          parseInt(step.popup.offsetHorizontal, 10);
 
         arrowLeft = ($jpwTooltip.width() / 2) - arrow;
         arrowTop = '';
@@ -952,11 +922,6 @@
           // Amount in degrees to rotate the content by
           contentRotation: 0
         },
-        // Whether the overlay should be shown or not
-        overlay: true,
-        // Allow user interaction with highlighted content - e.g. allow typing
-        // in inputs
-        accessible: false,
         // Automatically scroll to the content for the step
         autoScroll: true,
         // Speed to use when scrolling to elements
