@@ -64,8 +64,6 @@ $.fn.pagewalkthrough.defaults = {
     {
       // jQuery selector for the element to highlight for this step
       wrapper: '',
-      // Margin for highlighted element (use CSS syntax)
-      margin: 0,
       // ##### <a name="popup-options">Popup options</a>
       popup: {
         // Selector for the element which contains the content, or the literal
