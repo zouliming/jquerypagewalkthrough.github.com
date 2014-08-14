@@ -276,6 +276,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+### 14/08/2014
+
+* `v2.3.5`: Re-work fix for issue #36, original attempt at fixing in `v2.3.3`
+
 ### 13/08/2014
 
 * `v2.3.4`: Fix issue with auto-scrolling to a new target element when the element to scroll is already partly scrolled
