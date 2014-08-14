@@ -15,6 +15,7 @@ function step() {
     echo -n "${MSG}..."
 
     $1 >/dev/null || {
+        echo " Failed, aborting."
         exit 1;
     }
 
@@ -24,6 +25,13 @@ function step() {
 # Entry conditions - build script dependencies
 step "command -v lessc" "Checking dependencies - lessc"
 step "command -v uglifyjs" "Checking dependencies - uglifyjs"
+step "command -v jshint" "Checking dependencies - jshint"
+
+# Create dist directory
+step "mkdir -p ${DEST}" "Creating build files directory (${DEST})"
+
+# Lint src file
+step "jshint src/" "Linting src/"
 
 # Copy un-minified version
 step "cp -r src/* $DEST" "Copying sources to '$DEST'"

@@ -8,6 +8,9 @@ Forked from [jpadamsonline/jquerypagewalkthrough.github.com](https://github.com/
 
 Page Walkthrough is a flexible system for designing interactive, multimedia, educational walkthroughs.
 
+**Note:** currently under heavy active development, and is likely to change **alot** at this moment in time.  Check out where we're at by going to
+the [issues](https://github.com/warby-/jquery-pagewalkthrough/issues) page.
+
 ## Screenshots
 
 ### Modal-style tour step
@@ -277,18 +280,19 @@ Once these two dependencies are met, just run `./bin/build` from the top-level d
 #### Build script dependencies
 
 For the build script to run, you will need the programs `less` (for compiling the LESS into CSS, and for creating the minified CSS - you'd need this
-anyway if you had modified the LESS during development), and `uglifyjs` (for creating the minified JS).  The easiest way to install these dependencies
+anyway if you had modified the LESS during development), `uglifyjs` (for creating the minified JS), and `jshint` (for linting the source JS).  The easiest way to install these dependencies
 is through `node` and `npm`:
 
 ```shell
 npm install -g less
 npm install -g uglify-js
+npm install -g jshint
 ```
 
 ### Code style
 
-There is no formally defined code style, so just try and stick to what is already there for the time being.  The code is due a major refactor and tidy-up anyway.  The only "hard"
-rule is stick to 2 space tabs.  Also try to stick to lines which are less than 80 characters long.
+The adopted code style is that of [airbnb's JavaScript style guide](https://github.com/airbnb/javascript).  The included `.jshintrc` file is taken directly from there, with the addition of
+ECMAScript 3 support (for maintaining IE9 compatibility).  Note that the **build step will fail** if `jshint` finds any errors.  You can run the linter without building by running `jshint src/`.
 
 Also note that the CSS pre-processor [lesscss](http://lesscss.org/) is used in this project - don't modify the CSS files directly, as your changes will be overwritten when the LESS
 is compiled.  Instead, you should modify the LESS and compile it (see the section on 'Building' above).
