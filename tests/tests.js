@@ -292,3 +292,37 @@ QUnit.test('name is required', 1, function(assert) {
         $('#qunit-fixture').pagewalkthrough();
     }, Error, 'missing name property throws an Error');
 });
+
+QUnit.module('Click propagation', lifecycle);
+
+QUnit.asyncTest('clicks on the overlay do not propagate', 0, function(assert) {
+    createWalkthrough(this.fixture);
+
+    $(document).on('click', function() {
+        assert.ok(false, 'click propagated')
+    });
+
+    this.fixture.pagewalkthrough('show');
+    setTimeout(function() {
+        $('#jpwOverlay').click();
+        QUnit.start();
+    }, 1000);
+});
+
+QUnit.asyncTest('clicks on the tooltip content/arrow do not propagate', 0, function(assert) {
+    createWalkthrough(this.fixture);
+
+    $(document).on('click', function() {
+        assert.ok(false, 'click propagated')
+    });
+
+    this.fixture.pagewalkthrough('show');
+
+    setTimeout(function() {
+        $('#tooltipInner:visible').click();
+        $('#tooltipBottom:visible').click();
+        $('#tooltipTop:visible').click();
+        $('#tooltipWrapper:visible + span').click();
+        QUnit.start();
+    }, 1000);
+});
