@@ -7,7 +7,7 @@
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
  * Version: 2.3.8
- * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
+ * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
 ;(function($, window, document, undefined) {
@@ -26,7 +26,6 @@
     _firstTimeLoad = true,
     _onLoad = true,
     _index = 0,
-    _id = 0, // Counter for default walkthrough IDs
     _isWalkthroughActive = false,
     $jpwOverlay = $('<div id="jpwOverlay"></div>'),
     $jpWalkthrough = $('<div id="jpWalkthrough"></div>'),
@@ -47,7 +46,7 @@
 
     //init method
     init: function(options) {
-      var options = $.extend(true, {}, $.fn.pagewalkthrough.defaults, options);
+      options = $.extend(true, {}, $.fn.pagewalkthrough.defaults, options);
       var that = this;
 
       if (!options.name) {
@@ -60,8 +59,6 @@
       options._element = this;
 
       return this.each(function(i) {
-        var $this = $(this);
-
         options = options || {};
         options.elementID = options.name;
 
@@ -74,14 +71,14 @@
         }
 
         //get first onload = true
-        if (_counter == 1 && _onLoad) {
+        if (_counter === 1 && _onLoad) {
           _activeId = options.name;
           _activeWalkthrough = _globalWalkthrough[_activeId];
           _onLoad = false;
         }
 
         // set the activeWalkthrough if onLoad is false for all walkthroughs
-        if ((i + 1 === that.length && _counter == 0)) {
+        if ((i + 1 === that.length && _counter === 0)) {
           _activeId = options.name;
           _activeWalkthrough = _globalWalkthrough[_elements[0]];
           _hasDefault = false;
@@ -91,16 +88,16 @@
 
     renderOverlay: function() {
 
-      //if each walkthrough has onLoad = true, throw warning message to the console
+      // if each walkthrough has onLoad: true, log warning message
       if (_counter > 1) {
-        debug('Warning: Only first walkthrough will be shown onLoad as default');
+        debug('Warning: Only 1st walkthrough will be shown onLoad as default');
       }
 
       //get cookie load
       _isCookieLoad = getCookie('_walkthrough-' + _activeId);
 
       //check if first time walkthrough
-      if (_isCookieLoad == undefined) {
+      if (typeof _isCookieLoad === 'undefined') {
         _isWalkthroughActive = true;
 
         if (!(onEnter())) return;
@@ -113,7 +110,7 @@
             if (!onAfterShow()) return;
           }
         }, 100);
-      } else { //check when user used to close the walkthrough to call the onCookieLoad callback
+      } else {
         onCookieLoad(_globalWalkthrough);
       }
     },
@@ -130,7 +127,7 @@
     close: function() {
       var options = _activeWalkthrough;
 
-      if (typeof options.onClose === "function") {
+      if (typeof options.onClose === 'function') {
         options.onClose.call(this);
       }
 
@@ -258,7 +255,7 @@
   function buildWalkthrough() {
     $jpWalkthrough.removeClass('jpw-scrolling');
     var options = _activeWalkthrough,
-      scrollElement,
+      step = options.steps[_index],
       targetElement;
 
     //call onBeforeShow callback
@@ -267,33 +264,40 @@
     }
 
     // Extend step options with defaults
-    options.steps[_index] = $.extend(
-        true, {}, $.fn.pagewalkthrough.defaults.steps[0], options.steps[_index]
+    step = $.extend(
+        true, {}, $.fn.pagewalkthrough.defaults.steps[0], step
     );
 
-    targetElement = options._element.find(options.steps[_index].wrapper);
+    targetElement = options._element.find(step.wrapper);
 
     $jpwOverlay.show();
 
-    if (options.steps[_index].popup.type != 'modal' && options.steps[_index].popup.type != 'nohighlight') {
+    if (step.popup.type !== 'modal' && step.popup.type !== 'nohighlight') {
 
       $jpWalkthrough.html('');
 
       //check if wrapper is not empty or undefined
-      if (options.steps[_index].wrapper == '' || options.steps[_index].wrapper == undefined) {
-        alert('Your walkthrough position is: "' + options.steps[_index].popup.type + '" but wrapper is empty or undefined. Please check your "' + _activeId + '" wrapper parameter.');
+      if (step.wrapper === '' || typeof step.wrapper === 'undefined') {
+        // @TODO should we skip here?
+        debug('Your walkthrough position is: "' + step.popup.type +
+            '" but wrapper is empty or undefined. Please check your "' +
+            _activeId + '" wrapper parameter.'
+        );
         return;
       }
 
       // @todo make it so we don't have to destroy and recreate this element for
       // each step
       $jpwOverlay.appendTo($jpWalkthrough);
-      var overlayHole = $('<div>')
+
+      // Overlay hole
+      $('<div>')
         .addClass('overlay-hole')
         .height(targetElement.outerHeight())
         .width(targetElement.outerWidth())
         .css({
-            padding: '20px', // Recommended to be at least twice the inset box-shadow spread
+             // Recommended to be at least twice the inset box-shadow spread
+            padding: '20px',
             position: 'absolute',
             top: targetElement.offset().top - 20, // top/left minus padding
             left: targetElement.offset().left - 20,
@@ -319,20 +323,20 @@
       $jpWalkthrough.appendTo('body').show();
       $jpwTooltip.show();
 
-      if (options.steps[_index].accessible) {
+      if (step.accessible) {
         showTooltip(true);
       } else {
         showTooltip(false);
       }
 
 
-    } else if (options.steps[_index].popup.type == 'modal') {
+    } else if (step.popup.type === 'modal') {
 
       if ($('#jpWalkthrough').length) {
         $('#jpWalkthrough').remove();
       }
 
-      if (options.steps[_index].overlay == undefined || options.steps[_index].overlay) {
+      if (typeof step.overlay === 'undefined' || step.overlay) {
         showModal(true);
       } else {
         showModal(false);
@@ -341,13 +345,6 @@
     } else {
       if ($('#jpWalkthrough').length) {
         $('#jpWalkthrough').remove();
-      }
-
-
-      if (options.steps[_index].overlay == undefined || options.steps[_index].overlay) {
-        noHighlight(true);
-      } else {
-        noHighlight(false);
       }
     }
 
@@ -362,8 +359,7 @@
 
   function showModal(isOverlay) {
     var options = _activeWalkthrough,
-      overlayClass = '',
-      content;
+      step = options.steps[_index];
 
     if (isOverlay) {
       $jpwOverlay.appendTo('body').show().removeClass('transparent');
@@ -373,13 +369,13 @@
       }
     }
 
-    var textRotation = setRotation(parseInt(options.steps[_index].popup.contentRotation));
+    var textRotation = setRotation(parseInt(step.popup.contentRotation));
 
     $jpwTooltip.css({
       'position': 'absolute',
       'left': '50%',
       'top': '20%',
-      'margin-left': -(parseInt(options.steps[_index].popup.width) + 60) / 2 + 'px',
+      'margin-left': -(parseInt(step.popup.width) + 60) / 2 + 'px',
       'z-index': '999999'
     });
 
@@ -398,7 +394,10 @@
 
     $jpWalkthrough.html('');
     $jpwTooltip.html('').append(tooltipSlide)
-      .wrapInner('<div id="tooltipWrapper" style="width:' + cleanValue(parseInt(options.steps[_index].popup.width) + 30) + '"></div>')
+      .wrapInner($('<div />', {
+        id: 'tooltipWrapper',
+        style: 'width:' + cleanValue(parseInt(step.popup.width) + 30)
+      }))
       .append('<div id="bottom-scratch"></div>')
       .appendTo($jpWalkthrough);
 
@@ -407,7 +406,7 @@
 
     $('#tooltipWrapper').css(textRotation);
 
-    $('#tooltipInner').append(getContent(options.steps[_index])).show();
+    $('#tooltipInner').append(getContent(step)).show();
 
     $jpwTooltip.css('margin-top', -(($jpwTooltip.height()) / 2) + 'px');
     $jpWalkthrough.show();
@@ -419,19 +418,19 @@
    */
 
   function showTooltip(isAccessible) {
-    var opt = _activeWalkthrough;
+    var opt = _activeWalkthrough,
+      step = opt.steps[_index];
 
-    var tooltipWidth = (opt.steps[_index].popup.width == '') ? 300 : opt.steps[_index].popup.width,
-      top, left, arrowTop, arrowLeft,
-      roundedCorner = 30,
+    var top, left, arrowTop, arrowLeft,
       overlayHoleWidth = $('#jpWalkthrough .overlay-hole').outerWidth(),
       overlayHoleHeight = $('#jpWalkthrough .overlay-hole').outerHeight(),
       overlayHoleTop = $('#jpWalkthrough .overlay-hole').offset().top,
       overlayHoleLeft = $('#jpWalkthrough .overlay-hole').offset().left,
-      arrow = 30,
-      draggable = '';
+      arrow = 30;
 
-    var textRotation = (opt.steps[_index].popup.contentRotation == undefined || parseInt(opt.steps[_index].popup.contentRotation) == 0) ? clearRotation() : setRotation(parseInt(opt.steps[_index].popup.contentRotation));
+    var textRotation = (typeof step.popup.contentRotation === 'undefined' ||
+        parseInt(step.popup.contentRotation) === 0) ? clearRotation() :
+        setRotation(parseInt(step.popup.contentRotation));
 
 
     // Remove overlay background to prevent double-transparency
@@ -459,10 +458,13 @@
       'z-index': '999999'
     })
       .append(tooltipSlide)
-      .wrapInner('<div id="tooltipWrapper" style="width:' + cleanValue(parseInt(opt.steps[_index].popup.width) + 30) + '"></div>')
+      .wrapInner($('<div />', {
+          id: 'tooltipWrapper',
+          style: 'width:' + cleanValue(parseInt(step.popup.width) + 30)
+      }))
       .appendTo($jpWalkthrough);
 
-    if (opt.steps[_index].popup.draggable) {
+    if (step.popup.draggable) {
       $jpwTooltip.append('<div id="drag-area" class="draggable-area"></div>');
     }
 
@@ -470,50 +472,67 @@
 
     $('#tooltipWrapper').css(textRotation);
 
-    $('#tooltipInner').append(getContent(opt.steps[_index])).show();
+    $('#tooltipInner').append(getContent(step)).show();
 
-    $jpwTooltip.append('<span class="' + opt.steps[_index].popup.position + '">&nbsp;</span>');
+    $jpwTooltip.append(
+        '<span class="' + step.popup.position + '">&nbsp;</span>'
+    );
 
-    switch (opt.steps[_index].popup.position) {
+    switch (step.popup.position) {
 
       case 'top':
-        top = overlayHoleTop - ($jpwTooltip.height() + (arrow / 2)) + parseInt(opt.steps[_index].popup.offsetVertical) - 86;
+        top = overlayHoleTop - ($jpwTooltip.height() + (arrow / 2)) +
+            parseInt(step.popup.offsetVertical) - 86;
         if (isAccessible) {
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) - ($jpwTooltip.width() / 2) - 40 + parseInt(opt.steps[_index].popup.offsetHorizontal);
+          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
+            ($jpwTooltip.width() / 2) - 40 +
+            parseInt(step.popup.offsetHorizontal);
         } else {
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) - ($jpwTooltip.width() / 2) - 5 + parseInt(opt.steps[_index].popup.offsetHorizontal);
+          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
+            ($jpwTooltip.width() / 2) - 5 + parseInt(step.popup.offsetHorizontal
+            );
         }
         arrowLeft = ($jpwTooltip.width() / 2) - arrow;
         arrowTop = '';
         break;
       case 'right':
-        top = overlayHoleTop - (arrow / 2) + parseInt(opt.steps[_index].popup.offsetVertical);
-        left = overlayHoleLeft + overlayHoleWidth + (arrow / 2) + parseInt(opt.steps[_index].popup.offsetHorizontal) + 105;
+        top = overlayHoleTop - (arrow / 2) +
+            parseInt(step.popup.offsetVertical);
+        left = overlayHoleLeft + overlayHoleWidth + (arrow / 2) +
+            parseInt(step.popup.offsetHorizontal) + 105;
         arrowTop = arrow;
         arrowLeft = '';
         break;
       case 'bottom':
 
         if (isAccessible) {
-          top = (overlayHoleTop + overlayHoleHeight) + parseInt(opt.steps[_index].popup.offsetVertical) + 86;
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) - ($jpwTooltip.width() / 2) - 40 + parseInt(opt.steps[_index].popup.offsetHorizontal);
+          top = (overlayHoleTop + overlayHoleHeight) +
+            parseInt(step.popup.offsetVertical) + 86;
+          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
+            ($jpwTooltip.width() / 2) - 40 +
+            parseInt(step.popup.offsetHorizontal);
         } else {
-          top = overlayHoleTop + overlayHoleHeight + parseInt(opt.steps[_index].popup.offsetVertical) + 86;
-          left = (overlayHoleLeft + (overlayHoleWidth / 2)) - ($jpwTooltip.width() / 2) - 5 + parseInt(opt.steps[_index].popup.offsetHorizontal);
+          top = overlayHoleTop + overlayHoleHeight +
+            parseInt(step.popup.offsetVertical) + 86;
+          left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
+            ($jpwTooltip.width() / 2) - 5 +
+            parseInt(step.popup.offsetHorizontal);
         }
 
         arrowLeft = ($jpwTooltip.width() / 2) - arrow;
         arrowTop = '';
         break;
       case 'left':
-        top = overlayHoleTop - (arrow / 2) + parseInt(opt.steps[_index].popup.offsetVertical);
-        left = overlayHoleLeft - $jpwTooltip.width() - (arrow) + parseInt(opt.steps[_index].popup.offsetHorizontal) - 105;
+        top = overlayHoleTop - (arrow / 2) +
+            parseInt(step.popup.offsetVertical);
+        left = overlayHoleLeft - $jpwTooltip.width() - (arrow) +
+            parseInt(step.popup.offsetHorizontal) - 105;
         arrowTop = arrow;
         arrowLeft = '';
         break;
     }
 
-    $('#jpwTooltip span.' + opt.steps[_index].popup.position).css({
+    $('#jpwTooltip span.' + step.popup.position).css({
       'left': cleanValue(arrowLeft)
     });
 
@@ -582,9 +601,9 @@
   //callback for onLoadHidden cookie
 
   function onCookieLoad(options) {
-
+    /*jshint validthis: true */
     for (var i = 0; i < _elements.length; i++) {
-      if (typeof(options[_elements[i]].onCookieLoad) === "function") {
+      if (typeof(options[_elements[i]].onCookieLoad) === 'function') {
         options[_elements[i]].onCookieLoad.call(this);
       }
     }
@@ -593,9 +612,10 @@
   }
 
   function onLeave(e) {
+    /*jshint validthis: true */
     var options = _activeWalkthrough;
 
-    if (typeof options.steps[_index].onLeave === "function") {
+    if (typeof options.steps[_index].onLeave === 'function') {
       if (!options.steps[_index].onLeave.call(this, e, _index)) {
         return false;
       }
@@ -608,10 +628,10 @@
   //callback for onEnter step
 
   function onEnter(e) {
-
+    /*jshint validthis: true */
     var options = _activeWalkthrough;
 
-    if (typeof options.steps[_index].onEnter === "function") {
+    if (typeof options.steps[_index].onEnter === 'function') {
       return options.steps[_index].onEnter.call(this, e, _index);
     }
 
@@ -621,12 +641,13 @@
   //callback for onRestart help
 
   function onRestart(e) {
+    /*jshint validthis: true */
     var options = _activeWalkthrough;
     //set help mode to true
     _isWalkthroughActive = true;
     methods.restart(e);
 
-    if (typeof options.onRestart === "function") {
+    if (typeof options.onRestart === 'function') {
       if (!options.onRestart.call(this)) {
         return false;
       }
@@ -638,10 +659,11 @@
   //callback for before all first walkthrough element loaded
 
   function onBeforeShow() {
+    /*jshint validthis: true */
     var options = _activeWalkthrough || {};
     _index = 0;
 
-    if (typeof(options.onBeforeShow) === "function") {
+    if (typeof(options.onBeforeShow) === 'function') {
       if (!options.onBeforeShow.call(this)) {
         return false;
       }
@@ -653,10 +675,11 @@
   //callback for after all first walkthrough element loaded
 
   function onAfterShow() {
+    /*jshint validthis: true */
     var options = _activeWalkthrough;
     _index = 0;
 
-    if (typeof(options.onAfterShow) === "function") {
+    if (typeof(options.onAfterShow) === 'function') {
       if (!options.onAfterShow.call(this)) {
         return false;
       }
@@ -670,11 +693,6 @@
   /**
    * HELPERS
    */
-
-  function windowWidth() {
-    return $(window).innerWidth() || $(window).width();
-  }
-
   function debug(message) {
     if (window.console && window.console.log)
       window.console.log(message);
@@ -687,7 +705,7 @@
       '-o-transform': 'none', //opera
       'filter': 'none', //IE7
       '-ms-transform': 'none' //IE8+
-    }
+    };
 
     return rotationStyle;
   }
@@ -710,17 +728,16 @@
       '-webkit-transform': 'rotate(' + parseInt(angle) + 'deg)', //safari
       '-moz-transform': 'rotate(' + parseInt(angle) + 'deg)', //firefox
       '-o-transform': 'rotate(' + parseInt(angle) + 'deg)', //opera
-      'filter': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',sizingMethod = "auto expand");', //IE7
-      '-ms-transform': 'progid:DXImageTransform.Microsoft.Matrix(M11 = ' + M11 + ',M12 = -' + M12 + ',M21 = ' + M21 + ',M22 = ' + M22 + ',SizingMethod = "auto expand");' //IE8+
-    }
+      '-ms-transform': 'rotate(' + parseInt(angle) + 'deg)' //IE9+
+    };
 
     return rotationStyle;
 
   }
 
   function cleanValue(value) {
-    if (typeof value === "string") {
-      if (value.toLowerCase().indexOf('px') == -1) {
+    if (typeof value === 'string') {
+      if (value.toLowerCase().indexOf('px') === -1) {
         return value + 'px';
       } else {
         return value;
@@ -730,111 +747,22 @@
     }
   }
 
-  function cleanSyntax(val) {
-
-    if (val.indexOf('px') != -1) {
-      return true;
-    } else if (parseInt(val) == 0) {
-      return true;
-    }
-    return false;
-  }
-
-  function cssSyntax(val, position) {
-    if (!val) val = '0px';
-
-    var value = val,
-      arrVal = value.split(' '),
-      counter = 0,
-      top, right, bottom, left, returnVal;
-
-    for (var i = 0; i < arrVal.length; i++) {
-      //check if syntax is clean with value and 'px'
-      if (cleanSyntax(arrVal[i])) {
-        counter++;
-      }
-    }
-
-    //all syntax are clean
-    if (counter == arrVal.length) {
-
-      for (i = 0; i < arrVal.length; i++) {
-
-        switch (i) {
-          case 0:
-            top = arrVal[i];
-            break;
-          case 1:
-            right = arrVal[i];
-            break;
-          case 2:
-            bottom = arrVal[i];
-            break;
-          case 3:
-            left = arrVal[i];
-            break;
-        }
-
-      }
-
-      switch (arrVal.length) {
-        case 1:
-          right = bottom = left = top;
-          break;
-        case 2:
-          bottom = top;
-          left = right;
-          break;
-        case 3:
-          left = right;
-          break;
-      }
-
-      if (position == 'undefined' || position == '' || position == null) {
-        console.log('Please define margin position (top, right, bottom, left)');
-        return false;
-      } else {
-
-        switch (position) {
-          case 'top':
-            returnVal = top;
-            break;
-          case 'right':
-            returnVal = right;
-            break;
-          case 'bottom':
-            returnVal = bottom;
-            break;
-          case 'left':
-            returnVal = left;
-            break;
-        }
-
-      }
-
-      return returnVal;
-
-    } else {
-      console.log('Please check your margin syntax..');
-      return false;
-    }
-  }
-
-  function setCookie(c_name, value, exdays) {
+  function setCookie(cName, value, exdays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
-    document.cookie = c_name + "=" + c_value;
+    var cValue = encodeURIComponent(value) + ((exdays == null) ? '' :
+        '; expires=' + exdate.toUTCString());
+    document.cookie = [cName, '=', cValue].join('');
   }
 
-  function getCookie(c_name) {
-    var i, x, y, ARRcookies = document.cookie.split(";");
+  function getCookie(cName) {
+    var i, x, y, ARRcookies = document.cookie.split(';');
     for (i = 0; i < ARRcookies.length; i++) {
-      x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
-      y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
-      x = x.replace(/^\s+|\s+$/g, "");
-      if (x == c_name) {
-        return unescape(y);
+      x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
+      y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
+      x = x.replace(/^\s+|\s+$/g, '');
+      if (x === cName) {
+        return decodeURIComponent(y);
       }
     }
   }
@@ -845,7 +773,7 @@
    *                   otherwise
    */
   function isLastStep() {
-    return _index == (_activeWalkthrough.steps.length - 1);
+    return _index === (_activeWalkthrough.steps.length - 1);
   }
 
   /* Returns true if the current step is the first step in the walkthrough.
@@ -934,20 +862,21 @@
       $(this).addClass('draggable').css('cursor', 'move');
     }
 
-    var z_idx = $(this).css('z-index'),
-      drg_h = $(this).outerHeight(),
-      drg_w = $(this).outerWidth(),
-      pos_y = $(this).offset().top + (drg_h * 2) - e.pageY - 10,
-      pos_x = (e.pageX - $(this).offset().left + drg_w) - ($(this).parent().outerWidth() + drg_w) + 20;
+    var zIdx = $(this).css('z-index'),
+      drgH = $(this).outerHeight(),
+      drgW = $(this).outerWidth(),
+      posY = $(this).offset().top + (drgH * 2) - e.pageY - 10,
+      posX = (e.pageX - $(this).offset().left + drgW) -
+        ($(this).parent().outerWidth() + drgW) + 20;
 
-    $(document).on("mousemove", function(e) {
+    $(document).on('mousemove', function(e) {
 
       $('.draggable').parent().offset({
-        top: e.pageY + pos_y - drg_h,
-        left: e.pageX + pos_x - drg_w
-      }).on("mouseup", function() {
+        top: e.pageY + posY - drgH,
+        left: e.pageX + posX - drgW
+      }).on('mouseup', function() {
         $(this).children('#tooltipWrapper').removeClass('draggable').css({
-          'z-index': z_idx,
+          'z-index': zIdx,
           'cursor': 'default'
         });
       });
@@ -966,7 +895,7 @@
 
     if (methods[method]) {
 
-      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+      return methods[method].apply(this, [].slice.call(arguments, 1));
 
     } else if (typeof method === 'object' || !method) {
 
@@ -985,7 +914,7 @@
 
     }
 
-  }
+  };
 
   /* #### <a name="default-options">Options</a>
    *
@@ -1006,9 +935,11 @@
           // Selector for the element which contains the content, or the literal
           // content
           content: '',
-          // Popup type - either modal, tooltip or nohighlight.  See [Popup Types](/pages/popup-types.html)
+          // Popup type - either modal, tooltip or nohighlight.
+          // See [Popup Types](/pages/popup-types.html)
           type: 'modal',
-          // Position for tooltip and nohighlight style popups - either top, left, right or bottom
+          // Position for tooltip and nohighlight style popups - either top,
+          // left, right or bottom
           position: 'top',
           // Horizontal offset for the walkthrough
           offsetHorizontal: 0,
@@ -1023,7 +954,8 @@
         },
         // Whether the overlay should be shown or not
         overlay: true,
-        // Allow user interaction with highlighted content - e.g. allow typing in inputs
+        // Allow user interaction with highlighted content - e.g. allow typing
+        // in inputs
         accessible: false,
         // Automatically scroll to the content for the step
         autoScroll: true,
@@ -1037,11 +969,13 @@
         onLeave: null
       }
     ],
-    // **(Required)** Walkthrough name.  Should be a unique name to identify the walkthrough, as it will
+    // **(Required)** Walkthrough name.  Should be a unique name to identify the
+    // walkthrough, as it will
     // be used in the cookie name
     name: null,
-    // Automatically show the walkthrough when the page is loaded.  If multiple walkthroughs set this to
-    // true, only the first walkthrough is shown automatically
+    // Automatically show the walkthrough when the page is loaded.  If multiple
+    // walkthroughs set this to true, only the first walkthrough is shown
+    // automatically
     onLoad: true,
     // Callback to be executed before the walkthrough is shown
     onBeforeShow: null,
@@ -1049,22 +983,24 @@
     onAfterShow: null,
     // Callback executed in the event that 'restart' is triggered
     onRestart: null,
-    // Callback executed when the walkthrough is closed.  The walkthrough can be closed by the user
-    // clicking the close button in the top right, or clicking the finish button on the last step
+    // Callback executed when the walkthrough is closed.  The walkthrough can be
+    // closed by the user clicking the close button in the top right, or
+    // clicking the finish button on the last step
     onClose: null,
-    // Callback executed when cookie has been set after a walkthrough has been closed
+    // Callback executed when cookie has been set after a walkthrough has been
+    // closed
     onCookieLoad: null,
     /* ##### <a name="controls-options">Walkthrough controls</a>
      *
-     * Hash of buttons to show.  Object keys are used as the button element's ID.
+     * Hash of buttons to show.  Object keys are used as the button element's ID
      */
     buttons: {
       // ID of the button
       jpwClose: {
         // Translation string for the button
         i18n: 'Click here to close',
-        // Whether or not to show the button.  Can be a boolean value, or a function which returns
-        // a boolean value
+        // Whether or not to show the button.  Can be a boolean value, or a
+        // function which returns a boolean value
         show: true
       },
       jpwNext: {
