@@ -276,12 +276,13 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
-### 14/08/2014
+#### 14/08/2014
 
+* `v2.3.7`: Re-work of fix for issue #35, to make sure stuff behind the overlay cannot be clicked the second time a walkthrough is shown
 * `v2.3.6`: Fix `onEnter` callback not firing if used with first step of a tour
 * `v2.3.5`: Re-work fix for issue #36, original attempt at fixing in `v2.3.3`
 
-### 13/08/2014
+#### 13/08/2014
 
 * `v2.3.4`: Fix issue with auto-scrolling to a new target element when the element to scroll is already partly scrolled
 * `v2.3.3`: Fix to prevent clicks on the overlay propagating, thus fixing issue where highlighted Bootstrap dropdowns and such would close
@@ -290,14 +291,14 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 * `v2.3.0`: Fix the auto-scrolling behaviour so that it can scroll elements other than `body,html`
 * `v2.2.1`: Moved the `onClose` callback to before the index reset, so close callbacks can access the last step index.
 
-### 12/08/2014
+#### 12/08/2014
 
 * `v2.2.0`: Remove support for `noHighlight` step types, add box-shadow based overlays
 * `v2.1.3`: Make sure `wrapper` option selector is scoped to the current walkthrough's element, instead of being a document-wide selector
 * `v2.1.2`: Fixes 2 bugs related to the `onClose` callback: 1) would not fire if walkthrough closed using `close` method, and 2) specifying an `onClose` callback would prevent
 the default `close` behaviour from triggering, resulting in the walkthrough not being hidden
 
-### 07/08/2014
+#### 07/08/2014
 
 * `v2.1.1`: Fixes support for multiple walkthroughs, adds clearer method documentation and a basic test suite
 * `v2.1.0`: Support for literal content in each step's `popup.content` option, instead of just a selector
@@ -305,18 +306,18 @@ the default `close` behaviour from triggering, resulting in the walkthrough not 
 * `v1.4.0`: `name` is now a required option and **must be provided for all tours**
 * `v1.3.0`: Deprecate `isPageWalkthroughActive` function in favour of `isActive` function
 
-### 05/08/2014
+#### 05/08/2014
 
 * `v1.2.4`: Add an optional finish button to the last step of the tour
 
-### 04/08/2014
+#### 04/08/2014
 
 * `v1.2.3`: Hotfix for each step's options not correctly extending default options
 * `v1.2.2`: Hotfix to make the plugin actually work
 * `v1.2.1`: Bug fix
 * `v1.2.0`: Remove demo/example related files from master branch; source files into src/; distribution files into dist/
 
-### 30/07/2014
+#### 30/07/2014
 
 * `v1.1.4`: Add option to make close button optional
 * `v1.1.3`: Support for showing next and previous buttons to move between tour stops

@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.3.6
+ * Version: 2.3.7
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -272,6 +272,8 @@
     );
 
     targetElement = options._element.find(options.steps[_index].wrapper);
+
+    $jpwOverlay.show();
 
     if (options.steps[_index].popup.type != 'modal' && options.steps[_index].popup.type != 'nohighlight') {
 
