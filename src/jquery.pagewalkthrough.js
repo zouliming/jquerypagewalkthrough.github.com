@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.5.0
+ * Version: 2.5.1
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -264,7 +264,7 @@
     }
 
     // Extend step options with defaults
-    step = $.extend(
+    options.steps[_index] = $.extend(
         true, {}, $.fn.pagewalkthrough.defaults.steps[0], step
     );
 

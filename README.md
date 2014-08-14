@@ -314,6 +314,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 14/08/2014
 
+* `v2.5.1`: Fix position of tooltips, which broke in 2a5003f following a minor refactor
 * `v2.5.0`: Remove draggable tooltip 'feature'
 * `v2.4.0`: Remove defunct `accessible` and `overlay` options from step options
 * `v2.3.8`: Fix clicks on tooltip content propagating through the DOM
