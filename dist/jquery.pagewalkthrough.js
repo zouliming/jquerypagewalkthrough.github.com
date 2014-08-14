@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.3.5
+ * Version: 2.3.6
  * Issue, Feature & Bug Support: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -102,6 +102,8 @@
       //check if first time walkthrough
       if (_isCookieLoad == undefined) {
         _isWalkthroughActive = true;
+
+        if (!(onEnter())) return;
         showStep();
         showButton('jpwClose', 'body');
 
@@ -155,8 +157,14 @@
 
     },
 
-    show: function(name) {
+    show: function(name, e) {
+      // If no name, then first argument is event
+      e = name == null ? name : e;
+
       name = name || this.first().data('jpw').name;
+
+      if ((name === _activeId && _isWalkthroughActive) || !(onEnter(e))) return;
+
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
       _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
@@ -601,9 +609,7 @@
     var options = _activeWalkthrough;
 
     if (typeof options.steps[_index].onEnter === "function") {
-      if (!options.steps[_index].onEnter.call(this, e, _index)) {
-        return false;
-      }
+      return options.steps[_index].onEnter.call(this, e, _index);
     }
 
     return true;
