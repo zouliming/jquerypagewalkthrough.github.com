@@ -278,6 +278,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 14/08/2014
 
+* `v2.3.8`: Fix clicks on tooltip content propagating through the DOM
 * `v2.3.7`: Re-work of fix for issue #35, to make sure stuff behind the overlay cannot be clicked the second time a walkthrough is shown
 * `v2.3.6`: Fix `onEnter` callback not firing if used with first step of a tour
 * `v2.3.5`: Re-work fix for issue #36, original attempt at fixing in `v2.3.3`
