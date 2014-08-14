@@ -163,11 +163,12 @@
 
       name = name || this.first().data('jpw').name;
 
+      _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
+
       if ((name === _activeId && _isWalkthroughActive) || !(onEnter(e))) return;
 
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
-      _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
 
       showStep();
       showButton('jpwClose', 'body');
