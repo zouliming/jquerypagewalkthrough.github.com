@@ -112,7 +112,7 @@ QUnit.test('increments step index when next is called', 1, function(assert) {
     this.fixture.pagewalkthrough('show');
     this.fixture.pagewalkthrough('next');
 
-    var idx = this.fixture.pagewalkthrough('currIndex');
+    var idx = this.fixture.pagewalkthrough('index');
 
     assert.strictEqual(idx, 1, 'Index is incremented');
 });
@@ -123,11 +123,11 @@ QUnit.test('does not increment step index on final step', 2, function(assert) {
     this.fixture.pagewalkthrough('show');
     this.fixture.pagewalkthrough('next');
 
-    assert.strictEqual(this.fixture.pagewalkthrough('currIndex'), 1, 'Incremented');
+    assert.strictEqual(this.fixture.pagewalkthrough('index'), 1, 'Incremented');
 
     this.fixture.pagewalkthrough('next');
 
-    assert.strictEqual(this.fixture.pagewalkthrough('currIndex'), 1, 'Not incremented');
+    assert.strictEqual(this.fixture.pagewalkthrough('index'), 1, 'Not incremented');
 });
 
 QUnit.module('prev', lifecycle);
@@ -138,13 +138,13 @@ QUnit.test('decrements step index when prev is called', 2, function(assert) {
     this.fixture.pagewalkthrough('show');
     this.fixture.pagewalkthrough('next');
 
-    var idx = this.fixture.pagewalkthrough('currIndex');
+    var idx = this.fixture.pagewalkthrough('index');
 
     assert.strictEqual(idx, 1, 'Index is incremented');
 
     this.fixture.pagewalkthrough('prev');
 
-    idx = this.fixture.pagewalkthrough('currIndex');
+    idx = this.fixture.pagewalkthrough('index');
     assert.strictEqual(idx, 0, 'Index is decremented');
 });
 
@@ -154,7 +154,7 @@ QUnit.test('does not decrement step index on first step', 1, function(assert) {
     this.fixture.pagewalkthrough('show');
     this.fixture.pagewalkthrough('prev');
 
-    assert.strictEqual(this.fixture.pagewalkthrough('currIndex'), 0, 'Not incremented');
+    assert.strictEqual(this.fixture.pagewalkthrough('index'), 0, 'Not incremented');
 });
 
 QUnit.module('isActive', lifecycle);
@@ -268,12 +268,12 @@ QUnit.test('returns options for a walkthrough element', function(assert) {
     assert.strictEqual(opts.name, 'test', 'Returns correct walkthrough name');
 });
 
-QUnit.module('currIndex', lifecycle);
+QUnit.module('index', lifecycle);
 
 QUnit.test('returns zero on the first step', function(assert) {
     createWalkthrough(this.fixture);
 
-    assert.strictEqual(this.fixture.pagewalkthrough('currIndex'), 0);
+    assert.strictEqual(this.fixture.pagewalkthrough('index'), 0);
 });
 
 QUnit.test('returns one on the second step', function(assert) {
@@ -282,7 +282,7 @@ QUnit.test('returns one on the second step', function(assert) {
     this.fixture.pagewalkthrough('show');
     this.fixture.pagewalkthrough('next');
 
-    assert.strictEqual(this.fixture.pagewalkthrough('currIndex'), 1);
+    assert.strictEqual(this.fixture.pagewalkthrough('index'), 1);
 });
 
 QUnit.module('Errors', lifecycle);
