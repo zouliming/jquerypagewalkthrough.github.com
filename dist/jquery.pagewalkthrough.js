@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.5.6
+ * Version: 2.6.0
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -495,16 +495,21 @@
         left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
           ($jpwTooltip.width() / 2) - 5 +
           parseInt(step.popup.offsetHorizontal, 10);
-        arrowLeft = ($jpwTooltip.width() / 2) - arrow;
-        arrowTop = '';
+        arrowLeft = ($jpwTooltip.width() / 2) - arrow +
+            parseInt(step.popup.offsetArrowHorizontal, 10);
+        arrowTop = (step.popup.offsetArrowVertical) ?
+            parseInt(step.popup.offsetArrowVertical, 10) :
+            '';
         break;
       case 'right':
         top = overlayHoleTop - (arrow / 2) +
             parseInt(step.popup.offsetVertical, 10);
         left = overlayHoleLeft + overlayHoleWidth + (arrow / 2) +
             parseInt(step.popup.offsetHorizontal, 10) + 105;
-        arrowTop = arrow;
-        arrowLeft = '';
+        arrowTop = arrow + parseInt(step.popup.offsetArrowVertical, 10);
+        arrowLeft = (step.popup.offsetArrowHorizontal) ?
+            parseInt(step.popup.offsetArrowHorizontal, 10) :
+            '';
         break;
       case 'bottom':
         top = overlayHoleTop + overlayHoleHeight +
@@ -513,20 +518,26 @@
           ($jpwTooltip.width() / 2) - 5 +
           parseInt(step.popup.offsetHorizontal, 10);
 
-        arrowLeft = ($jpwTooltip.width() / 2) - arrow;
-        arrowTop = '';
+        arrowLeft = (($jpwTooltip.width() / 2) - arrow) +
+            parseInt(step.popup.offsetArrowHorizontal, 10);
+        arrowTop = (step.popup.offsetArrowVertical) ?
+            parseInt(step.popup.offsetArrowVertical, 10) :
+            '';
         break;
       case 'left':
         top = overlayHoleTop - (arrow / 2) +
             parseInt(step.popup.offsetVertical, 10);
         left = overlayHoleLeft - $jpwTooltip.width() - (arrow) +
             parseInt(step.popup.offsetHorizontal, 10) - 105;
-        arrowTop = arrow;
-        arrowLeft = '';
+        arrowTop = arrow + parseInt(step.popup.offsetArrowVertical, 10);
+        arrowLeft = (step.popup.offsetArrowVertical) ?
+            parseInt(step.popup.offsetArrowHorizontal, 10) :
+            '';
         break;
     }
 
     $('#jpwTooltip span.' + step.popup.position).css({
+      'top': cleanValue(arrowTop),
       'left': cleanValue(arrowLeft)
     });
 
@@ -902,6 +913,10 @@
           offsetHorizontal: 0,
           // Vertical offset for the walkthrough
           offsetVertical: 0,
+          // Horizontal offset for the arrow
+          offsetArrowHorizontal: 0,
+          // Vertical offset for the arrow
+          offsetArrowVertical: 0,
           // Default width for each popup
           width: '320',
           // Amount in degrees to rotate the content by
