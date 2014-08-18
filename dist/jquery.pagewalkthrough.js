@@ -227,6 +227,7 @@
       step = options.steps[_index],
       targetElement = options._element.find(step.wrapper),
       scrollTarget = getScrollParent(targetElement),
+      maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight(),
       // For modals, scroll to the top.  For tooltips, try and center the target
       // (wrapper) element in the screen
       scrollTo = step.popup.type === 'modal' ? 0 :
@@ -235,12 +236,24 @@
           scrollTarget.scrollTop()
         );
 
-    // Only scroll if:
-    //   1.  the new scroll value is <= 0 and the scrollElement offset is > 0
-    //   2.  the new scroll value is > 0 and not equal to the current
-    //       scrollElement offset
-    if ((scrollTo <= 0 && scrollTarget.scrollTop() !== 0) ||
-      (scrollTo > 0 && scrollTo !== scrollTarget.scrollTop())) {
+    // @TODO: simplify this logic
+    //
+    // Conditions for scrolling:
+    //   1.  new scroll value is not equal to current scroll value
+    //    AND
+    //     a.  new scroll value is less than the max scroll, and we are
+    //         currently at the max scroll value
+    //      OR
+    //     b.  new scroll value is less than or equal to 0, and the current
+    //         scroll is greater than 0
+    //      OR
+    //     c.  new scroll value is greater than 0 and currentScroll is 0
+    if (scrollTarget.scrollTop() !== scrollTo &&
+      (
+        (scrollTarget.scrollTop() === maxScroll && scrollTo < maxScroll) ||
+        (scrollTo <= 0 && scrollTarget.scrollTop() > 0) ||
+        (scrollTo > 0 && scrollTarget.scrollTop() === 0)
+      )) {
 
       // Stylistic concerns - fill overlay hole and hide tooltip whilst
       // scrolling
