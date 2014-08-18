@@ -318,6 +318,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 18/08/2014
 
+* `v2.5.5`: Fix issue where modal steps would be mis-aligned when walkthrough re-opened
 * `v2.5.4`: Fix issue where plugin would try to scroll when it shouldn't because of the `scrollTo` value being a decimal
 * `v2.5.3`: Fix issue where highlight overlay could overflow the containing element
 
