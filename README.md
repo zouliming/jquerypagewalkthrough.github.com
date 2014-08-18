@@ -316,6 +316,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+#### 18/08/2014
+
+* `v2.5.3`: Fix issue where highlight overlay could overflow the containing element
+
 #### 14/08/2014
 
 * `v2.5.2`: Update to test dependencies, fix centering of modal content

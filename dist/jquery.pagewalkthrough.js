@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.5.2
+ * Version: 2.5.3
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -260,7 +260,9 @@
     $jpWalkthrough.removeClass('jpw-scrolling');
     var options = _activeWalkthrough,
       step = options.steps[_index],
-      targetElement;
+      targetElement,
+      scrollParent,
+      maxHeight;
 
     //call onBeforeShow callback
     if (isFirstStep() && _firstTimeLoad) {
@@ -273,6 +275,7 @@
     );
 
     targetElement = options._element.find(step.wrapper);
+    scrollParent = getScrollParent(targetElement);
 
     $jpwOverlay.show();
 
@@ -290,6 +293,13 @@
         return;
       }
 
+      maxHeight = scrollParent.outerHeight() - targetElement.offset().top +
+        scrollParent.offset().top + scrollParent.scrollTop();
+
+      // If max height is negative, means we have plenty room so targetElement
+      // height
+      maxHeight = maxHeight <= 0 ? targetElement.outerHeight() : maxHeight;
+
       // @todo make it so we don't have to destroy and recreate this element for
       // each step
       $jpwOverlay.appendTo($jpWalkthrough);
@@ -297,7 +307,7 @@
       // Overlay hole
       $('<div>')
         .addClass('overlay-hole')
-        .height(targetElement.outerHeight())
+        .height(Math.min(maxHeight, targetElement.outerHeight()))
         .width(targetElement.outerWidth())
         .css({
              // Recommended to be at least twice the inset box-shadow spread
