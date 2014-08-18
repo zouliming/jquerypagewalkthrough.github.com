@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.5.4
+ * Version: 2.5.5
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -375,7 +375,7 @@
     $jpwTooltip.css({
       'position': 'absolute',
       'left': '50%',
-      'top': '50%',
+      'top': '25%',
       'margin-left': -(parseInt(step.popup.width, 10) + 60) / 2 + 'px',
       'z-index': '999999'
     });
@@ -409,7 +409,6 @@
 
     $('#tooltipInner').append(getContent(step)).show();
 
-    $jpwTooltip.css('margin-top', -(($jpwTooltip.height()) / 2) + 'px');
     $jpWalkthrough.show();
   }
 
