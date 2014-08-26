@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.0
+ * Version: 2.6.1
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -247,12 +247,12 @@
     //     b.  new scroll value is less than or equal to 0, and the current
     //         scroll is greater than 0
     //      OR
-    //     c.  new scroll value is greater than 0 and currentScroll is 0
+    //     c.  new scroll value is greater than 0
     if (scrollTarget.scrollTop() !== scrollTo &&
       (
         (scrollTarget.scrollTop() === maxScroll && scrollTo < maxScroll) ||
         (scrollTo <= 0 && scrollTarget.scrollTop() > 0) ||
-        (scrollTo > 0 && scrollTarget.scrollTop() === 0)
+        (scrollTo > 0)
       )) {
 
       // Stylistic concerns - fill overlay hole and hide tooltip whilst

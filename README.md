@@ -316,6 +316,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+#### 26/08/2014
+
+* `v2.6.1`: Fix issue where plugin wasn't scrolling to the target element properly
+
 #### 18/08/2014
 
 * `v2.6.0`: Add support for arrow offsets
