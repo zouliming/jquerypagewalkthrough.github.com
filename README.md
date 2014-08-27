@@ -316,6 +316,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+#### 27/08/2014
+
+* `v2.6.2`: Fix issue where plugin attempts to scroll before onBeforeShow
+
 #### 26/08/2014
 
 * `v2.6.1`: Fix issue where plugin wasn't scrolling to the target element properly

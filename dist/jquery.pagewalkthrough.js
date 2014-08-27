@@ -99,12 +99,14 @@
 
       //get cookie load
       _isCookieLoad = getCookie('_walkthrough-' + _activeId);
+      if (!(onBeforeShow())) return;
 
       //check if first time walkthrough
       if (typeof _isCookieLoad === 'undefined') {
         _isWalkthroughActive = true;
 
         if (!(onEnter())) return;
+
         showStep();
         showButton('jpwClose', 'body');
 
@@ -278,11 +280,6 @@
       targetElement,
       scrollParent,
       maxHeight;
-
-    //call onBeforeShow callback
-    if (isFirstStep() && _firstTimeLoad) {
-      if (!onBeforeShow()) return;
-    }
 
     // Extend step options with defaults
     options.steps[_index] = $.extend(
