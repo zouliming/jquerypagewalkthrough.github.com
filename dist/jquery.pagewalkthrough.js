@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.1
+ * Version: 2.6.3
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -99,7 +99,6 @@
 
       //get cookie load
       _isCookieLoad = getCookie('_walkthrough-' + _activeId);
-      if (!(onBeforeShow())) return;
 
       //check if first time walkthrough
       if (typeof _isCookieLoad === 'undefined') {
@@ -172,6 +171,7 @@
 
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
+      if (!(onBeforeShow())) return;
 
       showStep();
       showButton('jpwClose', 'body');
