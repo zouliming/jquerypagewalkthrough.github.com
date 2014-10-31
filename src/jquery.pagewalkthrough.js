@@ -7,7 +7,7 @@
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
  * Version: 2.6.3
- * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
+ * Features & Bugs: https://github.com/jwarby/jquery-pagewalkthrough/issues
  ***/
 
 ;(function($, window, document, undefined) {

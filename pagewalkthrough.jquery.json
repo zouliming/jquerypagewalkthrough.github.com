@@ -25,7 +25,7 @@
         {
             "name": "James Warwood",
             "email": "james.duncan.1991@googlemail.com",
-            "url": "https://github.com/warby-"
+            "url": "https://github.com/jwarby"
         },
         {
             "name": "Craig Roberts",
@@ -41,13 +41,13 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/warby-/jquery-pagewalkthrough.git"
+        "url": "git://github.com/jwarby/jquery-pagewalkthrough.git"
     },
     "bugs": "",
-    "homepage": "https://github.com/warby-/jquery-pagewalkthrough",
-	"demo": "http://warby-.github.io/jquery-pagewalkthrough",
-    "docs": "https://github.com/warby-/jquery-pagewalkthrough",
-    "download": "https://github.com/warby-/jquery-pagewalkthrough/archive/master.zip",
+    "homepage": "https://github.com/jwarby/jquery-pagewalkthrough",
+	"demo": "http://jwarby.github.io/jquery-pagewalkthrough",
+    "docs": "https://github.com/jwarby/jquery-pagewalkthrough",
+    "download": "https://github.com/jwarby/jquery-pagewalkthrough/archive/master.zip",
     "dependencies": {
         "jquery": ">=1.4"
     }

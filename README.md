@@ -1,6 +1,6 @@
 ###### Issues overview
-[![Issues ready to be worked on](https://badge.waffle.io/warby-/jquery-pagewalkthrough.svg?label=ready&title=Ready%20To%20Work%20On)](http://waffle.io/warby-/jquery-pagewalkthrough)
-[![Issues being worked on](https://badge.waffle.io/warby-/jquery-pagewalkthrough.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/warby-/jquery-pagewalkthrough)
+[![Issues ready to be worked on](https://badge.waffle.io/jwarby/jquery-pagewalkthrough.svg?label=ready&title=Ready%20To%20Work%20On)](http://waffle.io/jwarby/jquery-pagewalkthrough)
+[![Issues being worked on](https://badge.waffle.io/jwarby/jquery-pagewalkthrough.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/jwarby/jquery-pagewalkthrough)
 
 # jQuery Page Walkthrough
 
@@ -9,7 +9,7 @@ Forked from [jpadamsonline/jquerypagewalkthrough.github.com](https://github.com/
 Page Walkthrough is a flexible system for designing interactive, multimedia, educational walkthroughs.
 
 **Note:** currently under heavy active development, and is likely to change **alot** at this moment in time.  Check out where we're at by going to
-the [issues](https://github.com/warby-/jquery-pagewalkthrough/issues) page.
+the [issues](https://github.com/jwarby/jquery-pagewalkthrough/issues) page.
 
 ## Screenshots
 
@@ -21,12 +21,12 @@ the [issues](https://github.com/warby-/jquery-pagewalkthrough/issues) page.
 
 ## Demo site
 
-The demo site is located [here](http://warby-.github.io/jquery-pagewalkthrough/).
+The demo site is located [here](http://jwarby.github.io/jquery-pagewalkthrough/).
 
 ## Installing
 
-1. Download the release you want from the [releases page](https://github.com/warby-/jquery-pagewalkthrough/releases), or download the
-[latest code](https://github.com/warby-/jquery-pagewalkthrough/archive/master.zip)(may not be stable).
+1. Download the release you want from the [releases page](https://github.com/jwarby/jquery-pagewalkthrough/releases), or download the
+[latest code](https://github.com/jwarby/jquery-pagewalkthrough/archive/master.zip)(may not be stable).
 2. Extract the files from the `dist/` folder into your project
 3. Include the stylesheets and JS (**note: include jQuery first**):
 
