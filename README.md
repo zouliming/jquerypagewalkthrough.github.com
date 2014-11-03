@@ -316,6 +316,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+#### 3/11/2014
+
+* `v2.6.4`: If `onEnter` or `onLeave` returns `false` for a step, move to the next/previous step as appropriate 
+
 #### 28/08/2014
 
 * `v2.6.3`: Bug fix for v2.6.2 which broke onBeforeShow functionality

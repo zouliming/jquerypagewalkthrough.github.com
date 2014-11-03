@@ -6,8 +6,8 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.3
- * Features & Bugs: https://github.com/jwarby/jquery-pagewalkthrough/issues
+ * Version: 2.6.4
+ * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
 ;(function($, window, document, undefined) {
@@ -189,7 +189,9 @@
 
       if (!onLeave(e)) return;
       _index = parseInt(_index, 10) + 1;
-      if (!onEnter(e)) return;
+      if (!onEnter(e)) {
+          methods.next();
+      }
       showStep();
     },
 
@@ -198,7 +200,9 @@
 
       if (!onLeave(e)) return;
       _index = parseInt(_index, 10) - 1;
-      if (!onEnter(e)) return;
+      if (!onEnter(e)) {
+        methods.prev();
+      }
       showStep();
     },
 
