@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.4
+ * Version: 2.6.5
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -131,6 +131,8 @@
 
     close: function() {
       var options = _activeWalkthrough;
+
+      onLeave();
 
       if (typeof options.onClose === 'function') {
         options.onClose.call(this);
