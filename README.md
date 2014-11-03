@@ -2,7 +2,7 @@
 [![Issues ready to be worked on](https://badge.waffle.io/jwarby/jquery-pagewalkthrough.svg?label=ready&title=Ready%20To%20Work%20On)](http://waffle.io/jwarby/jquery-pagewalkthrough)
 [![Issues being worked on](https://badge.waffle.io/jwarby/jquery-pagewalkthrough.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/jwarby/jquery-pagewalkthrough)
 
-# jQuery Page Walkthrough
+# jQuery Page Walkthrough [![GitHub version](https://badge.fury.io/gh/jwarby%2Fjquery-pagewalkthrough.svg)](http://badge.fury.io/gh/jwarby%2Fjquery-pagewalkthrough)
 
 Forked from [jpadamsonline/jquerypagewalkthrough.github.com](https://github.com/jpadamsonline/jquerypagewalkthrough.github.com)
 
