@@ -85,7 +85,11 @@ $.fn.pagewalkthrough.defaults = {
         // Default width for each popup
         width: '320',
         // Amount in degrees to rotate the content by
-        contentRotation: 0
+        contentRotation: 0,
+        // If set to 'skip', skips tooltip/nohighlight types when the wrapper
+        // does not exist. If set to anything else, uses the value as a fallback
+        // popup type (e.g. 'modal' will fallback to a popup type of 'modal').
+        fallback: 'skip'
       },
       // Automatically scroll to the content for the step
       autoScroll: true,
@@ -318,6 +322,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 3/11/2014
 
+* `v2.6.6`: Added optional fallback for popup/nohighlight steps when the wrapper element cannot be found
 * `v2.6.5`: The `close` method now calls `onLeave` for the current step. Return values of `false` are ignored
 * `v2.6.4`: If `onEnter` or `onLeave` returns `false` for a step, move to the next/previous step as appropriate 
 
