@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.6
+ * Version: 2.6.7
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -230,30 +230,31 @@
   /* Pre-build walkthrough step function.  Handles the scrolling to the target
    * element.
    */
-  function showStep(skipMethod) {
+  function showStep(skipDirection) {
     var options = _activeWalkthrough,
       step = options.steps[_index],
-      targetElement = options._element.find(step.wrapper);
+      targetElement = options._element.find(step.wrapper),
+      scrollTarget = getScrollParent(targetElement),
+      maxScroll, scrollTo;
 
       if (step.popup.type !== 'modal' && !targetElement.length) {
         if (step.popup.fallback === 'skip' ||
             typeof step.popup.fallback === 'undefined') {
-          methods[skipMethod]();
+          methods[skipDirection]();
           return;
-        } else {
-          step.popup.type = step.popup.fallback;
         }
+
+        step.popup.type = step.popup.fallback;
       }
 
-      var scrollTarget = getScrollParent(targetElement),
-      maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight(),
       // For modals, scroll to the top.  For tooltips, try and center the target
       // (wrapper) element in the screen
+      maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight();
       scrollTo = step.popup.type === 'modal' ? 0 :
-        Math.floor(
-          targetElement.offset().top - ($(window).height() / 2) +
-          scrollTarget.scrollTop()
-        );
+          Math.floor(
+            targetElement.offset().top - ($(window).height() / 2) +
+            scrollTarget.scrollTop()
+          );
 
     // @TODO: simplify this logic
     //

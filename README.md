@@ -322,6 +322,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 3/11/2014
 
+* `v2.6.7`: Clean up for code style, no API changes.
 * `v2.6.6`: Added optional fallback for popup/nohighlight steps when the wrapper element cannot be found
 * `v2.6.5`: The `close` method now calls `onLeave` for the current step. Return values of `false` are ignored
 * `v2.6.4`: If `onEnter` or `onLeave` returns `false` for a step, move to the next/previous step as appropriate 
