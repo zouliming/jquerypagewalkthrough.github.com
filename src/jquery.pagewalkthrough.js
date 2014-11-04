@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.7
+ * Version: 2.6.8
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -224,6 +224,13 @@
       }
 
       return _wtObj;
+    },
+
+    refresh: function() {
+        // Stricly speaking, a skipDirection should never
+        // be needed, but I'd rather provide one at this point
+        // than watch it explode...
+        showStep('next');
     }
   }; //end public method
 

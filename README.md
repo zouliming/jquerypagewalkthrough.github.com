@@ -240,14 +240,14 @@ If called on an element collection, the `name` argument is ignored.
     // Returns whether the walkthrough defined on the collection is active
     $('body').pagewalkthrough('isActive');
 
-### currIndex([name])
+### index([name])
 
 If called on the global jQuery object, the optional `name` argument
 restricts the check to a specific walkthrough.
 
     // Returns the current index for the active walkthrough, or false
     // if no walkthrough is active
-    $.pagewalkthrough('currIndex');
+    $.pagewalkthrough('index');
     // Returns the current index for a specific walkthrough, or false
     // if the walkthrough is not active
     $.pagewalkthrough('isActive', 'test');
@@ -255,7 +255,7 @@ restricts the check to a specific walkthrough.
 If called on an element collection, the `name` argument is ignored.
 
     // Returns the current index, or false if the walkthrough is not active
-    $('body').pagewalkthrough('currIndex');
+    $('body').pagewalkthrough('index');
 
 ### getOptions([activeWalkthrough])
 
@@ -273,6 +273,11 @@ and it returns the options for the specific walkthrough.
 
     // Returns options for this specific walkthrough
     $('body').pagewalkthrough('getOptions');
+
+### refresh()
+
+Re-renders the current step, in order to handle re-positioning the overlays on
+window resize or other events.
 
 ## Contributing
 
@@ -322,6 +327,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 3/11/2014
 
+* `v2.6.8`: Add new `refresh` method, which re-renders the current step. Intended for `onresize` and similar events.
 * `v2.6.7`: Clean up for code style, no API changes.
 * `v2.6.6`: Added optional fallback for popup/nohighlight steps when the wrapper element cannot be found
 * `v2.6.5`: The `close` method now calls `onLeave` for the current step. Return values of `false` are ignored

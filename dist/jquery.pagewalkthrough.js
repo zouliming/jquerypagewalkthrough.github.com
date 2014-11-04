@@ -224,6 +224,13 @@
       }
 
       return _wtObj;
+    },
+
+    refresh: function() {
+        // Stricly speaking, a skipDirection should never
+        // be needed, but I'd rather provide one at this point
+        // than watch it explode...
+        showStep('next');
     }
   }; //end public method
 
