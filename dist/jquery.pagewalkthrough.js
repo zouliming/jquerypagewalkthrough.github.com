@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.7
+ * Version: 2.6.8
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -257,11 +257,19 @@
       // For modals, scroll to the top.  For tooltips, try and center the target
       // (wrapper) element in the screen
       maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight();
-      scrollTo = step.popup.type === 'modal' ? 0 :
-          Math.floor(
+
+      if (step.autoScroll !== false) {
+        if (step.popup.type === 'modal') {
+          scrollTo = 0;
+        } else {
+          scrollTo = Math.floor(
             targetElement.offset().top - ($(window).height() / 2) +
-            scrollTarget.scrollTop()
+                scrollTarget.scrollTop()
           );
+        }
+      } else {
+        scrollTo = scrollTarget.scrollTop();
+      }
 
     // @TODO: simplify this logic
     //
@@ -410,7 +418,7 @@
     $jpwTooltip.css({
       'position': 'absolute',
       'left': '50%',
-      'top': '25%',
+      'top': 'calc('+$(document).scrollTop()+'px + 25%)',
       'margin-left': -(parseInt(step.popup.width, 10) + 60) / 2 + 'px',
       'z-index': '999999'
     });

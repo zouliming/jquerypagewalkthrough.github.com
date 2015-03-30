@@ -257,11 +257,19 @@
       // For modals, scroll to the top.  For tooltips, try and center the target
       // (wrapper) element in the screen
       maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight();
-      scrollTo = step.popup.type === 'modal' ? 0 :
-          Math.floor(
+
+      if (step.autoScroll !== false) {
+        if (step.popup.type === 'modal') {
+          scrollTo = 0;
+        } else {
+          scrollTo = Math.floor(
             targetElement.offset().top - ($(window).height() / 2) +
-            scrollTarget.scrollTop()
+                scrollTarget.scrollTop()
           );
+        }
+      } else {
+        scrollTo = scrollTarget.scrollTop();
+      }
 
     // @TODO: simplify this logic
     //
