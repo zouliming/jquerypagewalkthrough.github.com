@@ -853,7 +853,7 @@
       }).eq(0);
 
     return position === 'fixed' ? $() : !scrollParent.length ?
-      $('body') : scrollParent;
+      $('html, body') : scrollParent;
   }
 
   /**
