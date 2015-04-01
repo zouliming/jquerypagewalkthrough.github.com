@@ -352,8 +352,8 @@
       // Overlay hole
       $('<div>')
         .addClass('overlay-hole')
-        .height(Math.min(maxHeight, targetElement.outerHeight()))
-        .width(targetElement.outerWidth())
+        .height(Math.min(maxHeight, targetElement.outerHeight() + 40))
+        .width(targetElement.outerWidth() + 40)
         .css({
              // Recommended to be at least twice the inset box-shadow spread
             padding: '20px',
@@ -853,7 +853,7 @@
       }).eq(0);
 
     return position === 'fixed' ? $() : !scrollParent.length ?
-      $('body') : scrollParent;
+      $('html, body') : scrollParent;
   }
 
   /**
