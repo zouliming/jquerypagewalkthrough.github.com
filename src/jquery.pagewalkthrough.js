@@ -132,7 +132,7 @@
     close: function() {
       var options = _activeWalkthrough;
 
-      onLeave();
+      onLeave(true);
 
       if (typeof options.onClose === 'function') {
         options.onClose.call(this);
