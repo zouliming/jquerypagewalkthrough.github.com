@@ -272,7 +272,7 @@ QUnit.test('returns options for a walkthrough element', function(assert) {
     createWalkthrough(this.fixture);
 
     var opts = this.fixture.pagewalkthrough('getOptions');
-    assert.strictEqual(opts.name, 'test', 'Returns correct walkthrough name');
+    assert.strictEqual(opts[0].name, 'test', 'Returns correct walkthrough name');
 });
 
 QUnit.module('index', lifecycle);

@@ -213,8 +213,11 @@
 
       //get only current active walkthrough
       if (activeWalkthrough) {
-        _wtObj = {};
-        _wtObj = _activeWalkthrough;
+        if (!_isWalkthroughActive) {
+          _wtObj = false;
+        } else {
+          _wtObj = _activeWalkthrough;
+        }
         //get all walkthrough
       } else {
         _wtObj = [];
