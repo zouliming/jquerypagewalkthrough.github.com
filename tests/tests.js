@@ -1,5 +1,6 @@
+'use strict';
+/* global assert, QUnit */
 function createWalkthrough(element, options) {
-
     options = $.extend(true, {
         name: 'test',
         onLoad: false,
@@ -69,9 +70,9 @@ QUnit.test('loads on the first element of a collection', 2, function(assert) {
     });
 
     assert.strictEqual(first.data('jpw').name, 'test',
-        'Attaches data to the first element')
+        'Attaches data to the first element');
     assert.strictEqual(second.data('jpw'), undefined,
-        'Does not attach data to subsequent elements')
+        'Does not attach data to subsequent elements');
 });
 
 QUnit.asyncTest('uses content as a string', 1, function(assert) {
@@ -79,7 +80,7 @@ QUnit.asyncTest('uses content as a string', 1, function(assert) {
         onAfterShow: function() {
             assert.strictEqual($('#tooltipInner').html(),
                 'Hello, world!',
-                'Content used as string')
+                'Content used as string');
             QUnit.start();
         }
     });
@@ -103,7 +104,7 @@ QUnit.asyncTest('uses content as a selector', 1, function(assert) {
         onAfterShow: function() {
             assert.strictEqual($('#tooltipInner').html(),
                 'Hello, selector!',
-                'Content used as selector')
+                'Content used as selector');
             QUnit.start();
         }
     });

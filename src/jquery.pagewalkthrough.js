@@ -104,7 +104,9 @@
       if (typeof _isCookieLoad === 'undefined') {
         _isWalkthroughActive = true;
 
-        if (!(onEnter())) return;
+        if (!(onEnter())) {
+          return;
+        }
 
         showStep();
         showButton('jpwClose', 'body');
@@ -112,7 +114,9 @@
         setTimeout(function() {
           //call onAfterShow callback
           if (isFirstStep() && _firstTimeLoad) {
-            if (!onAfterShow()) return;
+            if (!onAfterShow()) {
+              return;
+            }
           }
         }, 100);
       } else {
@@ -121,11 +125,15 @@
     },
 
     restart: function(e) {
-      if (isFirstStep()) return;
+      if (isFirstStep()) {
+        return;
+      }
 
       _index = 0;
-      if (!(onRestart(e))) return;
-      if (!(onEnter(e))) return;
+      if (!(onRestart(e)) || !(onEnter(e))) {
+        return;
+      }
+
       showStep();
     },
 
@@ -169,27 +177,31 @@
 
       _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
 
-      if ((name === _activeId && _isWalkthroughActive) || !(onEnter(e))) return;
+      if ((name === _activeId && _isWalkthroughActive) || !(onEnter(e))) {
+        return;
+      }
 
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
-      if (!(onBeforeShow())) return;
+      if (!(onBeforeShow())) {
+        return;
+      }
 
       showStep();
       showButton('jpwClose', 'body');
 
       //call onAfterShow callback
-      if (isFirstStep() && _firstTimeLoad) {
-        if (!onAfterShow()) return;
+      if ((isFirstStep() && _firstTimeLoad) && !onAfterShow()) {
+        return;
       }
-
     },
 
     next: function(e) {
       _firstTimeLoad = false;
-      if (isLastStep()) return;
+      if (isLastStep() || !onLeave(e)) {
+        return;
+      }
 
-      if (!onLeave(e)) return;
       _index = parseInt(_index, 10) + 1;
       if (!onEnter(e)) {
           methods.next();
@@ -198,9 +210,10 @@
     },
 
     prev: function(e) {
-      if (isFirstStep()) return;
+      if (isFirstStep() || !onLeave(e)) {
+        return;
+      }
 
-      if (!onLeave(e)) return;
       _index = parseInt(_index, 10) - 1;
       if (!onEnter(e)) {
         methods.prev();
@@ -611,14 +624,18 @@
    *                                  #tooltipWrapper
    */
   function showButton(id, appendTo) {
-    if ($('#' + id).length) return;
+    if ($('#' + id).length) {
+      return;
+    }
 
     var btn = _activeWalkthrough.buttons[id];
 
     appendTo = appendTo || '#tooltipWrapper';
 
     // Check that button is defined
-    if (!btn) return;
+    if (!btn) {
+      return;
+    }
 
     // Check that button should be shown
     if ((typeof btn.show === 'function' && !btn.show()) || !btn.show) {
@@ -732,8 +749,9 @@
    * HELPERS
    */
   function debug(message) {
-    if (window.console && window.console.log)
+    if (window.console && window.console.log) {
       window.console.log(message);
+    }
   }
 
   function clearRotation() {
