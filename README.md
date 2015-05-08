@@ -421,3 +421,4 @@ the default `close` behaviour from triggering, resulting in the walkthrough not 
 * Tai Nguyen
 * JP Adams <jpadamsonline@gmail.com>
 * James West <jwwest@gmail.com>
+[![Build Status](https://travis-ci.org/jwarby/jquery-pagewalkthrough.png?branch=master)](https://travis-ci.org/jwarby/jquery-pagewalkthrough)
