@@ -4,6 +4,7 @@ node_js:
     - 0.8
 before_script:
     # install dependencies
+    - npm update -g npm
     - npm install -g node-qunit-phantomjs
 script:
     # We want to gate on passing tests and a successful build
