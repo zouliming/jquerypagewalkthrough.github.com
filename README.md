@@ -1,8 +1,6 @@
-###### Issues overview
-[![Issues ready to be worked on](https://badge.waffle.io/jwarby/jquery-pagewalkthrough.svg?label=ready&title=Ready%20To%20Work%20On)](http://waffle.io/jwarby/jquery-pagewalkthrough)
-[![Issues being worked on](https://badge.waffle.io/jwarby/jquery-pagewalkthrough.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/jwarby/jquery-pagewalkthrough)
-
-# jQuery Page Walkthrough [![GitHub version](https://badge.fury.io/gh/jwarby%2Fjquery-pagewalkthrough.svg)](http://badge.fury.io/gh/jwarby%2Fjquery-pagewalkthrough)
+# jQuery Page Walkthrough
+[![GitHub version](https://badge.fury.io/gh/jwarby%2Fjquery-pagewalkthrough.svg)](http://badge.fury.io/gh/jwarby%2Fjquery-pagewalkthrough)
+[![Build Status](https://travis-ci.org/jwarby/jquery-pagewalkthrough.png?branch=dev)](https://travis-ci.org/jwarby/jquery-pagewalkthrough)
 
 Forked from [jpadamsonline/jquerypagewalkthrough.github.com](https://github.com/jpadamsonline/jquerypagewalkthrough.github.com)
 
@@ -421,4 +419,3 @@ the default `close` behaviour from triggering, resulting in the walkthrough not 
 * Tai Nguyen
 * JP Adams <jpadamsonline@gmail.com>
 * James West <jwwest@gmail.com>
-[![Build Status](https://travis-ci.org/jwarby/jquery-pagewalkthrough.png?branch=master)](https://travis-ci.org/jwarby/jquery-pagewalkthrough)
