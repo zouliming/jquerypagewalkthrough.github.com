@@ -80,6 +80,10 @@ $.fn.pagewalkthrough.defaults = {
         offsetHorizontal: 0,
         // Vertical offset for the walkthrough
         offsetVertical: 0,
+        // Horizontal offset for the arrow
+        offsetArrowHorizontal: 0,
+        // Vertical offset for the arrow
+        offsetArrowVertical: 0,
         // Default width for each popup
         width: '320',
         // Amount in degrees to rotate the content by
@@ -96,9 +100,11 @@ $.fn.pagewalkthrough.defaults = {
       // Prevent the user from scrolling away from the content
       lockScrolling: false,
       // Callback when entering the step
-      onEnter: null,
-      // Callback when leaving the step
-      onLeave: null
+      onEnter: $.noop,
+      /* Callback when leaving the step.  Called with `true` if the user is
+       * skipping the rest of the tour (gh #66)
+       */
+      onLeave: $.noop
     }
   ],
   // **(Required)** Walkthrough name.  Should be a unique name to identify the
@@ -110,18 +116,18 @@ $.fn.pagewalkthrough.defaults = {
   // automatically
   onLoad: true,
   // Callback to be executed before the walkthrough is shown
-  onBeforeShow: null,
+  onBeforeShow: $.noop,
   // Callback executed after the walkthrough is shown
-  onAfterShow: null,
+  onAfterShow: $.noop,
   // Callback executed in the event that 'restart' is triggered
-  onRestart: null,
+  onRestart: $.noop,
   // Callback executed when the walkthrough is closed.  The walkthrough can be
   // closed by the user clicking the close button in the top right, or
   // clicking the finish button on the last step
-  onClose: null,
+  onClose: $.noop,
   // Callback executed when cookie has been set after a walkthrough has been
   // closed
-  onCookieLoad: null,
+  onCookieLoad: $.noop,
   /* ##### <a name="controls-options">Walkthrough controls</a>
    *
    * Hash of buttons to show.  Object keys are used as the button element's ID
