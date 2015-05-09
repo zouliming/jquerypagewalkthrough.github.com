@@ -281,6 +281,8 @@ QUnit.module('index', lifecycle);
 QUnit.test('returns zero on the first step', function(assert) {
     createWalkthrough(this.fixture);
 
+
+
     assert.strictEqual(this.fixture.pagewalkthrough('index'), 0);
 });
 
@@ -331,4 +333,33 @@ QUnit.asyncTest('clicks on the tooltip content/arrow do not propagate', 0, funct
 
         QUnit.start();
     }, 1000);
+});
+
+QUnit.asyncTest('onLeave called with true if tour skipped', 1, function(assert) {
+    createWalkthrough(this.fixture, {
+        steps: [
+            {
+                autoScroll: false,
+                popup: {
+                    content: 'Hello, world!',
+                    type: 'modal'
+                },
+                onLeave: function(skipped) {
+                    assert.equal(skipped, true, 'skipped flag was true');
+                    QUnit.start();
+                }
+            },
+            {
+                autoScroll: false,
+                popup: {
+                    content: 'My second step',
+                    type: 'modal'
+                }
+            }
+        ]
+    });
+
+    this.fixture.pagewalkthrough('show');
+
+    $('#jpwClose').click();
 });
