@@ -325,6 +325,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+#### 20/11/2015
+
+* `v2.6.9`: Allow next, previous and finish buttons to re-positioned using CSS, by changing which element they get appended to - #67
+
 #### 3/11/2014
 
 * `v2.6.8`: Add new `refresh` method, which re-renders the current step. Intended for `onresize` and similar events.
