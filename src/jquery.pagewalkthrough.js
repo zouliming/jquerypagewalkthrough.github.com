@@ -602,9 +602,8 @@
   function showButton(id, appendTo) {
     if ($('#' + id).length) return;
 
-    var btn = _activeWalkthrough.buttons[id];
-
-    appendTo = appendTo || '#tooltipWrapper';
+    var btn = _activeWalkthrough.buttons[id],
+      $a;
 
     // Check that button is defined
     if (!btn) return;
@@ -614,11 +613,17 @@
       return;
     }
 
-    // Append button
-    $(appendTo).append($('<a />', {
+    $a = $('<a />', {
       id: id,
       html: btn.i18n
-    }));
+    });
+
+    // Append button
+    if (appendTo) {
+      $(appendTo).append($a);
+    } else {
+      $('#tooltipWrapper').after($a);
+    }
   }
 
   /**
