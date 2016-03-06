@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.9
+ * Version: 2.7.0
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -104,7 +104,9 @@
       if (typeof _isCookieLoad === 'undefined') {
         _isWalkthroughActive = true;
 
-        if (!(onEnter())) return;
+        if (!(onEnter())) {
+          return;
+        }
 
         showStep();
         showButton('jpwClose', 'body');
@@ -112,7 +114,9 @@
         setTimeout(function() {
           //call onAfterShow callback
           if (isFirstStep() && _firstTimeLoad) {
-            if (!onAfterShow()) return;
+            if (!onAfterShow()) {
+              return;
+            }
           }
         }, 100);
       } else {
@@ -121,18 +125,22 @@
     },
 
     restart: function(e) {
-      if (isFirstStep()) return;
+      if (isFirstStep()) {
+        return;
+      }
 
       _index = 0;
-      if (!(onRestart(e))) return;
-      if (!(onEnter(e))) return;
+      if (!(onRestart(e)) || !(onEnter(e))) {
+        return;
+      }
+
       showStep();
     },
 
     close: function() {
       var options = _activeWalkthrough;
 
-      onLeave();
+      onLeave(true);
 
       if (typeof options.onClose === 'function') {
         options.onClose.call(this);
@@ -169,27 +177,31 @@
 
       _activeWalkthrough = _globalWalkthrough[this.first().data('jpw').name];
 
-      if ((name === _activeId && _isWalkthroughActive) || !(onEnter(e))) return;
+      if ((name === _activeId && _isWalkthroughActive) || !(onEnter(e))) {
+        return;
+      }
 
       _isWalkthroughActive = true;
       _firstTimeLoad = true;
-      if (!(onBeforeShow())) return;
+      if (!(onBeforeShow())) {
+        return;
+      }
 
       showStep();
       showButton('jpwClose', 'body');
 
       //call onAfterShow callback
-      if (isFirstStep() && _firstTimeLoad) {
-        if (!onAfterShow()) return;
+      if ((isFirstStep() && _firstTimeLoad) && !onAfterShow()) {
+        return;
       }
-
     },
 
     next: function(e) {
       _firstTimeLoad = false;
-      if (isLastStep()) return;
+      if (isLastStep() || !onLeave(e)) {
+        return;
+      }
 
-      if (!onLeave(e)) return;
       _index = parseInt(_index, 10) + 1;
       if (!onEnter(e)) {
           methods.next();
@@ -198,9 +210,10 @@
     },
 
     prev: function(e) {
-      if (isFirstStep()) return;
+      if (isFirstStep() || !onLeave(e)) {
+        return;
+      }
 
-      if (!onLeave(e)) return;
       _index = parseInt(_index, 10) - 1;
       if (!onEnter(e)) {
         methods.prev();
@@ -213,8 +226,11 @@
 
       //get only current active walkthrough
       if (activeWalkthrough) {
-        _wtObj = {};
-        _wtObj = _activeWalkthrough;
+        if (!_isWalkthroughActive) {
+          _wtObj = false;
+        } else {
+          _wtObj = _activeWalkthrough;
+        }
         //get all walkthrough
       } else {
         _wtObj = [];
@@ -257,11 +273,19 @@
       // For modals, scroll to the top.  For tooltips, try and center the target
       // (wrapper) element in the screen
       maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight();
-      scrollTo = step.popup.type === 'modal' ? 0 :
-          Math.floor(
+
+      if (step.autoScroll !== false) {
+        if (step.popup.type === 'modal') {
+          scrollTo = 0;
+        } else {
+          scrollTo = Math.floor(
             targetElement.offset().top - ($(window).height() / 2) +
-            scrollTarget.scrollTop()
+                scrollTarget.scrollTop()
           );
+        }
+      } else {
+        scrollTo = scrollTarget.scrollTop();
+      }
 
     // @TODO: simplify this logic
     //
@@ -410,7 +434,7 @@
     $jpwTooltip.css({
       'position': 'absolute',
       'left': '50%',
-      'top': '25%',
+      'top': 'calc('+$(document).scrollTop()+'px + 25%)',
       'margin-left': -(parseInt(step.popup.width, 10) + 60) / 2 + 'px',
       'z-index': '999999'
     });
@@ -600,13 +624,17 @@
    *                                  #tooltipWrapper
    */
   function showButton(id, appendTo) {
-    if ($('#' + id).length) return;
+    if ($('#' + id).length) {
+      return;
+    }
 
     var btn = _activeWalkthrough.buttons[id],
       $a;
 
     // Check that button is defined
-    if (!btn) return;
+    if (!btn) {
+      return;
+    }
 
     // Check that button should be shown
     if ((typeof btn.show === 'function' && !btn.show()) || !btn.show) {
@@ -648,7 +676,7 @@
     var options = _activeWalkthrough;
 
     if (typeof options.steps[_index].onLeave === 'function') {
-      if (!options.steps[_index].onLeave.call(this, e, _index)) {
+      if (options.steps[_index].onLeave.call(this, e, _index) === false) {
         return false;
       }
     }
@@ -664,7 +692,7 @@
     var options = _activeWalkthrough;
 
     if (typeof options.steps[_index].onEnter === 'function') {
-      return options.steps[_index].onEnter.call(this, e, _index);
+      return options.steps[_index].onEnter.call(this, e, _index) !== false;
     }
 
     return true;
@@ -680,7 +708,7 @@
     methods.restart(e);
 
     if (typeof options.onRestart === 'function') {
-      if (!options.onRestart.call(this)) {
+      if (options.onRestart.call(this) === false) {
         return false;
       }
     }
@@ -696,7 +724,7 @@
     _index = 0;
 
     if (typeof(options.onBeforeShow) === 'function') {
-      if (!options.onBeforeShow.call(this)) {
+      if (options.onBeforeShow.call(this) === false) {
         return false;
       }
     }
@@ -712,7 +740,7 @@
     _index = 0;
 
     if (typeof(options.onAfterShow) === 'function') {
-      if (!options.onAfterShow.call(this)) {
+      if (options.onAfterShow.call(this) === false) {
         return false;
       }
     }
@@ -726,8 +754,9 @@
    * HELPERS
    */
   function debug(message) {
-    if (window.console && window.console.log)
+    if (window.console && window.console.log) {
       window.console.log(message);
+    }
   }
 
   function clearRotation() {
@@ -850,7 +879,7 @@
       }).eq(0);
 
     return position === 'fixed' ? $() : !scrollParent.length ?
-      $('body') : scrollParent;
+      $('html, body') : scrollParent;
   }
 
   /**
@@ -880,6 +909,14 @@
         ev.stopImmediatePropagation();
     }
   );
+
+  /**
+   * WINDOW RESIZE RERENDERER
+   */
+  
+  $(window).resize(function() {
+    $.pagewalkthrough('refresh');
+  });
 
   /**
    * DRAG & DROP
@@ -947,7 +984,11 @@
           // Default width for each popup
           width: '320',
           // Amount in degrees to rotate the content by
-          contentRotation: 0
+          contentRotation: 0,
+          // If set to 'skip', skips tooltip/nohighlight types when the wrapper
+          // does not exist. If set to anything else, uses the value as a fallback
+          // popup type (e.g. 'modal' will fallback to a popup type of 'modal').
+          fallback: 'skip'
         },
         // Automatically scroll to the content for the step
         autoScroll: true,
@@ -956,9 +997,11 @@
         // Prevent the user from scrolling away from the content
         lockScrolling: false,
         // Callback when entering the step
-        onEnter: null,
-        // Callback when leaving the step
-        onLeave: null
+        onEnter: $.noop,
+        /* Callback when leaving the step.  Called with `true` if the user is
+         * skipping the rest of the tour (gh #66)
+         */
+        onLeave: $.noop
       }
     ],
     // **(Required)** Walkthrough name.  Should be a unique name to identify the
@@ -970,18 +1013,18 @@
     // automatically
     onLoad: true,
     // Callback to be executed before the walkthrough is shown
-    onBeforeShow: null,
+    onBeforeShow: $.noop,
     // Callback executed after the walkthrough is shown
-    onAfterShow: null,
+    onAfterShow: $.noop,
     // Callback executed in the event that 'restart' is triggered
-    onRestart: null,
+    onRestart: $.noop,
     // Callback executed when the walkthrough is closed.  The walkthrough can be
     // closed by the user clicking the close button in the top right, or
     // clicking the finish button on the last step
-    onClose: null,
+    onClose: $.noop,
     // Callback executed when cookie has been set after a walkthrough has been
     // closed
-    onCookieLoad: null,
+    onCookieLoad: $.noop,
     /* ##### <a name="controls-options">Walkthrough controls</a>
      *
      * Hash of buttons to show.  Object keys are used as the button element's ID

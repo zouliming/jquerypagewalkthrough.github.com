@@ -1,5 +1,6 @@
+'use strict';
+/* global assert, QUnit */
 function createWalkthrough(element, options) {
-
     options = $.extend(true, {
         name: 'test',
         onLoad: false,
@@ -24,6 +25,10 @@ function createWalkthrough(element, options) {
     element.pagewalkthrough(options);
 }
 
+function clickPropagateFail() {
+    assert.ok(false, 'click propagated');
+}
+
 var lifecycle = {
     setup: function() {
         this.fixture = $('#qunit-fixture');
@@ -35,6 +40,9 @@ var lifecycle = {
         this.fixture.remove();
         this.fixture = null;
         this.fixture = $('<div>').attr('id', 'qunit-fixture').appendTo('body');
+
+        // Turn off document click propagation fail handlers
+        $(document).off('click', clickPropagateFail);
         // @todo destroy method for plugin to prevent memory leaks
     }
 };
@@ -62,9 +70,9 @@ QUnit.test('loads on the first element of a collection', 2, function(assert) {
     });
 
     assert.strictEqual(first.data('jpw').name, 'test',
-        'Attaches data to the first element')
+        'Attaches data to the first element');
     assert.strictEqual(second.data('jpw'), undefined,
-        'Does not attach data to subsequent elements')
+        'Does not attach data to subsequent elements');
 });
 
 QUnit.asyncTest('uses content as a string', 1, function(assert) {
@@ -72,7 +80,7 @@ QUnit.asyncTest('uses content as a string', 1, function(assert) {
         onAfterShow: function() {
             assert.strictEqual($('#tooltipInner').html(),
                 'Hello, world!',
-                'Content used as string')
+                'Content used as string');
             QUnit.start();
         }
     });
@@ -96,7 +104,7 @@ QUnit.asyncTest('uses content as a selector', 1, function(assert) {
         onAfterShow: function() {
             assert.strictEqual($('#tooltipInner').html(),
                 'Hello, selector!',
-                'Content used as selector')
+                'Content used as selector');
             QUnit.start();
         }
     });
@@ -265,13 +273,15 @@ QUnit.test('returns options for a walkthrough element', function(assert) {
     createWalkthrough(this.fixture);
 
     var opts = this.fixture.pagewalkthrough('getOptions');
-    assert.strictEqual(opts.name, 'test', 'Returns correct walkthrough name');
+    assert.strictEqual(opts[0].name, 'test', 'Returns correct walkthrough name');
 });
 
 QUnit.module('index', lifecycle);
 
 QUnit.test('returns zero on the first step', function(assert) {
     createWalkthrough(this.fixture);
+
+
 
     assert.strictEqual(this.fixture.pagewalkthrough('index'), 0);
 });
@@ -298,13 +308,12 @@ QUnit.module('Click propagation', lifecycle);
 QUnit.asyncTest('clicks on the overlay do not propagate', 0, function(assert) {
     createWalkthrough(this.fixture);
 
-    $(document).on('click', function() {
-        assert.ok(false, 'click propagated')
-    });
+    $(document).on('click', clickPropagateFail);
 
     this.fixture.pagewalkthrough('show');
     setTimeout(function() {
         $('#jpwOverlay').click();
+
         QUnit.start();
     }, 1000);
 });
@@ -312,9 +321,7 @@ QUnit.asyncTest('clicks on the overlay do not propagate', 0, function(assert) {
 QUnit.asyncTest('clicks on the tooltip content/arrow do not propagate', 0, function(assert) {
     createWalkthrough(this.fixture);
 
-    $(document).on('click', function() {
-        assert.ok(false, 'click propagated')
-    });
+    $(document).on('click', clickPropagateFail);
 
     this.fixture.pagewalkthrough('show');
 
@@ -323,6 +330,36 @@ QUnit.asyncTest('clicks on the tooltip content/arrow do not propagate', 0, funct
         $('#tooltipBottom:visible').click();
         $('#tooltipTop:visible').click();
         $('#tooltipWrapper:visible + span').click();
+
         QUnit.start();
     }, 1000);
+});
+
+QUnit.asyncTest('onLeave called with true if tour skipped', 1, function(assert) {
+    createWalkthrough(this.fixture, {
+        steps: [
+            {
+                autoScroll: false,
+                popup: {
+                    content: 'Hello, world!',
+                    type: 'modal'
+                },
+                onLeave: function(skipped) {
+                    assert.equal(skipped, true, 'skipped flag was true');
+                    QUnit.start();
+                }
+            },
+            {
+                autoScroll: false,
+                popup: {
+                    content: 'My second step',
+                    type: 'modal'
+                }
+            }
+        ]
+    });
+
+    this.fixture.pagewalkthrough('show');
+
+    $('#jpwClose').click();
 });
