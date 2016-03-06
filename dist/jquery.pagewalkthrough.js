@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.6.9
+ * Version: 2.7.0
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
