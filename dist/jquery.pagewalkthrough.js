@@ -911,6 +911,14 @@
   );
 
   /**
+   * WINDOW RESIZE RERENDERER
+   */
+  
+  $(window).resize(function() {
+    $.pagewalkthrough('refresh');
+  });
+
+  /**
    * DRAG & DROP
    */
 
