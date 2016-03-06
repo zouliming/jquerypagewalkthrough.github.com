@@ -43,9 +43,6 @@ step "uglifyjs $JS_SRC -o ${DEST}jquery.pagewalkthrough.min.js" \
 # Make dist/css directory if it doesn't exist
 step "mkdir -p ${DEST}css/" "Creating '${DEST}css/'"
 
-# Check that less file is valid
-step "lessc -l $LESS_SRC" "Linting LESS file"
-
 # Compile less
 step "lessc $LESS_SRC ${DEST}css/jquery.pagewalkthrough.css" \
      "Compiling LESS into '${DEST}css/jquery.pagewalkthrough.css'"
