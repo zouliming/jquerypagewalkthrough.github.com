@@ -329,6 +329,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+#### 06/03/2016
+
+* `v2.7.0`: Modal steps don't scroll page to top anymorei - #62; current step re-renders on resize - #68; `true` is passed to `onLeave` when walkthrough is skipped - #66
+
 #### 20/11/2015
 
 * `v2.6.9`: Allow next, previous and finish buttons to re-positioned using CSS, by changing which element they get appended to - #67
