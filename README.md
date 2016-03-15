@@ -97,8 +97,6 @@ $.fn.pagewalkthrough.defaults = {
       autoScroll: true,
       // Speed to use when scrolling to elements
       scrollSpeed: 1000,
-      // Prevent the user from scrolling away from the content
-      lockScrolling: false,
       // Callback when entering the step
       onEnter: $.noop,
       /* Callback when leaving the step.  Called with `true` if the user is
@@ -328,6 +326,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 @TODO - not yet implemented
 
 ## Changelog
+
+#### 15/03/2016
+
+* `v2.7.1`: Fix bug with resize functionality - walkthrough would show when window resized even if it wasn't showing beforehand - #71; remove unsupported `lockScrolling` option from list of options - #70
 
 #### 06/03/2016
 
