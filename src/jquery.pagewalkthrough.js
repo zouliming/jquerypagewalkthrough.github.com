@@ -996,8 +996,6 @@
         autoScroll: true,
         // Speed to use when scrolling to elements
         scrollSpeed: 1000,
-        // Prevent the user from scrolling away from the content
-        lockScrolling: false,
         // Callback when entering the step
         onEnter: $.noop,
         /* Callback when leaving the step.  Called with `true` if the user is
