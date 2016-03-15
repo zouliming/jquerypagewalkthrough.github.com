@@ -329,6 +329,7 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 #### 15/03/2016
 
+* `v2.7.2`: #71 wasn't fixed properly - multiple resize events were causing the animation queue (and thus the callbacks) to build up - fixed by clearing queue before animating the scrolling
 * `v2.7.1`: Fix bug with resize functionality - walkthrough would show when window resized even if it wasn't showing beforehand - #71; remove unsupported `lockScrolling` option from list of options - #70
 
 #### 06/03/2016
