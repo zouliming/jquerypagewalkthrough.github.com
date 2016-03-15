@@ -915,7 +915,9 @@
    */
   
   $(window).resize(function() {
-    $.pagewalkthrough('refresh');
+    if (_isWalkthroughActive) {
+      $.pagewalkthrough('refresh');
+    }
   });
 
   /**
