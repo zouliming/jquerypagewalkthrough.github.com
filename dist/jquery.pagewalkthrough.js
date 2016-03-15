@@ -6,7 +6,7 @@
  *               James Warwood <james.duncan.1991@googlemail.com>
  *               Craig Roberts <craig0990@googlemail.com>
  * Created On: 27/02/2013
- * Version: 2.7.0
+ * Version: 2.7.1
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
@@ -915,7 +915,9 @@
    */
   
   $(window).resize(function() {
-    $.pagewalkthrough('refresh');
+    if (_isWalkthroughActive) {
+      $.pagewalkthrough('refresh');
+    }
   });
 
   /**
@@ -994,8 +996,6 @@
         autoScroll: true,
         // Speed to use when scrolling to elements
         scrollSpeed: 1000,
-        // Prevent the user from scrolling away from the content
-        lockScrolling: false,
         // Callback when entering the step
         onEnter: $.noop,
         /* Callback when leaving the step.  Called with `true` if the user is

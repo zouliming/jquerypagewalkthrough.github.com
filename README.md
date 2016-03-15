@@ -327,6 +327,10 @@ is compiled.  Instead, you should modify the LESS and compile it (see the sectio
 
 ## Changelog
 
+#### 15/03/2016
+
+* `v2.7.1`: Fix bug with resize functionality - walkthrough would show when window resized even if it wasn't showing beforehand - #71; remove unsupported `lockScrolling` option from list of options - #70
+
 #### 06/03/2016
 
 * `v2.7.0`: Modal steps don't scroll page to top anymorei - #62; current step re-renders on resize - #68; `true` is passed to `onLeave` when walkthrough is skipped - #66
