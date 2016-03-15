@@ -311,7 +311,7 @@
       $jpWalkthrough.addClass('jpw-scrolling');
       $jpwTooltip.fadeOut('fast');
 
-      scrollTarget.animate({
+      scrollTarget.clearQueue().animate({
         scrollTop: scrollTo
       }, options.steps[_index].scrollSpeed, buildWalkthrough);
 
