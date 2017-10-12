@@ -254,6 +254,7 @@
    * element.
    */
   function showStep(skipDirection) {
+    skipDirection = skipDirection || "undefined";
     var options = _activeWalkthrough,
       step = options.steps[_index],
       targetElement = options._element.find(step.wrapper),
@@ -263,7 +264,9 @@
       if (step.popup.type !== 'modal' && !targetElement.length) {
         if (step.popup.fallback === 'skip' ||
             typeof step.popup.fallback === 'undefined') {
-          methods[skipDirection]();
+            if(skipDirection!=="undefined"){
+                methods[skipDirection]();
+            }
           return;
         }
 
